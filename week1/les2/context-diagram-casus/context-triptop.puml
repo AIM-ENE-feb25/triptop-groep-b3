@@ -1,5 +1,4 @@
 @startuml
-set separator none
 title Context diagram voor het Triptop reis systeem
 
 top to bottom direction
