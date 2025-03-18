@@ -1,0 +1,79 @@
+@startuml
+set separator none
+title Context diagram voor het Triptop reis systeem
+
+top to bottom direction
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<BookingAPI>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<GetYourGuideAPI>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<GoogleMapsAPI>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+
+skinparam rectangle<<MollieAPI>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<NSAPI>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam person<<Reisagent>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+  shadowing false
+}
+skinparam person<<Reiziger>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+  shadowing false
+}
+skinparam rectangle<<TripTopWebapplicatie>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+  roundCorner 20
+  shadowing false
+}
+
+person "==Reiziger\n<size:10><<Persoon>></size>\n\nKlant van TripTop" <<Reiziger>> as Reiziger
+person  "==Reisagent\n<size:10><<Persoon>></size>\n\nMedewerker van TripTop" <<Reisagent>> as Reisagent
+rectangle "==TripTop Webapplicatie\n<size:10><<Software Systeem></size>\n\nHelpt reizigers met samenstellen van een reis d.m.v. bouwstenen"<<TripTopWebapplicatie>> as TripTopWebapplicatie
+
+rectangle "==Booking API\n<size:10>[Software Systeem]</size>\n\nHaalt verblijfplaats op via" <<BookingAPI>> as BookingAPI
+rectangle "==NS API\n<size:10>[Software Systeem]</size>\n\nTreininformatie en tickets" <<NSAPI>> as NSAPI
+
+Reiziger .[#707070,thickness=2].> TripTopWebapplicatie : "<color:#707070>Kiest een reis en wijzigt deze via bouwstenen"
+Reisagent .[#707070,thickness=2].> TripTopWebapplicatie : "<color:#707070>Stelt reispakketten samen voor gebruikers via bouwpakkketten"
+
+TripTopWebapplicatie .[#707070,thickness=2].> BookingAPI : "<color:#707070>Boekt verblijfplaats via Booking.com"
+TripTopWebapplicatie .[#707070,thickness=2].> NSAPI : "<color:#707070>Boekt treintickets via NS"
+@enduml
