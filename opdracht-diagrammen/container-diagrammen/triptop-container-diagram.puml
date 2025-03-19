@@ -18,9 +18,9 @@ Person(reisagent, "Reisagent", "Ondersteunt reizigers bij het plannen en boeken 
 System_Ext(bookingAPI, "Booking.com API", "API voor het boeken van accommodaties")
 System_Ext(getYourGuideAPI, "GetYourGuide API", "API voor excursies en activiteiten")
 System_Ext(googleMapsAPI, "Google Maps API", "API voor routeplanning en navigatie")
-System_Ext(mollieAPI, "Mollie API", "API voor betaalverwerking")
 System_Ext(nsAPI, "NS API", "API voor treininformatie en tickets")
 System_Ext(rentalCarAPI, "Autoverhuur API", "API voor het huren van voertuigen")
+System_Ext(identityProvider, "IdentityProvider Wiremock", "Mock service voor authenticatie en autorisatie")
 
 ' Define system boundary for TripTop
 System_Boundary(triptop_system, "TripTop Reissysteem") {
@@ -54,6 +54,6 @@ Rel(booking_service, bookingAPI, "Boekt accommodaties", "REST/HTTPS")
 Rel(booking_service, getYourGuideAPI, "Boekt excursies", "REST/HTTPS")
 Rel(booking_service, nsAPI, "Boekt treintickets", "REST/HTTPS")
 Rel(booking_service, rentalCarAPI, "Boekt huurauto's", "REST/HTTPS")
-Rel(payment_service, mollieAPI, "Verwerkt betalingen", "REST/HTTPS")
+Rel(auth_service, identityProvider, "Verifieert gebruikers", "REST/HTTPS")
 
 @enduml 
