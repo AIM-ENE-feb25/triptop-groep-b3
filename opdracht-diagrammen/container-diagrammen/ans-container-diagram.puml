@@ -1,0 +1,43 @@
+@startuml
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+title Container Diagram for the ANS application
+
+LAYOUT_WITH_LEGEND()
+
+Person(student, "Student", "A student who uses the system to make exams")
+Person(teacher, "Teacher", "A teacher who uses the system to create and grade exams")
+
+System_Boundary(ans, "ANS System") {
+    Container(web_application, "Web Application", "HTML, CSS, JavaScript", "Provides the user interface for students and teachers")
+    Container(api_gateway, "API Gateway", "Spring Boot", "Handles API requests and routes them to appropriate services")
+    Container(student_service, "Student Service", "Java, Spring Boot", "Manages student exam-taking and results")
+    Container(teacher_service, "Teacher Service", "Java, Spring Boot", "Manages exam creation and grading")
+    Container(auth_service, "Authentication Service", "Java, Spring Security", "Handles user authentication and authorization")
+    Container(exam_service, "Exam Service", "Java, Spring Boot", "Manages exam content and scheduling")
+    ContainerDb(student_db, "Student Database", "PostgreSQL", "Stores student data, exam results and progress")
+    ContainerDb(exam_db, "Exam Database", "PostgreSQL", "Stores exam content, questions and answers")
+}
+
+System_Ext(osiris, "Osiris", "Contains registered students for exams")
+System_Ext(schoolyear, "SchoolYear", "Secures ANS so it can only be used in a safe browser")
+
+Rel(student, web_application, "Uses to take exams", "HTTPS")
+Rel(teacher, web_application, "Uses to create and grade exams", "HTTPS")
+
+Rel(web_application, api_gateway, "Makes API calls to", "JSON/HTTPS")
+Rel(api_gateway, student_service, "Routes student requests to", "JSON/HTTPS")
+Rel(api_gateway, teacher_service, "Routes teacher requests to", "JSON/HTTPS")
+Rel(api_gateway, auth_service, "Validates requests through", "JSON/HTTPS")
+Rel(api_gateway, exam_service, "Routes exam-related requests to", "JSON/HTTPS")
+
+Rel(student_service, student_db, "Reads from and writes to", "JDBC")
+Rel(teacher_service, exam_db, "Reads from and writes to", "JDBC")
+Rel(exam_service, exam_db, "Reads from and writes to", "JDBC")
+
+Rel(student_service, osiris, "Verifies student registration for exams", "API/HTTPS")
+Rel(auth_service, schoolyear, "Verifies browser security status", "API/HTTPS")
+
+@enduml
