@@ -17,11 +17,7 @@ System_Boundary(triptop, "Triptop Systeem") {
 }
 
 System_Ext(bookingAPI, "Booking API", "Verblijfsaccommodaties via Booking.com")
-System_Ext(getYourGuideAPI, "GetYourGuide API", "Excursies en activiteiten")
-System_Ext(googleMapsAPI, "Google Maps API", "Routeplanning en navigatie")
-System_Ext(mollieAPI, "Mollie API", "Betaalverwerking")
-System_Ext(nsAPI, "NS API", "Treininformatie en ticketverkoop")
-System_Ext(rentalCarAPI, "Autoverhuur API", "Huurauto's via Sixt, Hertz")
+System_Ext(MapsAPI, "Maps API", "Routeplanning en navigatie")
 System_Ext(identityProviderAPI, "Identity Provider API", "Authenticatie en autorisatie")
 
 Rel(reiziger, frontend, "Stelt reis samen, boekt, past aan of annuleert")
@@ -29,11 +25,7 @@ Rel(reisagent, frontend, "Biedt advies en ondersteuning")
 Rel(frontend, backend, "Maakt API-verzoeken")
 Rel(backend, database, "Leest/schrijft reisgegevens en boekingen")
 Rel(backend, bookingAPI, "Boekt verblijfplaatsen")
-Rel(backend, getYourGuideAPI, "Boekt excursies en activiteiten")
-Rel(backend, googleMapsAPI, "Plant routes en navigatie")
-Rel(backend, mollieAPI, "Verwerkt betalingen")
-Rel(backend, nsAPI, "Boekt treintickets")
-Rel(backend, rentalCarAPI, "Boekt huurauto’s")
+Rel(backend, MapsAPI, "Plant routes en navigatie")
 Rel(backend, identityProviderAPI, "Beheert authenticatie en autorisatie")
 
 @enduml
