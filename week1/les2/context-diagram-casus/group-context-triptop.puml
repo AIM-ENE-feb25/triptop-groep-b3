@@ -1,0 +1,77 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Context diagram voor het Triptop reis systeem
+
+top to bottom direction
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+' Kleurinstellingen voor externe APIs
+skinparam rectangle<<ExterneAPI>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+
+' Kleurinstelling voor de Triptop Webapplicatie
+skinparam rectangle<<TripTopWebapplicatie>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+  roundCorner 20
+  shadowing false
+}
+
+' Kleurinstelling voor actoren
+skinparam person<<Reisagent>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+  shadowing false
+}
+
+skinparam person<<Reiziger>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+  shadowing false
+}
+
+' Actoren
+person "==Reiziger\n<size:10><<Persoon>></size>\nKlant van Triptop" <<Reiziger>> as Reiziger
+person "==Reisagent\n<size:10><<Persoon>></size>\nMedewerker van Triptop" <<Reisagent>> as Reisagent
+
+' Hoofd systeem
+rectangle "==Triptop Webapplicatie\n<size:10><<Software Systeem>></size>\n\nOnline platform voor reisplanning" <<TripTopWebapplicatie>> as TripTopWebapplicatie
+
+' Externe APIs
+rectangle "==Booking API\n<size:10>[Externe API]</size>\n\nVerblijfsaccommodaties via Booking.com" <<ExterneAPI>> as BookingAPI
+rectangle "==GetYourGuide API\n<size:10>[Externe API]</size>\n\nExcursies en activiteiten" <<ExterneAPI>> as GetYourGuideAPI
+rectangle "==Google Maps API\n<size:10>[Externe API]</size>\n\nRouteplanning en navigatie" <<ExterneAPI>> as GoogleMapsAPI
+rectangle "==Mollie API\n<size:10>[Externe API]</size>\n\nBetaalverwerking" <<ExterneAPI>> as MollieAPI
+rectangle "==NS API\n<size:10>[Externe API]</size>\n\nTreininformatie en ticketverkoop" <<ExterneAPI>> as NSAPI
+rectangle "==Autoverhuur API\n<size:10>[Externe API]</size>\n\nHuurauto's via Sixt, Hertz" <<ExterneAPI>> as RentalCarAPI
+
+' Interacties met het systeem
+Reiziger .[#707070,thickness=2].> TripTopWebapplicatie : "<color:#707070>Stelt reis samen, boekt, past aan of annuleert"
+Reisagent .[#707070,thickness=2].> TripTopWebapplicatie : "<color:#707070>Biedt advies en ondersteuning"
+
+' Interacties met externe systemen
+TripTopWebapplicatie .[#707070,thickness=2].> BookingAPI : "<color:#707070>Boekt verblijfplaatsen"
+TripTopWebapplicatie .[#707070,thickness=2].> GetYourGuideAPI : "<color:#707070>Boekt excursies en activiteiten"
+TripTopWebapplicatie .[#707070,thickness=2].> GoogleMapsAPI : "<color:#707070>Plant routes en navigatie"
+TripTopWebapplicatie .[#707070,thickness=2].> MollieAPI : "<color:#707070>Verwerkt betalingen"
+TripTopWebapplicatie .[#707070,thickness=2].> NSAPI : "<color:#707070>Boekt treintickets"
+TripTopWebapplicatie .[#707070,thickness=2].> RentalCarAPI : "<color:#707070>Boekt huurauto’s"
+
+LAYOUT_WITH_LEGEND()
+@enduml
