@@ -13,6 +13,8 @@ Person(reisagent, "Reisagent", "Biedt ondersteuning en advies")
 System_Boundary(triptop, "Triptop Systeem") {
     Container(frontend, "Frontend", "React", "Biedt een gebruikersinterface voor klanten")
     Container(backend, "Backend", "Java", "Online platform voor reisplanning")
+    Container(bookings, "Booking Service", "Java", "Plaatst boekingen van de gebruiker op Booking.com")
+    Container(login, "Login Service", "Java", "Handelt het inloggen van de gebruiker af")
     ContainerDb(database, "Database", "SQL", "Slaat reisgegevens en boekingen op")
 }
 
@@ -24,8 +26,10 @@ Rel(reiziger, frontend, "Stelt reis samen, boekt, past aan of annuleert")
 Rel(reisagent, frontend, "Biedt advies en ondersteuning")
 Rel(frontend, backend, "Maakt API-verzoeken")
 Rel(backend, database, "Leest/schrijft reisgegevens en boekingen")
-Rel(backend, bookingAPI, "Boekt verblijfplaatsen")
+Rel(bookings, bookingAPI, "Boekt verblijfplaatsen")
 Rel(backend, MapsAPI, "Plant routes en navigatie")
-Rel(backend, identityProviderAPI, "Beheert authenticatie en autorisatie")
+Rel(login, identityProviderAPI, "Beheert authenticatie en autorisatie")
+Rel(backend, bookings, "Plaatst boekingen via")
+Rel(backend, login, "Autoriseert gebruikers via")
 
 @enduml
