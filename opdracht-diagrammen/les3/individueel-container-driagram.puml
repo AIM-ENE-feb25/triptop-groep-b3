@@ -5,7 +5,7 @@
 
 LAYOUT_WITH_LEGEND()
 
-title Context diagram voor het Triptop reis systeem
+title Container diagram voor het Triptop reis systeem
 
 Person(reiziger, "Reiziger", "Stelt zijn reis zelf samen")
 Person(reisagent, "Reisagent", "Biedt ondersteuning en advies")
