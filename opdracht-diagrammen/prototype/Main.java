@@ -1,5 +1,9 @@
+import java.net.http.*;
+import java.net.URI;
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         // booking.com api call prototype
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://booking-com15.p.rapidapi.com/api/v1/attraction/getAttractionReviews?id=PR6K7ZswbGBs&page=1"))

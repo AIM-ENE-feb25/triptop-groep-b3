@@ -11,7 +11,7 @@ Person(reiziger, "Reiziger", "Stelt zijn reis zelf samen")
 Person(reisagent, "Reisagent", "Biedt ondersteuning en advies")
 
 System_Boundary(triptop, "Triptop Systeem") {
-    Container(frontend, "Frontend", "React", "Biedt een gebruikersinterface voor klanten")
+    Container(frontend, "Frontend", "React","Biedt een gebruikersinterface voor klanten")
     Container(backend, "Backend", "Java", "Online platform voor reisplanning")
     Container(bookings, "Booking Service", "Java", "Plaatst boekingen van de gebruiker op Booking.com")
     Container(login, "Login Service", "Java", "Handelt het inloggen van de gebruiker af")
