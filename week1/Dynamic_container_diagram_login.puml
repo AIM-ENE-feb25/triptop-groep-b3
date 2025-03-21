@@ -1,0 +1,23 @@
+@startuml
+set separator none
+title Dynamisch Container Diagram - Inloggen
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(user, "Gebruiker")
+
+Container(Frontend, "Frontend")
+Container(Backend, "Backend")
+ContainerDb(Database, "Database")
+
+Rel_R(user, Frontend, "1. De gebruiker logt in", "HTTPS")
+Rel_R(Frontend, Backend, "2. De frontend vraagt om authenticatie via", "JSON")
+Rel_R(Backend, Database, "3. De backend verifieert de gegevens in de", "SQL")
+Rel_R(Database, Backend, "4. De database bevestigt dat de gegevens correct zijn", "SQL")
+Rel_R(Backend, Frontend, "5. De backend stuurt een succesvolle login response terug naar de", "JSON")
+Rel_R(Frontend, user, "6. De gebruiker wordt ingelogd", "JSON")
+
+SHOW_LEGEND(true)
+@enduml
