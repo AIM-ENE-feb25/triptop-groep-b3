@@ -1,4 +1,4 @@
-# 1. Using the google maps API for fetching location data
+# 1. Using the Google Maps API for fetching location data
 
 Date: 2025-03-20
 
@@ -9,7 +9,9 @@ Accepted
 We need an API to fetch data to places, directions and location services.
 
 ## Decision
-We will use the Google Maps external API. 
+We will use the Google Maps external API because of:
+Comprehensive data
+Accurate locations
 
 ## Consequences
 #### Pros:
