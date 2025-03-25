@@ -1,0 +1,55 @@
+@startuml
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/react.puml
+!include FONTAWESOME/users.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+
+
+LAYOUT_WITH_LEGEND()
+
+title Frontend Component Diagram - Triptop
+
+Person(reiziger, "Reiziger", "Stelt zelf de reis samen", $sprite="users")
+Person(reisagent, "Reisagent", "Tweedelijns support", $sprite="users")
+
+Container(backend, "Backend", "Java, Spring Boot", $sprite="java")
+Container_Ext(google_maps, "Google Maps API", "Externe service voor kaarten", $sprite="map-marked-alt")
+Component(database, "Database", "MS-SQL Server", $sprite="msql_server")
+System_Boundary(Triptop, "Frontend van Triptop Systeem") {
+
+    Container(app, "App", "React Component", "Gateway voor componenten", $sprite="react")
+
+    Component(tripplanner, "TripPlanner", "React Component", "Gebruiker plant een reis")
+    Component(booking, "Booking", "React Component", "Afhandelen van boekingen")
+    Component(googleMaps, "GoogleMaps", "React Component", "Toont kaarten en routes met Google Maps")
+    Component(vluchtoverzicht, "VluchtOverzicht", "React Component", Toont overzicht van beschikbare vluchten")
+    Component(vlucht, "Vlucht", "React Component", "Beschikbare vluchten")
+    Component(login, "Login", "React Component", "Inlogscherm voor gebruiker")
+    Component(auto, "Auto", "React Component", "lijst met auto's")
+    Component(huurauto, "Huur auto's overzicht", "React Component", "Beschikbare auto's")
+
+}
+
+Rel(reiziger, app, "Navigeert door de app")
+Rel(app, tripplanner, "navigeert")
+Rel(tripplanner, booking, "maakt gebruik van")
+Rel(app, googleMaps, "Toont kaartweergave")
+Rel(app, login, "navigeert")
+Rel(reisagent, app, "Gebruikt")
+Rel(app, vluchtoverzicht, "navigeert")
+Rel(vluchtoverzicht, vlucht, "maakt gebruik van")
+Rel(vlucht, backend, "Haalt vluchten op", "HTTP/JSON")
+Rel(app, huurauto, "navigeert")
+Rel(huurauto, auto, "maakt gebruik van")
+Rel(auto, backend, "haalt auto's op", "HTTP/JSON")
+Rel(login, backend, "Controleer inloggegevens")
+Rel(googleMaps, google_maps, "Vraagt kaarten en routes op", "HTTP/JSON")
+Rel(booking, database, "")
+
+@enduml

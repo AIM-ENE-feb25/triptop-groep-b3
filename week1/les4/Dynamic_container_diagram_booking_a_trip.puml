@@ -15,7 +15,7 @@ title Dynamisch Container Diagram - Reis Boeken
 
 Person(user, "Gebruiker", $sprite="users")
 
-Container(Frontend, "Frontend", $sprite="users")
+Container(Frontend, "Frontend", $sprite="react")
 Container(Backend, "Backend", $sprite="java")
 ContainerDb(Database, "Database", $sprite="msql_server")
 

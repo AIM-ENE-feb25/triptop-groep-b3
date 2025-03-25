@@ -6,11 +6,19 @@ title Dynamisch Container Diagram - Inloggen
 !include <C4/C4_Context>
 !include <C4/C4_Container>
 
-Person(user, "Gebruiker")
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
 
-Container(Frontend, "Frontend")
-Container(Backend, "Backend")
-ContainerDb(Database, "Database")
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/react.puml
+
+Person(user, "Gebruiker", $sprite="users")
+
+Container(Frontend, "Frontend", $sprite="react")
+Container(Backend, "Backend", $sprite="java")
+ContainerDb(Database, "Database", $sprite="msql_server")
 
 Rel_R(user, Frontend, "1. De gebruiker logt in", "HTTPS")
 Rel_R(Frontend, Backend, "2. De frontend vraagt om authenticatie via", "JSON")
