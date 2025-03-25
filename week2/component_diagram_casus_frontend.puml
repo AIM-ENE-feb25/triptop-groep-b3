@@ -20,10 +20,11 @@ Person(reisagent, "Reisagent", "Tweedelijns support", $sprite="users")
 
 Container(backend, "Backend", "Java, Spring Boot", $sprite="java")
 Container_Ext(google_maps, "Google Maps API", "Externe service voor kaarten", $sprite="map-marked-alt")
-Component(database, "Database", "MS-SQL Server", $sprite="msql_server")
+Container(database, "Database", "MS-SQL Server", $sprite="msql_server")
+
 System_Boundary(Triptop, "Frontend van Triptop Systeem") {
 
-    Container(app, "App", "React Component", "Gateway voor componenten", $sprite="react")
+    Component(app, "App", "React Component", "Gateway voor componenten", $sprite="react")
 
     Component(tripplanner, "TripPlanner", "React Component", "Gebruiker plant een reis")
     Component(booking, "Booking", "React Component", "Afhandelen van boekingen")
