@@ -6,31 +6,31 @@
 LAYOUT_LEFT_RIGHT()
 
 title C4 Component Diagram - Expense System
-
-Person(user, "User", "Gebruiker die uitgaven wil beheren")
+Container(system, "Webapplicatie", "Frontend webapplicatie")
 
 System_Boundary(ExpenseSystem, "Expense System") {
 
-  Container(Controllers, "Controllers", "Spring Boot", "Behandelt binnenkomende HTTP-verzoeken\n- AuthorizationController\n- ExpenseController")
-  Container(Services, "Services", "Spring Boot", "Bevat de businesslogica\n- IAuthorizationService / AuthorizationService\n- IExpenseService / ExpenseService")
-  Container(Repositories, "Repositories", "Spring Boot", "Data access-laag\n- IUserRepository / UserRepository\n- IExpenseRepository / ExpenseRepository")
-  Container(Security, "Authentication & Security", "Spring Boot", "Afhandelen van authenticatie en beveiliging\n- ForbiddenAuthenticationEntryPoint\n- SecurityConfig\n- SessionFilter")
-  Container(Config, "Config", "Spring Boot", "Configuratie en databaseinstellingen\n- DBConfig")
-  Container(Domain, "Domain Model", "Java Classes", "Domeinobjecten:\n- Cookie\n- Expense\n- Login\n- SessionCookie")
-  Container(DTOs, "DTOs", "Java Classes", "Data Transfer Objects:\n- SessionDto\n- UserDto")
-  Container(Exceptions, "Exceptions", "Spring Boot", "Foutafhandeling:\n- InvalidExpenseException\n- InvalidExpenseExceptionHandler")
+  Container(authenticationC, "Authentication Controller", "RestController", "handelt authenticatie af")
+  Container(expenseC, "Expense Controller", "RestController", "haalt kosten op of voegt kosten toe")
+  Container(expenseS, "Expense Service", "Service", "")
+  Container(authenticationS, "Authentication Service", "Service", "")
+  Container(expenseR, "Expense Repository", "Repository", "slaat kosten op")
+  Container(userR, "User Repository", "Repository", "slaat gebruikers op")
+  Container(sessionR, "Session Repository", "Repository", "slaat sessions op")
 
 }
+  ContainerDb(database, "Database", "H2 Sql", "Database voor het opslaan van kosten")
 
-Rel(user, Controllers, "Verstuurt verzoeken (HTTP)")
-Rel(Controllers, Services, "Gebruikt")
-Rel(Services, Repositories, "Haalt / slaat data op via")
-Rel(Controllers, Security, "Gaat door security filters")
-Rel(Security, Controllers, "Beveiligt endpoints")
-Rel(Config, Repositories, "Biedt DB-configuratie aan")
-Rel(Services, Domain, "Gebruikt domeinobjecten")
-Rel(Controllers, DTOs, "Maakt gebruik van DTO's voor input/output")
-Rel(Controllers, Exceptions, "Maakt gebruik van foutafhandeling")
-Rel(Services, Exceptions, "Maakt gebruik van foutafhandeling")
+Rel(system, expenseC, "Verstuurt verzoeken (HTTP)")
+Rel(system, authenticationC, "Verstuurt verzoeken (HTTP)")
+Rel(authenticationC, authenticationS, "Gebruikt")
+Rel(expenseC, expenseS, "Gebruikt")
+Rel(expenseC, authenticationS, "Authoriseert via")
+Rel(expenseS, expenseR, "Gebruikt")
+Rel(authenticationS, userR, "Gebruikt")
+Rel(authenticationS, sessionR, "Gebruikt")
+Rel(userR, database, "Leest/schrijft")
+Rel(sessionR, database, "Leest/schrijft")
+Rel(expenseR, database, "Leest/schrijft")
 
 @enduml
