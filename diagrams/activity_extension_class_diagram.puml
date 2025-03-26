@@ -24,21 +24,21 @@ class ProviderRegistry {
 }
 
 ' Adapters
-class TripAdvisorAdapter implements IActivityProviderPort {
+class TripAdvisorAdapter {
   -apiClient: TripAdvisorClient
   +getAvailableActivities(): List<Activity>
   +bookActivity(): Booking
   +getSupportedActivityTypes(): List<ActivityType>
 }
 
-class BookingAdapter implements IActivityProviderPort {
+class BookingAdapter {
   -apiClient: BookingClient
   +getAvailableActivities(): List<Activity>
   +bookActivity(): Booking
   +getSupportedActivityTypes(): List<ActivityType>
 }
 
-class GoogleMapsAdapter implements IActivityProviderPort {
+class GoogleMapsAdapter {
   -apiClient: GoogleMapsClient
   +getAvailableActivities(): List<Activity>
   +bookActivity(): Booking
@@ -66,16 +66,24 @@ class Booking {
 }
 
 ' Relationships
-ActivityService --> ProviderRegistry: gebruikt
-ActivityService --> IActivityProviderPort: gebruikt
-ProviderRegistry o--> "many" IActivityProviderPort: beheert
+ActivityService --> ProviderRegistry
+ActivityService --> IActivityProviderPort
+ProviderRegistry --> IActivityProviderPort
 
-Activity --> ActivityType: heeft type
+IActivityProviderPort <|.. TripAdvisorAdapter
+IActivityProviderPort <|.. BookingAdapter
+IActivityProviderPort <|.. GoogleMapsAdapter
 
-' Connection to external APIs
-TripAdvisorAdapter ..> "TripAdvisor API": gebruikt
-BookingAdapter ..> "Booking.com API": gebruikt
-GoogleMapsAdapter ..> "Google Maps API": gebruikt
+Activity --> ActivityType
+
+' External systems
+class "TripAdvisor API" as TripAdvisorAPI << External System >>
+class "Booking.com API" as BookingAPI << External System >>
+class "Google Maps API" as GoogleMapsAPI << External System >>
+
+TripAdvisorAdapter --> TripAdvisorAPI
+BookingAdapter --> BookingAPI
+GoogleMapsAdapter --> GoogleMapsAPI
 
 ' Note about extension mechanism
 note bottom of IActivityProviderPort
