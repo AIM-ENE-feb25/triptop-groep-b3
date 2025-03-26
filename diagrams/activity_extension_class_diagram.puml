@@ -1,0 +1,86 @@
+@startuml "Class Diagram voor Activity Extension in Triptop"
+
+title "Class Diagram: Uitbreiding met nieuwe activiteitstypes"
+
+' Primary interface
+interface IActivityProviderPort {
+  +getAvailableActivities(location, dateRange): List<Activity>
+  +bookActivity(activityId, participants): Booking
+  +getSupportedActivityTypes(): List<ActivityType>
+}
+
+' Core service
+class ActivityService {
+  -providerRegistry: ProviderRegistry
+  +searchActivities(location, dateRange, preferences): List<Activity>
+  +bookActivity(activityId, participants): Booking
+}
+
+' Registry
+class ProviderRegistry {
+  -providers: Map<ActivityType, List<IActivityProviderPort>>
+  +registerProvider(provider: IActivityProviderPort): void
+  +getProvidersForType(type: ActivityType): List<IActivityProviderPort>
+}
+
+' Adapters
+class TripAdvisorAdapter implements IActivityProviderPort {
+  -apiClient: TripAdvisorClient
+  +getAvailableActivities(): List<Activity>
+  +bookActivity(): Booking
+  +getSupportedActivityTypes(): List<ActivityType>
+}
+
+class BookingAdapter implements IActivityProviderPort {
+  -apiClient: BookingClient
+  +getAvailableActivities(): List<Activity>
+  +bookActivity(): Booking
+  +getSupportedActivityTypes(): List<ActivityType>
+}
+
+class GoogleMapsAdapter implements IActivityProviderPort {
+  -apiClient: GoogleMapsClient
+  +getAvailableActivities(): List<Activity>
+  +bookActivity(): Booking
+  +getSupportedActivityTypes(): List<ActivityType>
+}
+
+' Domain models
+enum ActivityType {
+  EXCURSIE
+  OVERNACHTING
+  VERVOER
+}
+
+class Activity {
+  -id: String
+  -name: String
+  -location: String
+  -type: ActivityType
+}
+
+class Booking {
+  -id: String
+  -activityId: String
+  -status: String
+}
+
+' Relationships
+ActivityService --> ProviderRegistry: gebruikt
+ActivityService --> IActivityProviderPort: gebruikt
+ProviderRegistry o--> "many" IActivityProviderPort: beheert
+
+Activity --> ActivityType: heeft type
+
+' Connection to external APIs
+TripAdvisorAdapter ..> "TripAdvisor API": gebruikt
+BookingAdapter ..> "Booking.com API": gebruikt
+GoogleMapsAdapter ..> "Google Maps API": gebruikt
+
+' Note about extension mechanism
+note bottom of IActivityProviderPort
+  Uitbreidingspunt: Nieuwe providers worden 
+  toegevoegd door deze interface te implementeren
+end note
+
+@enduml 
