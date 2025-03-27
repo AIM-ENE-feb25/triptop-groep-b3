@@ -5,16 +5,14 @@
 
 LAYOUT_WITH_LEGEND()
 
-title Container diagram voor het Triptop reis systeem
+title Container diagram van Triptop
 
-Person(reiziger, "Reiziger", "Stelt zijn reis zelf samen")
-Person(reisagent, "Reisagent", "Biedt ondersteuning en advies")
+Person(reiziger, "Reiziger\n[persoon]", "Klant van Triptop")
+Person(reisagent, "Reisagent\n[persoon]", "Medewerker van Triptop")
 
 System_Boundary(triptop, "Triptop Systeem") {
     Container(frontend, "Frontend", "React","Biedt een gebruikersinterface voor klanten")
     Container(backend, "Backend", "Java", "Online platform voor reisplanning")
-    Container(bookings, "Booking Service", "Java", "Plaatst boekingen van de gebruiker op Booking.com")
-    Container(login, "Login Service", "Java", "Handelt het inloggen van de gebruiker af")
     ContainerDb(database, "Database", "SQL", "Slaat reisgegevens en boekingen op")
 }
 
@@ -25,14 +23,12 @@ System_Ext(tripAdvisor, "Trip advisor API", "Reviews van boekingen")
 
 Rel(reiziger, frontend, "Stelt reis samen, boekt, past aan of annuleert")
 Rel(reisagent, frontend, "Biedt advies en ondersteuning")
-Rel(frontend, backend, "Maakt API-verzoeken")
-Rel(backend, database, "Leest/schrijft reisgegevens en boekingen")
-Rel(bookings, bookingAPI, "Boekt verblijfplaatsen")
-Rel(frontend, MapsAPI, "Toont locatie via")
-Rel(bookings, MapsAPI, "Maakt API-verzoeken")
-Rel(login, identityProviderAPI, "Beheert authenticatie en autorisatie")
-Rel(backend, bookings, "Plaatst boekingen via")
-Rel(backend, login, "Autoriseert gebruikers via")
-Rel(bookings, tripAdvisor, "Haalt reviews op via")
+Rel(frontend, backend, "Maakt API-verzoeken", "HTTP/JSON")
+Rel(backend, database, "Leest/schrijft reisgegevens en boekingen", "TCP/IP/SQL")
+Rel(backend, bookingAPI, "Boekt verblijfplaatsen", "HTTP/JSON")
+Rel(frontend, MapsAPI, "Toont locatie via", "HTTP/JSON")
+Rel(backend, MapsAPI, "Maakt API-verzoeken", "HTTP/JSON")
+Rel(backend, identityProviderAPI, "Beheert authenticatie en autorisatie", "HTTP/JSON")
+Rel(backend, tripAdvisor, "Haalt reviews op via", "HTTP/JSON")
 
 @enduml
