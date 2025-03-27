@@ -33,13 +33,6 @@ Container_Boundary(booking_service, "Boekings Service") {
     Component(booking_validator, "Beschikbaarheidsvalidator", "Spring Boot", "Controleert beschikbaarheid van bouwstenen")
 }
 
-' Payment Service Container
-Container_Boundary(payment_service, "Betaal Service") {
-    Component(payment_processor, "Payment Processor", "Spring Boot", "Verwerkt betalingen")
-    Component(payment_provider_adapter, "Payment Provider Adapter", "Spring Boot", "Integreert met betalingsproviders")
-    Component(invoice_generator, "Factuur Generator", "Spring Boot, PDF", "Genereert facturen")
-}
-
 ' Databases
 ContainerDb(user_db, "Gebruikers Database", "PostgreSQL", "Slaat gebruikersgegevens op")
 ContainerDb(trip_db, "Trip Database", "MongoDB", "Slaat reisplannen op")
@@ -48,10 +41,8 @@ ContainerDb(booking_db, "Boekingen Database", "PostgreSQL", "Slaat boekingsgegev
 ' Externe systemen
 System_Ext(booking_api, "Booking.com API", "API voor accommodaties")
 System_Ext(maps_api, "Google Maps API", "API voor routes")
-System_Ext(excursion_api, "GetYourGuide API", "API voor excursies")
-System_Ext(transport_api, "NS/Transport API", "API voor vervoer")
+System_Ext(excursion_api, "TripAdvisor API", "API voor excursies")
 System_Ext(identity_provider, "Identity Provider", "Externe auth provider")
-System_Ext(payment_gateway, "Mollie API", "Betaal gateway")
 
 ' Frontend
 Container(web_application, "Web Applicatie", "React", "Frontend van het systeem")
@@ -60,7 +51,6 @@ Container(web_application, "Web Applicatie", "React", "Frontend van het systeem"
 Rel(api_gateway, auth_service, "Routeert auth verzoeken naar", "JSON/HTTPS")
 Rel(api_gateway, trip_service, "Routeert trip verzoeken naar", "JSON/HTTPS")
 Rel(api_gateway, booking_service, "Routeert boekingsverzoeken naar", "JSON/HTTPS")
-Rel(api_gateway, payment_service, "Routeert betalingsverzoeken naar", "JSON/HTTPS")
 Rel(web_application, api_gateway, "Communiceert met", "JSON/HTTPS")
 
 ' Interne Auth Service relaties
@@ -79,10 +69,5 @@ Rel(booking_manager, booking_db, "Leest/schrijft naar")
 Rel(provider_adapter, booking_api, "Boekt accommodaties via", "REST/HTTPS")
 Rel(provider_adapter, excursion_api, "Boekt excursies via", "REST/HTTPS")
 Rel(provider_adapter, transport_api, "Boekt transport via", "REST/HTTPS")
-
-' Interne Payment Service relaties
-Rel(payment_processor, payment_provider_adapter, "Verwerkt betalingen via")
-Rel(payment_provider_adapter, payment_gateway, "Communiceert met", "REST/HTTPS")
-Rel(payment_processor, invoice_generator, "Genereert facturen via")
 
 @enduml 
