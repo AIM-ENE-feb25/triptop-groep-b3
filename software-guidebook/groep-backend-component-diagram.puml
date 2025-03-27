@@ -2,30 +2,63 @@
 !include <C4/C4>
 !include <C4/C4_Context>
 !include <C4/C4_Container>
+!include <C4/C4_Component>
 
-' gekozen ontwerpvraag:
-' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
+LAYOUT_WITH_LEGEND()
+
+title Component diagram voor de backend container van Triptop systeem
 
 Container(website, "Frontend", "React", "De frontend waar de gebruiker interacties via een user interface maakt")
 
 System_Boundary(triptop, "Triptop System") {
-    Container(bookingC, "Booking Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van de boekingen van de gebruiker")
-    Container(bookingS, "Booking Service", "Java Springboot, Service", "De service die met de api en repository praat om boekingen te plaatsen")
-    Container(bookingSA, "Booking API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Booking.com API en de Booking service")
-    Container(bookingSAImpl, "Booking API Adapter Implementation", "Java Springboot, Service", "De implementatie van de Booking API Adapter")
-    Container(bookingR, "Booking Repository", "Java Springboot, Repository", "De connectie tussen de database en de service voor het opslaan van boekingen")
-}
+    Component(bookingC, "Booking Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van de boekingen van de gebruiker")
+    Component(bookingS, "Booking Service", "Java Springboot, Service", "De service die met de api en repository praat om boekingen te plaatsen")
+    Component(bookingSA, "Booking API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Booking.com en TripAdvisor API en de Booking service")
+    Component(bookingSAImpl, "Booking API Adapter Implementation", "Java Springboot, Service", "De implementatie van de Booking API Adapter")
+    Component(bookingR, "Booking Repository", "Java Springboot, Repository", "De connectie tussen de database en de service voor het opslaan van boekingen")
+    
+    Component(mapsC, "Maps Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van kaart en locatie verzoeken")
+    Component(mapsS, "Maps Service", "Java Springboot, Service", "De service die met de Google Maps API communiceert")
+    Component(mapsA, "Maps API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Google Maps API en de Maps service")
+    Component(mapsAImpl, "Maps API Adapter Implementation", "Java Springboot, Service", "De implementatie van de Maps API Adapter")
+    
+    Component(authC, "Auth Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van authenticatie verzoeken")
+    Component(authS, "Auth Service", "Java Springboot, Service", "De service die OAuth authenticatie afhandelt")
+    Component(authA, "Auth API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Identity Provider API en de Auth service")
+    Component(authAImpl, "Auth API Adapter Implementation", "Java Springboot, Service", "De implementatie van de Auth API Adapter")
+    Component(authR, "User Repository", "Java Springboot, Repository", "De connectie tussen de database en de service voor het opslaan van gebruikersgegevens")
+} 
 
-ContainerDb(database, "Postgres database", "PostgresSql", "Voor het opslaan en ophalen van data")
+ContainerDb(database, "Postgres database", "PostgresSQL", "Voor het opslaan en ophalen van data")
 
-System_Ext(bookingApi, "Booking.Com API", "Zorgt voor het ophalen van hotels/resorts en maken van boekingen")
+System_Ext(bookingApi, "Booking.com API", "Zorgt voor het ophalen van hotels/resorts en maken van boekingen")
+System_Ext(mapsApi, "Google Maps API", "Zorgt voor kaarten, routes en locatie informatie")
+System_Ext(tripAdvisorApi, "TripAdvisor API", "Zorgt voor het ophalen van reviews van accommodaties")
+System_Ext(identityProviderApi, "Identity Provider API", "Zorgt voor authenticatie en autorisatie via OAuth 2.0")
 
-website --> bookingC : "gebruikers interactie"
-bookingC --> bookingS : ""
-bookingS --> bookingSA : "maken en ophalen van boekingen"
-bookingSA --> bookingSAImpl : "vervormen van boekingen naar 1 constant data model"
-bookingSAImpl --> bookingApi : "maken en ophalen van boekingen"
-bookingS --> bookingR : "Opslaan en ophalen van boekingen"
-bookingR --> database : "Opslaan en ophalen van data"
+Rel(website, bookingC, "gebruikers interactie", "HTTP/JSON")
+Rel(bookingC, bookingS, "verwerkt verzoeken")
+Rel(bookingS, bookingSA, "maken en ophalen van boekingen")
+Rel(bookingSA, bookingSAImpl, "vervormen van boekingen naar 1 constant data model")
+Rel(bookingSAImpl, bookingApi, "maken en ophalen van boekingen", "HTTP/JSON")
+Rel(bookingSAImpl, tripAdvisorApi, "maken en ophalen van reviews", "HTTP/JSON")
+Rel(bookingS, bookingR, "Opslaan en ophalen van boekingen")
+Rel(bookingR, database, "Opslaan en ophalen van data", "TCP/IP/SQL")
+
+Rel(website, mapsC, "kaart en locatie verzoeken", "HTTP/JSON")
+Rel(mapsC, mapsS, "verwerkt verzoeken")
+Rel(mapsS, mapsA, "ophalen van kaarten en routes")
+Rel(mapsA, mapsAImpl, "vervormen van locatie data naar 1 constant data model")
+Rel(mapsAImpl, mapsApi, "ophalen van kaarten en routes", "HTTP/JSON")
+
+Rel(website, authC, "authenticatie verzoeken", "HTTP/JSON")
+Rel(authC, authS, "verwerkt authenticatie")
+Rel(authS, authA, "OAuth authenticatie")
+Rel(authA, authAImpl, "vervormen van authenticatie data naar 1 constant data model")
+Rel(authAImpl, identityProviderApi, "authenticatie via OAuth 2.0", "HTTP/JSON")
+Rel(authS, authR, "Opslaan en ophalen van gebruikersgegevens")
+Rel(authR, database, "Opslaan en ophalen van data", "TCP/IP/SQL")
+Rel(bookingC, authS, "verifieert authenticatie")
+Rel(mapsC, authS, "verifieert authenticatie")
 
 @enduml
