@@ -119,10 +119,7 @@ De TripTop applicatie heeft Google Maps functionaliteit nodig voor locaties en r
 
 #### Decision
 
-Hybride aanpak:
-1. Visuele kaarten direct via frontend (Google Maps JavaScript API)
-2. Gevoelige operaties (routes, geocoding) via backend
-3. Backend implementeert caching
+We kiezen voor een hybride aanpak waarbij we het beste van twee werelden combineren. Visuele kaarten worden direct via de frontend geladen met de Google Maps JavaScript API, wat zorgt voor een snelle en interactieve gebruikerservaring. Tegelijkertijd worden alle gevoelige operaties zoals routeberekeningen en geocoding veilig via de backend afgehandeld. Om de prestaties te optimaliseren, implementeert de backend een slim cachingsysteem dat veelgebruikte routes en locatiegegevens bewaart voor hergebruik.
 
 #### Consequences
 
@@ -159,21 +156,11 @@ TripTop moet verschillende identity providers integreren (Google, Microsoft, Air
 
 #### Decision
 
-Implementeer het OAuth 2.0 protocol met het Adapter Pattern:
+Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het OAuth 2.0 protocol en het Adapter Pattern. We centraliseren alle authenticatie in de Login Service container, waar een generieke interface als brug fungeert tussen onze applicatie en de diverse identity providers. 
 
-1. Centraliseer authenticatie in de Login Service container
-2. Creëer een generieke `IdentityProviderInterface`
-3. Implementeer concrete adapter-klassen voor elke provider (GoogleAuthAdapter, MicrosoftAuthAdapter, etc.)
-4. Voeg een factory toe die de juiste adapter instantieert op basis van gebruikerskeuze
+Voor elke provider, zoals Google, Microsoft en AirBnB, ontwikkelen we een specifieke adapter die de unieke eigenschappen van die provider vertaalt naar onze standaard interface. Een slimme factory bepaalt vervolgens welke adapter nodig is, gebaseerd op de keuze van de gebruiker.
 
-```java
-public interface IdentityProviderInterface {
-    AuthToken authenticateUser(String authCode);
-    UserProfile getUserProfile(AuthToken token);
-    boolean validateToken(AuthToken token);
-    void revokeAccess(AuthToken token);
-}
-```
+Het hart van deze oplossing is onze `IdentityProviderInterface`, die alle essentiële authenticatiefuncties definieert:
 
 #### Consequences
 
@@ -186,35 +173,44 @@ De abstractielaag voegt complexiteit toe en verschillende providers ondersteunen
 ##### Actiepunten
 We implementeren de OAuth 2.0 flow en ontwikkelen provider adapters voor diverse identity providers. We creëren een gebruikersinterface voor providerkeuze en implementeren een token-validatie/refreshing mechanisme voor optimale beveiliging.
 
-### 8.3. ADR-003 TITLE
+### 8.3. ADR-003 Implementatie van Factory Pattern voor Reisbouwstenen
 
-> [!TIP]
-> These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
-
-#### Context
-
-> [!TIP]
-> This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts about the problem we're facing and points out factors to take into account or to weigh when making the final decision.
-
-#### Considered Options
-
-> [!TIP]
-> This section describes the options that were considered, and gives some indication as to why the chosen option was selected.
-
-#### Decision
-
-> [!TIP]
-> This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
+Datum: 2025-03-27
 
 #### Status
 
-> [!TIP]
-> A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
+Proposed
+
+#### Context
+
+TripTop biedt gebruikers de mogelijkheid om reizen samen te stellen uit verschillende "bouwstenen" zoals vluchten, accommodaties en activiteiten. Deze componenten moeten flexibel uitbreidbaar zijn zonder bestaande code aan te passen. We moeten een patroon kiezen dat het mogelijk maakt om nieuwe providers en bouwsteentypes toe te voegen terwijl de applicatie onafhankelijk blijft van specifieke implementaties.
+
+#### Considered Options
+
+| Criteria | State Pattern | Strategy Pattern | Adapter Pattern | Facade Pattern | Factory Method Pattern |
+|----------|--------------|-----------------|----------------|---------------|------------------------|
+| Flexibiliteit | + | ++ | + | - | ++ |
+| Ontkoppeling | + | + | ++ | - | ++ |
+| Uitbreidbaarheid | + | + | + | - | ++ |
+| Eenvoud implementatie | - | + | - | ++ | + |
+| Toekomstbestendigheid | + | + | + | - | ++ |
+
+#### Decision
+
+We implementeren het Factory Method Pattern voor onze reisbouwstenen. We creëren een abstracte `TravelComponentCreator` klasse met factory methods voor de verschillende soorten componenten. Voor elke categorie (Accommodatie, Transport, Activiteit) ontwikkelen we concrete factory subklassen die de juiste implementaties instantiëren op basis van parameters als prijsklasse of locatie.
+
+De client code werkt alleen met abstracte interfaces, waardoor we flexibel blijven in welke concrete implementaties we gebruiken. Dit zorgt voor een systeem dat eenvoudig kan worden uitgebreid zonder bestaande code aan te passen.
 
 #### Consequences
 
-> [!TIP]
-> This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
+##### Positief
+Het Factory Method Pattern zorgt voor een duidelijke scheiding tussen creatie en gebruik van reisbouwstenen. Nieuwe providers en types kunnen worden toegevoegd zonder bestaande code te wijzigen. Het systeem wordt beter testbaar doordat we makkelijker mock-implementaties kunnen injecteren.
+
+##### Negatief
+Het patroon introduceert extra klassen en interfaces, wat de initiële complexiteit verhoogt. Dit kan voor beginnende ontwikkelaars een leercurve betekenen en de ontwikkeltijd verlengen in vergelijking met directe, minder flexibele implementaties.
+
+##### Actiepunten
+We definiëren kerninterfaces voor reisbouwstenen en factories, creëren een consistente naamgeving, en ondersteunen de implementatie met unit tests. We documenteren het patroon grondig voor toekomstige ontwikkelaars.
 
 ### 8.4. ADR-004 TITLE
 
