@@ -1,0 +1,53 @@
+@startuml Frontend Component Diagram for TripTop
+
+!include <C4/C4>
+!include <C4/C4_Component>
+
+LAYOUT_WITH_LEGEND()
+
+title Component diagram voor de frontend container van Triptop systeem
+
+Container_Boundary(web_app, "Frontend van Triptop Systeem") {
+    Component(app_shell, "App", "React, JavaScript", "Hoofdcomponent die routing en layout beheert")
+    
+    Component(auth_module, "Authenticatie Module", "React, OAuth Client", "Handelt authenticatie af en beheert gebruikerssessies")
+    
+    Component(trip_planner, "Trip Planner", "React, JavaScript", "Stelt gebruikers in staat om reizen samen te stellen")
+    
+    Component(booking_module, "Boekings Module", "React, JavaScript", "Beheert het boekingsproces voor bouwstenen")
+
+    Component(user_dashboard, "Gebruikers Dashboard", "React, JavaScript", "Toont geboekte reizen en accountinformatie")
+    
+    Component(map_component, "Kaart Component", "React, Google Maps API", "Toont interactieve kaarten en routes")
+    
+    Component(notification_system, "Notificatie Systeem", "React, JavaScript", "Toont berichten en waarschuwingen aan gebruikers")
+    
+    Component(api_client, "API Client", "Axios/Fetch", "Centraal punt voor alle API-communicatie met de backend")
+}
+
+System(api_gateway, "API Gateway", "Centrale gateway voor alle backend services")
+System_Ext(google_maps_api, "Google Maps API", "API voor Google Maps")
+
+Person(reiziger, "Reiziger", "Klant van Triptop")
+Person(reisagent, "Reisagent", "Medewerker van Triptop")
+
+' Interne relaties
+Rel(app_shell, auth_module, "Gebruikt voor authenticatie")
+Rel(app_shell, trip_planner, "Laadt voor reisplanning")
+Rel(app_shell, booking_module, "Laadt voor boekingen")
+Rel(app_shell, user_dashboard, "Laadt voor gebruikersinformatie")
+Rel(app_shell, notification_system, "Toont berichten via")
+
+Rel(trip_planner, map_component, "Gebruikt voor visualisatie van routes")
+Rel(trip_planner, api_client, "Haalt bouwsteen-opties op via")
+Rel(booking_module, api_client, "Boekt bouwstenen via")
+Rel(auth_module, api_client, "Authenticeert via")
+Rel(user_dashboard, api_client, "Haalt gebruikersgegevens op via")
+Rel(map_component, google_maps_api, "Gebruikt voor visualisatie van routes", "HTTP/JSON")
+
+' Externe relaties
+Rel_D(reiziger, app_shell, "Gebruikt")
+Rel_D(reisagent, app_shell, "Gebruikt")
+Rel_D(api_client, api_gateway, "Communiceert met", "HTTP/JSON")
+
+@enduml 
