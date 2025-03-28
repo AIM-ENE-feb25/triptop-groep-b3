@@ -1,0 +1,82 @@
+@startuml
+
+' gekozen ontwerpvraag:
+' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
+
+class BookingController {
+    getBookings() : ResponseEntity<List<BookingDto>>;
+    addBooking(booking: BookingDto);
+}
+
+class BookingService {
+    getAllBookings() : List<BookingDto>;
+    saveBooking(booking: BookingDto);
+}
+
+interface IServiceFacade<T> {
+    getAll() : List<T>;
+    save(booking: T);
+}
+
+class BookingRepository {
+    getAllBookings() : List<BookingDto>;
+    saveBooking(booking: BookingDto);
+    getBookingById(id: int) : BookingDto;
+}
+
+
+class BookingDto {
+    id: int
+    name: String
+    location: String
+}
+
+class BookingAPIDto {
+    name: String
+    location: String
+}
+
+class BookingAPIReviewDto {
+    reviewer: String
+    amount: int
+}
+
+interface ICrudRepositoryFacade<T, TPK> {
+    getAll() : List<T>;
+    save(item: T);
+    getById(id: TPK) : T;
+}
+
+interface IBookingAPIFacade {
+    getAll() : BookingAPIDto;
+    getReviews(booking : BookingAPIDto) : List<BookingAPIReviewDto>;
+}
+
+class BookingAPIFacade {
+    getAll() : BookingAPIDto;
+    getReviews(booking : BookingAPIDto) : List<BookingAPIReviewDto>;
+}
+
+class BookingAPI {
+    getAll() : BookingAPIDto;
+}
+
+class TripAdvisorAPI {
+    getReviews(booking: BookingAPIDto) : List<BookingAPIReviewDto>;
+}
+
+BookingController --> IServiceFacade
+BookingService --|> IServiceFacade
+BookingService --> BookingRepository
+
+BookingRepository --|> ICrudRepositoryFacade
+
+BookingAPIFacade --|> IBookingAPIFacade
+
+BookingService --> IBookingAPIFacade
+
+BookingAPIFacade --> BookingAPI
+BookingAPIFacade --> TripAdvisorAPI
+
+
+@enduml
