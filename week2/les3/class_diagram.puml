@@ -1,0 +1,15 @@
+@startuml
+title Klasse Diagram - Hotels ophalen voor ingelogde gebruiker
+
+interface HotelController {
+    + List<Hotel> getAvailableHotels(String location, LocalDate checkIn, LocalDate checkOut)
+}
+
+interface HotelService {
+    + List<Hotel> findHotels(String location, LocalDate checkIn, LocalDate checkOut)
+}
+
+HotelController ..> HotelService : Uses
+HotelService ..> BookingAPI : Fetches hotel data
+
+@enduml

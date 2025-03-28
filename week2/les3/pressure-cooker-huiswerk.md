@@ -8,12 +8,14 @@ Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
 Het bepalen welk component waarvoor verantwoordelijk is en een naam kiezen die past bij die verantwoordelijkheid
 De uitkomst van deze stap is een lijst van componenten met een naam en een verantwoordelijkheid.
 
-| Component          | Verantwoordelijkheid              |
-|--------------------|-----------------------------------|
-| Kaart              | Ophalen data van kaarten          |
-| BookingService     | Ophalen van Boeking data          |
-| TripAdvisorService | Ophalen van reviews van boekingen |
-| Identity Provider  | Authenticatie via oauth2          |
+| Component         | Verantwoordelijkheid                                            |
+|-------------------|-----------------------------------------------------------------|
+| Login             | Rendert login form voor gebruiker                               |
+| OAuth provider    | Behandelt authenticatie en verstrekt tokens via OAuth2          |
+| HotelController   | Creëert endpoint voor gebruiker om hotelinformatie op te vragen |
+| HotelService      | Behandelt ophalen van hotelgegevens van externe API             |
+| BookingAPI        | Externe API voor het verstrekken van hotelgegevens              |
+| Identity Provider | Authenticatie via oauth2                                        |
 
 ## 2e onderdeel (20 minuten)
 
@@ -26,12 +28,8 @@ AuthToken authenticateUser(String authCode);
 boolean validateToken(AuthToken token);
 }
 
-interface BookingService {
+interface HotelService {
 List<Hotel> findHotels(String location, LocalDate checkIn, LocalDate checkOut);
-}
-
-interface TripAdvisorService {
-List<Review> findReviews(String hotelId);
 }
 ```
 
@@ -40,7 +38,8 @@ List<Review> findReviews(String hotelId);
 Het kiezen van een volgorde van aanroepen waarin de componenten samenwerken (Coupling).
 De uitkomst van deze stap is een dynamic diagram met componenten.
 
-Zie _dynamisch_diagram.puml_
+Zie _dynamic_container_diagram_pressure_cooker_fetch_hotels.puml_
+en _dynamic_container_diagram_pressure_cooker_login.puml_
 
 ## 4e onderdeel (20 minuten)
 
@@ -51,8 +50,11 @@ De uitkomst is een class diagram met classes en functies (het code/class level v
 Zie _class_diagram.puml_
 
 ### Antwoord op ontwerpvraag:
-In de meeste gevallen roept de backend een externe API aan, bijvoorbeeld bij databases of externe services. 
-Soms gebeurt dit echter ook vanuit de frontend, bijvoorbeeld bij het ophalen en weergeven van kaartgegevens via de Google Maps API.  
+
+In de meeste gevallen roept de backend een externe API aan, bijvoorbeeld bij databases of externe services.
+Soms gebeurt dit echter ook vanuit de frontend, bijvoorbeeld bij het ophalen en weergeven van kaartgegevens via de
+Google Maps API.
+
 #### Voordelen:
 
 | Frontend                    | Backend                             |
