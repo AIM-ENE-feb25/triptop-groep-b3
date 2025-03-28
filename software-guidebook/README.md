@@ -220,7 +220,7 @@ We implementeren de OAuth 2.0 flow en ontwikkelen provider adapters voor diverse
 gebruikersinterface voor providerkeuze en implementeren een token-validatie/refreshing mechanisme voor optimale
 beveiliging.
 
-### 8.3. ADR-003 Implementatie van Factory Pattern voor Reisbouwstenen
+### 8.3. ADR-003 Factory keuze
 
 Datum: 2025-03-27
 
@@ -276,9 +276,11 @@ implementatie met unit tests. We documenteren het patroon grondig voor toekomsti
 
 ### 8.4. ADR-004 Facade keuze
 
+Date: 2025-03-27
+
 #### Status
 
-In overweging
+Proposed
 
 #### Context
 
