@@ -2,6 +2,7 @@
 !include <C4/C4>
 !include <C4/C4_Context>
 !include <C4/C4_Container>
+!include <C4/C4_Component>
 
 ' gekozen ontwerpvraag:
 ' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
@@ -9,11 +10,11 @@
 Container(website, "Frontend", "React", "De frontend waar de gebruiker interacties via een user interface maakt")
 
 System_Boundary(triptop, "Triptop System") {
-    Container(bookingC, "Booking Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van de boekingen van de gebruiker")
-    Container(bookingS, "Booking Service", "Java Springboot, Service", "De service die met de api en repository praat om boekingen te plaatsen")
-    Container(bookingSA, "Booking API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Booking.com API en de Booking service")
-    Container(bookingSAImpl, "Booking API Adapter Implementation", "Java Springboot, Service", "De implementatie van de Booking API Adapter")
-    Container(bookingR, "Booking Repository", "Java Springboot, Repository", "De connectie tussen de database en de service voor het opslaan van boekingen")
+    Component(bookingC, "Booking Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van de boekingen van de gebruiker")
+    Component(bookingS, "Booking Service", "Java Springboot, Service", "De service die met de api en repository praat om boekingen te plaatsen")
+    Component(bookingSA, "Booking API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Booking.com API en de Booking service")
+    Component(bookingSAImpl, "Booking API Adapter Implementation", "Java Springboot, Service", "De implementatie van de Booking API Adapter")
+    Component(bookingR, "Booking Repository", "Java Springboot, Repository", "De connectie tussen de database en de service voor het opslaan van boekingen")
 }
 
 ContainerDb(database, "Postgres database", "PostgresSql", "Voor het opslaan en ophalen van data")
