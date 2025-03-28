@@ -3,12 +3,14 @@ skinparam linetype ortho
 skinparam nodesep 70
 skinparam ranksep 50
 
-title "Activity Extension with Factory Pattern"
+title "Klassendiagram voor Activity Extension in Triptop"
+
+' Ontwerpvraag: Modularity: Hoe kunnen we het systeem uitbreiden met nieuwe types activiteiten of excursies zonder de bestaande code te veranderen?
 
 ' Controllers
 class BookingController {
   -bookingService: BookingService
-  -authService: AuthService
+  -authService: AuthService 
   +getActivities(location: String, type: ActivityType): List<Activity>
   +bookActivity(activityId: String, participants: int): Booking
   +getBookings(userId: String): List<Booking>
