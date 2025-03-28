@@ -1,46 +1,58 @@
 # Software Guidebook Triptop
 
 ## 1. Introduction
-Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat een samenvatting van het volgende: 
+
+Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat een samenvatting van het volgende:
+
 1. De vereisten, beperkingen en principes. 
-1. De software-architectuur, met inbegrip van de technologiekeuzes op hoog niveau en de structuur van de software. 
-1. De ontwerp- en codebeslissingen die zijn genomen om de software te realiseren.
-1. De architectuur van de infrastructuur en hoe de software kan worden geinstalleerd. 
+2. De software-architectuur, met inbegrip van de technologiekeuzes op hoog niveau en de structuur van de software.
+3. De ontwerp- en codebeslissingen die zijn genomen om de software te realiseren.
+4. De architectuur van de infrastructuur en hoe de software kan worden geinstalleerd.
 
 ## 2. Context
 
 ![context-diagram.svg](resources%2Fcontext-diagram.svg)
 
 Toelichting op de context van de software inclusief System Context Diagram:
+
 * Functionaliteit
 * Gebruikers
 * Externe systemen
 
 ## 3. Functional Overview
 
-Om de belangrijkste features toe te lichten zijn er user stories en twee domain stories gemaakt en een overzicht van het domein in de vorm van een domeinmodel. Op deze plek staat typisch een user story map maar die ontbreekt in dit voorbeeld.
+Om de belangrijkste features toe te lichten zijn er user stories en twee domain stories gemaakt en een overzicht van het
+domein in de vorm van een domeinmodel. Op deze plek staat typisch een user story map maar die ontbreekt in dit
+voorbeeld.
 
 ### 3.1 User Stories
 
 #### 3.1.1 User Story 1: Reis plannen
 
-Als gebruiker wil ik een zelfstandig op basis van diverse variabelen (bouwstenen) een reis kunnen plannen op basis van mijn reisvoorkeuren (wel/niet duurzaam reizen, budget/prijsklasse, 's nachts reizen of overdag etc.) zodat ik op vakantie kan gaan zonder dat hiervoor een reisbureau benodigd is.
+Als gebruiker wil ik een zelfstandig op basis van diverse variabelen (bouwstenen) een reis kunnen plannen op basis van
+mijn reisvoorkeuren (wel/niet duurzaam reizen, budget/prijsklasse, 's nachts reizen of overdag etc.) zodat ik op
+vakantie kan gaan zonder dat hiervoor een reisbureau benodigd is.
 
 #### 3.1.2 User Story 2: Reis boeken
 
-Als gebruiker wil ik een geplande reis als geheel of per variabele (bouwsteen) boeken en betalen zodat ik op vakantie kan gaan zonder dat hiervoor een reisbureau benodigd is.
+Als gebruiker wil ik een geplande reis als geheel of per variabele (bouwsteen) boeken en betalen zodat ik op vakantie
+kan gaan zonder dat hiervoor een reisbureau benodigd is.
 
 #### 3.1.3 User Story 3: Reis cancelen
 
-Als gebruiker wil ik een geboekte reis, of delen daarvan, kunnen annuleren zodat ik mijn geld terug kan krijgen zonder inmenging van een intermediair zoals een reisbureau.
+Als gebruiker wil ik een geboekte reis, of delen daarvan, kunnen annuleren zodat ik mijn geld terug kan krijgen zonder
+inmenging van een intermediair zoals een reisbureau.
 
-#### 3.1.4 User Story 4: Reisstatus bewaren 
+#### 3.1.4 User Story 4: Reisstatus bewaren
 
-Als gebruiker wil ik mijn reisstatus kunnen bewaren zonder dat ik een extra account hoef aan te maken zodat ik mijn reis kan volgen zonder dat ik daarvoor extra handelingen moet verrichten.
+Als gebruiker wil ik mijn reisstatus kunnen bewaren zonder dat ik een extra account hoef aan te maken zodat ik mijn reis
+kan volgen zonder dat ik daarvoor extra handelingen moet verrichten.
 
 #### 3.1.5 User Story 5: Bouwstenen flexibel uitbreiden
 
-Als gebruiker wil ik de bouwstenen van mijn reis flexibel kunnen uitbreiden met een zelf te managen stap (bijv. met providers die niet standaard worden aangeboden zoals een andere reisorganisatie, hotelketen etc.) zodat ik mijn reis helemaal kan aanpassen aan mijn wensen.
+Als gebruiker wil ik de bouwstenen van mijn reis flexibel kunnen uitbreiden met een zelf te managen stap (bijv. met
+providers die niet standaard worden aangeboden zoals een andere reisorganisatie, hotelketen etc.) zodat ik mijn reis
+helemaal kan aanpassen aan mijn wensen.
 
 ### 3.2 Domain Story Reis Boeken (AS IS)
 
@@ -56,18 +68,27 @@ Als gebruiker wil ik de bouwstenen van mijn reis flexibel kunnen uitbreiden met 
 
 ## 4. Quality Attributes
 
-Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgende ISO 25010 kwaliteitsattributen benoemd als belangrijk:
-* Compatibility -> Interoperability (Degree to which a system, product or component can exchange information with other products and mutually use the information that has been exchanged)
-* Reliability -> Fault Tolerance (Degree to which a system or component operates as intended despite the presence of hardware or software faults)
-* Maintainability -> Modularity (Degree to which a system or computer program is composed of discrete components such that a change to one component has minimal impact on other components)
-* Maintainability -> Modifiability (Degree to which a product or system can be effectively and efficiently modified without introducing defects or degrading existing product quality)
-* Security -> Integrity (Degree to which a system, product or component ensures that the state of its system and data are protected from unauthorized modification or deletion either by malicious action or computer error)
-* Security -> Confidentiality (Degree to which a system, product or component ensures that data are accessible only to those authorized to have access)
+Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgende ISO 25010 kwaliteitsattributen benoemd
+als belangrijk:
+
+* Compatibility -> Interoperability (Degree to which a system, product or component can exchange information with other
+  products and mutually use the information that has been exchanged)
+* Reliability -> Fault Tolerance (Degree to which a system or component operates as intended despite the presence of
+  hardware or software faults)
+* Maintainability -> Modularity (Degree to which a system or computer program is composed of discrete components such
+  that a change to one component has minimal impact on other components)
+* Maintainability -> Modifiability (Degree to which a product or system can be effectively and efficiently modified
+  without introducing defects or degrading existing product quality)
+* Security -> Integrity (Degree to which a system, product or component ensures that the state of its system and data
+  are protected from unauthorized modification or deletion either by malicious action or computer error)
+* Security -> Confidentiality (Degree to which a system, product or component ensures that data are accessible only to
+  those authorized to have access)
 
 ## 5. Constraints
 
 > [!IMPORTANT]
-> Beschrijf zelf de beperkingen die op voorhand bekend zijn die invloed hebben op keuzes die wel of niet gemaakt kunnen of mogen worden.
+> Beschrijf zelf de beperkingen die op voorhand bekend zijn die invloed hebben op keuzes die wel of niet gemaakt kunnen
+> of mogen worden.
 
 ## 6. Principles
 
@@ -76,24 +97,22 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 ## 7. Software Architecture
 
-###     7.1. Containers
+### 7.1. Containers
 
 ![container-diagram.svg](resources%2Fcontainer-diagram.svg)
 
-###     7.2. Components
+### 7.2. Components
 
 > [!IMPORTANT]
 > Voeg toe: Component Diagram plus een Dynamic Diagram van een aantal scenario's inclusief begeleidende tekst.
 
-###     7.3. Design & Code
+### 7.3. Design & Code
 
 > [!IMPORTANT]
-> Voeg toe: Per ontwerpvraag een Class Diagram plus een Sequence Diagram van een aantal scenario's inclusief begeleidende tekst.
+> Voeg toe: Per ontwerpvraag een Class Diagram plus een Sequence-Diagram van een aantal scenario's inclusief
+> begeleidende tekst.
 
 ## 8. Architectural Decision Records
-
-> [!IMPORTANT]
-> Voeg toe: 3 tot 5 ADR's die beslissingen beschrijven die zijn genomen tijdens het ontwerpen en bouwen van de software.
 
 ### 8.1. ADR-001 Google Maps API Toegang
 
@@ -105,36 +124,49 @@ Accepted
 
 #### Context
 
-De TripTop applicatie heeft Google Maps functionaliteit nodig voor locaties en routes. De vraag is of we de API rechtstreeks vanuit de frontend of via de backend moeten benaderen.
+De TripTop applicatie heeft Google Maps functionaliteit nodig voor locaties en routes. De vraag is of we de API
+rechtstreeks vanuit de frontend of via de backend moeten benaderen.
 
 #### Considered Options
 
-| Criteria | Backend | Frontend | Hybride |
-|----------|---------|----------|---------|
-| Beveiliging | ++ | -- | + |
-| Gebruikerservaring | - | ++ | ++ |
-| Serverbelasting | -- | ++ | + |
-| Implementatiecomplexiteit | + | + | - |
-| Caching mogelijkheden | ++ | - | + |
+| Criteria                  | Backend | Frontend | Hybride |
+|---------------------------|---------|----------|---------|
+| Beveiliging               | ++      | --       | +       |
+| Gebruikerservaring        | -       | ++       | ++      |
+| Serverbelasting           | --      | ++       | +       |
+| Implementatiecomplexiteit | +       | +        | -       |
+| Caching mogelijkheden     | ++      | -        | +       |
 
 #### Decision
 
-We kiezen voor een hybride aanpak waarbij we het beste van twee werelden combineren. Visuele kaarten worden direct via de frontend geladen met de Google Maps JavaScript API, wat zorgt voor een snelle en interactieve gebruikerservaring. Tegelijkertijd worden alle gevoelige operaties zoals routeberekeningen en geocoding veilig via de backend afgehandeld. Om de prestaties te optimaliseren, implementeert de backend een slim cachingsysteem dat veelgebruikte routes en locatiegegevens bewaart voor hergebruik.
+We kiezen voor een hybride aanpak waarbij we het beste van twee werelden combineren. Visuele kaarten worden direct via
+de frontend geladen met de Google Maps JavaScript API, wat zorgt voor een snelle en interactieve gebruikerservaring.
+Tegelijkertijd worden alle gevoelige operaties zoals routeberekeningen en geocoding veilig via de backend afgehandeld.
+Om de prestaties te optimaliseren, implementeert de backend een slim cachingsysteem dat veelgebruikte routes en
+locatiegegevens bewaart voor hergebruik.
 
 #### Consequences
 
 ##### Positief
-De gebruiker ervaart een snelle, interactieve kaartervaring terwijl de API-sleutels veilig op de server worden bewaard. Het systeem profiteert van effectieve caching van veelgebruikte routes, wat de prestaties verder verbetert.
+
+De gebruiker ervaart een snelle, interactieve kaartervaring terwijl de API-sleutels veilig op de server worden bewaard.
+Het systeem profiteert van effectieve caching van veelgebruikte routes, wat de prestaties verder verbetert.
 
 ##### Negatief
-We moeten rekening houden met een dubbele implementatie in zowel frontend als backend, wat extra ontwikkeltijd kost. De configuratie wordt complexer door de hybride aanpak, wat meer aandacht vereist tijdens de implementatie en het onderhoud.
+
+We moeten rekening houden met een dubbele implementatie in zowel frontend als backend, wat extra ontwikkeltijd kost. De
+configuratie wordt complexer door de hybride aanpak, wat meer aandacht vereist tijdens de implementatie en het
+onderhoud.
 
 ##### Actiepunten
-We zullen een duidelijk functionaliteitenoverzicht maken waarin we de verdeling tussen frontend en backend specificeren. Het implementeren van een robuust caching-systeem en het toevoegen van rate limiting zijn essentiële vervolgstappen om de oplossing te optimaliseren.
+
+We zullen een duidelijk functionaliteitenoverzicht maken waarin we de verdeling tussen frontend en backend specificeren.
+Het implementeren van een robuust caching-systeem en het toevoegen van rate limiting zijn essentiële vervolgstappen om
+de oplossing te optimaliseren.
 
 ### 8.2. ADR-002 Integratie van Identity Providers
 
-Datum: 2025-03-21 
+Datum: 2025-03-21
 
 #### Status
 
@@ -142,36 +174,51 @@ Proposed
 
 #### Context
 
-TripTop moet verschillende identity providers integreren (Google, Microsoft, AirBnB) om gebruikers in te laten loggen zonder een extra account aan te maken. De containerdiagram toont een aparte Login Service die communiceert met externe Identity Provider APIs. We moeten beslissen hoe deze verschillende providers te integreren zodat het systeem niet afhankelijk wordt van één specifieke provider.
+TripTop moet verschillende identity providers integreren (Google, Microsoft, AirBnB) om gebruikers in te laten loggen
+zonder een extra account aan te maken. De containerdiagram toont een aparte Login Service die communiceert met externe
+Identity Provider APIs. We moeten beslissen hoe deze verschillende providers te integreren zodat het systeem niet
+afhankelijk wordt van één specifieke provider.
 
 #### Considered Options
 
-| Criteria | Directe integratie | Adapter Pattern | OAuth middleware |
-|----------|-------------------|----------------|------------------|
-| Onafhankelijkheid van providers | -- | ++ | + |
-| Implementatie-eenvoud | + | - | ++ |
-| Gebruikerservaring | + | + | ++ |
-| Onderhoudbaarheid | -- | + | ++ |
-| Beveiliging | + | + | ++ |
+| Criteria                        | Directe integratie | Adapter Pattern | OAuth middleware |
+|---------------------------------|--------------------|-----------------|------------------|
+| Onafhankelijkheid van providers | --                 | ++              | +                |
+| Implementatie-eenvoud           | +                  | -               | ++               |
+| Gebruikerservaring              | +                  | +               | ++               |
+| Onderhoudbaarheid               | --                 | +               | ++               |
+| Beveiliging                     | +                  | +               | ++               |
 
 #### Decision
 
-Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het OAuth 2.0 protocol en het Adapter Pattern. We centraliseren alle authenticatie in de Login Service container, waar een generieke interface als brug fungeert tussen onze applicatie en de diverse identity providers. 
+Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het OAuth 2.0 protocol en het Adapter Pattern.
+We centraliseren alle authenticatie in de Login Service container, waar een generieke interface als brug fungeert tussen
+onze applicatie en de diverse identity providers.
 
-Voor elke provider, zoals Google, Microsoft en AirBnB, ontwikkelen we een specifieke adapter die de unieke eigenschappen van die provider vertaalt naar onze standaard interface. Een slimme factory bepaalt vervolgens welke adapter nodig is, gebaseerd op de keuze van de gebruiker.
+Voor elke provider, zoals Google, Microsoft en AirBnB, ontwikkelen we een specifieke adapter die de unieke eigenschappen
+van die provider vertaalt naar onze standaard interface. Een slimme factory bepaalt vervolgens welke adapter nodig is,
+gebaseerd op de keuze van de gebruiker.
 
 Het hart van deze oplossing is onze `IdentityProviderInterface`, die alle essentiële authenticatiefuncties definieert:
 
 #### Consequences
 
 ##### Positief
-Gebruikers kunnen inloggen met bestaande accounts en nieuwe providers zijn eenvoudig toe te voegen zonder systeemwijzigingen. De Login Service fungeert als beveiligingslaag en zorgt voor een consistente authenticatie-ervaring ongeacht de gekozen provider.
+
+Gebruikers kunnen inloggen met bestaande accounts en nieuwe providers zijn eenvoudig toe te voegen zonder
+systeemwijzigingen. De Login Service fungeert als beveiligingslaag en zorgt voor een consistente authenticatie-ervaring
+ongeacht de gekozen provider.
 
 ##### Negatief
-De abstractielaag voegt complexiteit toe en verschillende providers ondersteunen uiteenlopende features. De synchronisatie van userdata tussen providers vereist extra logica, wat het systeem complexer maakt.
+
+De abstractielaag voegt complexiteit toe en verschillende providers ondersteunen uiteenlopende features. De
+synchronisatie van userdata tussen providers vereist extra logica, wat het systeem complexer maakt.
 
 ##### Actiepunten
-We implementeren de OAuth 2.0 flow en ontwikkelen provider adapters voor diverse identity providers. We creëren een gebruikersinterface voor providerkeuze en implementeren een token-validatie/refreshing mechanisme voor optimale beveiliging.
+
+We implementeren de OAuth 2.0 flow en ontwikkelen provider adapters voor diverse identity providers. We creëren een
+gebruikersinterface voor providerkeuze en implementeren een token-validatie/refreshing mechanisme voor optimale
+beveiliging.
 
 ### 8.3. ADR-003 Implementatie van Factory Pattern voor Reisbouwstenen
 
@@ -183,94 +230,131 @@ Proposed
 
 #### Context
 
-TripTop biedt gebruikers de mogelijkheid om reizen samen te stellen uit verschillende "bouwstenen" zoals vluchten, accommodaties en activiteiten. Deze componenten moeten flexibel uitbreidbaar zijn zonder bestaande code aan te passen. We moeten een patroon kiezen dat het mogelijk maakt om nieuwe providers en bouwsteentypes toe te voegen terwijl de applicatie onafhankelijk blijft van specifieke implementaties.
+TripTop biedt gebruikers de mogelijkheid om reizen samen te stellen uit verschillende "bouwstenen" zoals vluchten,
+accommodaties en activiteiten. Deze componenten moeten flexibel uitbreidbaar zijn zonder bestaande code aan te passen.
+We moeten een patroon kiezen dat het mogelijk maakt om nieuwe providers en bouwsteentypes toe te voegen terwijl de
+applicatie onafhankelijk blijft van specifieke implementaties.
 
 #### Considered Options
 
-| Criteria | State Pattern | Strategy Pattern | Adapter Pattern | Facade Pattern | Factory Method Pattern |
-|----------|--------------|-----------------|----------------|---------------|------------------------|
-| Flexibiliteit | + | ++ | + | - | ++ |
-| Ontkoppeling | + | + | ++ | - | ++ |
-| Uitbreidbaarheid | + | + | + | - | ++ |
-| Eenvoud implementatie | - | + | - | ++ | + |
-| Toekomstbestendigheid | + | + | + | - | ++ |
+| Criteria              | State Pattern | Strategy Pattern | Adapter Pattern | Facade Pattern | Factory Method Pattern |
+|-----------------------|---------------|------------------|-----------------|----------------|------------------------|
+| Flexibiliteit         | +             | ++               | +               | -              | ++                     |
+| Ontkoppeling          | +             | +                | ++              | -              | ++                     |
+| Uitbreidbaarheid      | +             | +                | +               | -              | ++                     |
+| Eenvoud implementatie | -             | +                | -               | ++             | +                      |
+| Toekomstbestendigheid | +             | +                | +               | -              | ++                     |
 
 #### Decision
 
-We implementeren het Factory Method Pattern voor onze reisbouwstenen. We creëren een abstracte `TravelComponentCreator` klasse met factory methods voor de verschillende soorten componenten. Voor elke categorie (Accommodatie, Transport, Activiteit) ontwikkelen we concrete factory subklassen die de juiste implementaties instantiëren op basis van parameters als prijsklasse of locatie.
+We implementeren het Factory Method Pattern voor onze reisbouwstenen. We creëren een abstracte `TravelComponentCreator`
+klasse met factory methods voor de verschillende soorten componenten. Voor elke categorie (Accommodatie, Transport,
+Activiteit) ontwikkelen we concrete factory subklassen die de juiste implementaties instantiëren op basis van parameters
+als prijsklasse of locatie.
 
-De client code werkt alleen met abstracte interfaces, waardoor we flexibel blijven in welke concrete implementaties we gebruiken. Dit zorgt voor een systeem dat eenvoudig kan worden uitgebreid zonder bestaande code aan te passen.
+De client code werkt alleen met abstracte interfaces, waardoor we flexibel blijven in welke concrete implementaties we
+gebruiken. Dit zorgt voor een systeem dat eenvoudig kan worden uitgebreid zonder bestaande code aan te passen.
 
 #### Consequences
 
 ##### Positief
-Het Factory Method Pattern zorgt voor een duidelijke scheiding tussen creatie en gebruik van reisbouwstenen. Nieuwe providers en types kunnen worden toegevoegd zonder bestaande code te wijzigen. Het systeem wordt beter testbaar doordat we makkelijker mock-implementaties kunnen injecteren.
+
+Het Factory Method Pattern zorgt voor een duidelijke scheiding tussen creatie en gebruik van reisbouwstenen. Nieuwe
+providers en types kunnen worden toegevoegd zonder bestaande code te wijzigen. Het systeem wordt beter testbaar doordat
+we makkelijker mock-implementaties kunnen injecteren.
 
 ##### Negatief
-Het patroon introduceert extra klassen en interfaces, wat de initiële complexiteit verhoogt. Dit kan voor beginnende ontwikkelaars een leercurve betekenen en de ontwikkeltijd verlengen in vergelijking met directe, minder flexibele implementaties.
+
+Het patroon introduceert extra klassen en interfaces, wat de initiële complexiteit verhoogt. Dit kan voor beginnende
+ontwikkelaars een leercurve betekenen en de ontwikkeltijd verlengen in vergelijking met directe, minder flexibele
+implementaties.
 
 ##### Actiepunten
-We definiëren kerninterfaces voor reisbouwstenen en factories, creëren een consistente naamgeving, en ondersteunen de implementatie met unit tests. We documenteren het patroon grondig voor toekomstige ontwikkelaars.
 
-### 8.4. ADR-004 TITLE
+We definiëren kerninterfaces voor reisbouwstenen en factories, creëren een consistente naamgeving, en ondersteunen de
+implementatie met unit tests. We documenteren het patroon grondig voor toekomstige ontwikkelaars.
 
-> [!TIP]
-> These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
-
-#### Context
-
-> [!TIP]
-> This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts about the problem we're facing and points out factors to take into account or to weigh when making the final decision.
-
-#### Considered Options
-
-> [!TIP]
-> This section describes the options that were considered, and gives some indication as to why the chosen option was selected.
-
-#### Decision
-
-> [!TIP]
-> This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
+### 8.4. ADR-004 Facade keuze
 
 #### Status
 
-> [!TIP]
-> A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
-
-#### Consequences
-
-> [!TIP]
-> This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
-
-### 8.5. ADR-005 TITLE
-
-> [!TIP]
-> These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
+In overweging
 
 #### Context
 
-> [!TIP]
-> This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts about the problem we're facing and points out factors to take into account or to weigh when making the final decision.
+Bij het ontwerpen van onze softwarearchitectuur staan we voor de keuze tussen verschillende design patterns. De
+belangrijkste kandidaten zijn het Facade-pattern, Factory-pattern, Adapter-pattern, State-pattern en Strategy-pattern.
+Elk van deze patronen heeft zijn eigen voordelen en toepassingen. We willen een keuze maken die de codebase
+vereenvoudigt, onderhoudbaarheid verhoogt en flexibiliteit biedt.
 
 #### Considered Options
 
-> [!TIP]
-> This section describes the options that were considered, and gives some indication as to why the chosen option was selected.
+| Criteria          | Facade | Factory | Adapter | State | Strategy |
+|-------------------|--------|---------|---------|-------|----------|
+| Eenvoud           | ++     | 0       | +       | --    | --       |
+| Onderhoudbaarheid | ++     | +       | 0       | --    | +        |
+| Herbruikbaarheid  | 0      | +       | +       | +     | +        |
+| Flexibiliteit     | -      | +       | +       | +     | +        |
+| Coupling          | ++     | 0       | +       | --    | +        |
 
 #### Decision
 
-> [!TIP]
-> This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
-
-#### Status
-
-> [!TIP]
-> A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
+We kiezen voor het **Facade design pattern**. Dit patroon biedt een vereenvoudigde interface voor complexe
+subsysteem functionaliteit, wat de code overzichtelijker maakt en de afhankelijkheden vermindert.
 
 #### Consequences
 
-> [!TIP]
-> This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
+##### Positief
+
+Het Facade-patroon maakt de interactie met complexe subsystemen eenvoudiger. Dit verlaagt de afhankelijkheid tussen
+componenten. Daardoor ontstaat een meer modulaire architectuur. De code wordt ook leesbaarder en makkelijker te
+onderhouden. Ontwikkelaars hoeven zich niet direct met de onderliggende implementatie bezig te houden.
+
+##### Negatief
+
+Het Facade-patroon voegt een extra abstractielaag toe. Dit kan in sommige gevallen overbodig zijn. Wijzigingen in het
+subsysteem kunnen alsnog doorwerken in de facade. Hierdoor blijft het voordeel van isolatie beperkt. Ook kan deze
+interface als een soort God interface worden gebruikt die door elke klasse binnen het systeem wordt gebruikt.
+
+##### Actiepunten
+
+Om het Facade-patroon effectief te implementeren, voegen we een centrale interface toe. Deze interface vereenvoudigt de
+interactie met het subsysteem. Vervolgens beoordelen we of aanvullende patronen zoals Factory of Strategy nodig zijn
+binnen de facade. Ten slotte stellen we documentatie en best practices op. Dit biedt ontwikkelaars een duidelijke
+richtlijn voor het correct toepassen en uitbreiden van het patroon binnen het project.
+
+### 8.5. ADR-005 Adapter keuze
+
+Date: 2025-03-27
+
+#### Status
+
+Proposed
+
+#### Context
+
+Bij het ontwerpen van onze softwarearchitectuur hebben we verschillende ontwerppatronen overwogen die kunnen bijdragen aan een flexibele, onderhoudbare en herbruikbare codebase. De voornaamste kandidaten zijn Facade, Factory, Adapter, State en Strategy. Elk van deze patronen biedt unieke voordelen en is geschikt voor specifieke scenario’s.
+
+#### Considered options
+
+| Criteria          | Facade | Factory | Adapter | State | Strategy |
+|:------------------|:------:|:-------:|:-------:|:-----:|:--------:|
+| Eenvoud           |   ++   |    0    |   ++    |  --   |    --    |
+| Onderhoudbaarheid |   ++   |    +    |    0    |  --   |    +     |
+| Herbruikbaarheid  |   0    |    +    |   ++    |   +   |    +     |
+| Flexibiliteit     |   ++   |    0    |    +    |  --   |    +     |
+
+#### Decision
+
+We hebben gekozen voor het Adapter pattern, het is een makkelijk patroon wat ook een goede herbruikbaarheid biedt met
+onze bestaande code.
+Het stelt ons in staat om nieuwe componenten eenvoudig te integreren zonder grote wijzigingen aan de bestaande
+architectuur.
+
+#### Consequences
+
+Het adapter-pattern verhoogt de herbruikbaarheid van de broncode, daarnaast maakt het de integratie van nieuwe componenten eenvoudiger zonder ingrijpende wijzigingen aan de bestaande architectuur.
+
 
 ## 9. Deployment, Operation and Support
 
