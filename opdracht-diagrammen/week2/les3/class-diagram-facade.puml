@@ -13,9 +13,9 @@ class BookingService {
     saveBooking(booking: BookingDto);
 }
 
-interface IBookingServiceFacade {
-    getAllBookings() : List<BookingDto>;
-    saveBooking(booking: BookingDto);
+interface IServiceFacade<T> {
+    getAll() : List<T>;
+    save(booking: T);
 }
 
 class BookingRepository {
@@ -37,8 +37,8 @@ interface ICrudRepositoryFacade<T, TPK> {
     getById(id: TPK) : T;
 }
 
-BookingController --> IBookingServiceFacade
-BookingService --|> IBookingServiceFacade
+BookingController --> IServiceFacade
+BookingService --|> IServiceFacade
 BookingService --> BookingRepository
 
 BookingController --> BookingDto
