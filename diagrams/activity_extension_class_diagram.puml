@@ -1,48 +1,132 @@
-@startuml "Class Diagram voor Activity Extension in Triptop"
+@startuml
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam ranksep 50
 
-title "Class Diagram: Uitbreiding met nieuwe activiteitstypes"
+title "Activity Extension with Factory Pattern"
 
-' Primary interface
-interface IActivityProviderPort {
-  +getAvailableActivities(location, dateRange): List<Activity>
-  +bookActivity(activityId, participants): Booking
-  +getSupportedActivityTypes(): List<ActivityType>
+' Controllers
+class BookingController {
+  -bookingService: BookingService
+  -authService: AuthService
+  +getActivities(location: String, type: ActivityType): List<Activity>
+  +bookActivity(activityId: String, participants: int): Booking
+  +getBookings(userId: String): List<Booking>
 }
 
-' Core service
-class ActivityService {
-  -providerRegistry: ProviderRegistry
-  +searchActivities(location, dateRange, preferences): List<Activity>
-  +bookActivity(activityId, participants): Booking
+class MapsController {
+  -mapsService: MapsService
+  -authService: AuthService
+  +getLocations(query: String): List<Location>
+  +getRoutes(from: String, to: String): Route
 }
 
-' Registry
-class ProviderRegistry {
-  -providers: Map<ActivityType, List<IActivityProviderPort>>
-  +registerProvider(provider: IActivityProviderPort): void
-  +getProvidersForType(type: ActivityType): List<IActivityProviderPort>
+class AuthController {
+  -authService: AuthService
+  +authenticate(credentials: Object): String
+  +register(userData: Object): User
 }
 
-' Adapters
-class TripAdvisorAdapter {
-  -apiClient: TripAdvisorClient
-  +getAvailableActivities(): List<Activity>
-  +bookActivity(): Booking
-  +getSupportedActivityTypes(): List<ActivityType>
+' Services
+class BookingService {
+  -activityFactory: ActivityFactory
+  -bookingRepository: BookingRepository
+  +searchActivities(location: String, type: ActivityType): List<Activity>
+  +bookActivity(activityId: String, participants: int): Booking
+  +getBookings(userId: String): List<Booking>
 }
 
-class BookingAdapter {
-  -apiClient: BookingClient
-  +getAvailableActivities(): List<Activity>
-  +bookActivity(): Booking
-  +getSupportedActivityTypes(): List<ActivityType>
+class MapsService {
+  -mapsRepository: MapsRepository
+  +getLocations(query: String): List<Location>
+  +getRoutes(from: String, to: String): Route
 }
 
-class GoogleMapsAdapter {
-  -apiClient: GoogleMapsClient
-  +getAvailableActivities(): List<Activity>
-  +bookActivity(): Booking
-  +getSupportedActivityTypes(): List<ActivityType>
+class AuthService {
+  -userRepository: UserRepository
+  +authenticate(credentials: Object): String
+  +register(userData: Object): User
+  +validateToken(token: String): boolean
+}
+
+' Factory Pattern Core
+interface ActivityFactory {
+  +createActivity(type: ActivityType): Activity
+}
+
+class ConcreteActivityFactory {
+  +createActivity(type: ActivityType): Activity
+}
+
+' Product interface
+interface Activity {
+  +getId(): String
+  +getName(): String
+  +getLocation(): String
+  +getType(): ActivityType
+  +getDetails(): String
+  +book(participants: int): Booking
+}
+
+' Concrete Products
+class Excursie {
+  -id: String
+  -name: String
+  -location: String
+  -description: String
+  -price: Double
+  +getId(): String
+  +getName(): String
+  +getLocation(): String
+  +getType(): ActivityType
+  +getDetails(): String
+  +book(participants: int): Booking
+}
+
+class Overnachting {
+  -id: String
+  -name: String
+  -location: String
+  -description: String
+  -price: Double
+  +getId(): String
+  +getName(): String
+  +getLocation(): String
+  +getType(): ActivityType
+  +getDetails(): String
+  +book(participants: int): Booking
+}
+
+class Vervoer {
+  -id: String
+  -name: String
+  -location: String
+  -description: String
+  -price: Double
+  +getId(): String
+  +getName(): String
+  +getLocation(): String
+  +getType(): ActivityType
+  +getDetails(): String
+  +book(participants: int): Booking
+}
+
+' Repositories
+class BookingRepository {
+  +save(booking: Booking): void
+  +findById(id: String): Booking
+  +findByUserId(userId: String): List<Booking>
+}
+
+class MapsRepository {
+  +findLocations(query: String): List<Location>
+  +findRoute(from: String, to: String): Route
+}
+
+class UserRepository {
+  +save(user: User): void
+  +findById(id: String): User
+  +findByUsername(username: String): User
 }
 
 ' Domain models
@@ -55,40 +139,80 @@ enum ActivityType {
 class Activity {
   -id: String
   -name: String
-  -location: String
   -type: ActivityType
 }
 
 class Booking {
   -id: String
   -activityId: String
+  -userId: String
+  -participants: int
+  -date: Date
   -status: String
 }
 
-' Relationships
-ActivityService --> ProviderRegistry
-ActivityService --> IActivityProviderPort
-ProviderRegistry --> IActivityProviderPort
+class User {
+  -id: String
+  -username: String
+  -email: String
+}
 
-IActivityProviderPort <|.. TripAdvisorAdapter
-IActivityProviderPort <|.. BookingAdapter
-IActivityProviderPort <|.. GoogleMapsAdapter
+class Location {
+  -id: String
+  -name: String
+  -coordinates: String
+}
 
+class Route {
+  -from: Location
+  -to: Location
+  -distance: Double
+}
+
+' External Systems
+class Database << External System >>
+class BookingAPI << External System >>
+class TripAdvisorAPI << External System >>
+class GoogleMapsAPI << External System >>
+class IdentityProviderAPI << External System >>
+
+' Relationships - Controller and Services
+BookingController --> BookingService
+BookingController --> AuthService
+MapsController --> MapsService
+MapsController --> AuthService
+AuthController --> AuthService
+
+' Factory Pattern Relationships
+BookingService --> ActivityFactory
+ActivityFactory <|.. ConcreteActivityFactory
+ConcreteActivityFactory ..> Excursie : creates
+ConcreteActivityFactory ..> Overnachting : creates
+ConcreteActivityFactory ..> Vervoer : creates
+
+' Product Relationships
+Activity <|.. Excursie
+Activity <|.. Overnachting
+Activity <|.. Vervoer
+
+' Repository Relationships
+BookingService --> BookingRepository
+MapsService --> MapsRepository
+AuthService --> UserRepository
+BookingRepository --> Database
+MapsRepository --> Database
+UserRepository --> Database
+
+' External Systems
+BookingService --> BookingAPI
+BookingService --> TripAdvisorAPI
+MapsService --> GoogleMapsAPI
+AuthService --> IdentityProviderAPI
+
+' Domain Relationships
 Activity --> ActivityType
-
-' External systems
-class "TripAdvisor API" as TripAdvisorAPI << External System >>
-class "Booking.com API" as BookingAPI << External System >>
-class "Google Maps API" as GoogleMapsAPI << External System >>
-
-TripAdvisorAdapter --> TripAdvisorAPI
-BookingAdapter --> BookingAPI
-GoogleMapsAdapter --> GoogleMapsAPI
-
-' Note about extension mechanism
-note bottom of IActivityProviderPort
-  Uitbreidingspunt: Nieuwe providers worden 
-  toegevoegd door deze interface te implementeren
-end note
+Excursie ..> Booking : creates
+Overnachting ..> Booking : creates
+Vervoer ..> Booking : creates
 
 @enduml 
