@@ -8,12 +8,27 @@ public class CarActivity implements Activity {
     private final int driverAge;
     private final int page;
     private final String currencyCode;
+    private final String pickUpPlaceId;
+    private final String pickUpLocationType;
+    private final String pickUpDate;
+    private final String dropOffDate;
+    private final String pickUpTime;
+    private final String dropOffTime;
     
-    public CarActivity(String order, int driverAge, int page, String currencyCode) {
+    public CarActivity(String order, int driverAge, int page, String currencyCode, 
+                      String pickUpPlaceId, String pickUpLocationType, 
+                      String pickUpDate, String dropOffDate,
+                      String pickUpTime, String dropOffTime) {
         this.order = order;
         this.driverAge = driverAge;
         this.page = page;
         this.currencyCode = currencyCode;
+        this.pickUpPlaceId = pickUpPlaceId;
+        this.pickUpLocationType = pickUpLocationType;
+        this.pickUpDate = pickUpDate;
+        this.dropOffDate = dropOffDate;
+        this.pickUpTime = pickUpTime;
+        this.dropOffTime = dropOffTime;
     }
     
     @Override
@@ -33,6 +48,12 @@ public class CarActivity implements Activity {
         params.put("driverAge", String.valueOf(driverAge));
         params.put("page", String.valueOf(page));
         params.put("currencyCode", currencyCode);
+        params.put("pickUpPlaceId", pickUpPlaceId);
+        params.put("pickUpLocationType", pickUpLocationType);
+        params.put("pickUpDate", pickUpDate);
+        params.put("dropOffDate", dropOffDate);
+        params.put("pickUpTime", pickUpTime);
+        params.put("dropOffTime", dropOffTime);
         return params;
     }
 } 

@@ -24,10 +24,13 @@ public class ActivityFactory {
      * 
      * @param pageNumber The page number for pagination
      * @param currencyCode The currency code (e.g., USD)
+     * @param geoId The geographic ID
+     * @param checkIn The check-in date (YYYY-MM-DD)
+     * @param checkOut The check-out date (YYYY-MM-DD)
      * @return A Hotel activity
      */
-    public Activity createHotelActivity(int pageNumber, String currencyCode) {
-        return new HotelActivity(pageNumber, currencyCode);
+    public Activity createHotelActivity(int pageNumber, String currencyCode, String geoId, String checkIn, String checkOut) {
+        return new HotelActivity(pageNumber, currencyCode, geoId, checkIn, checkOut);
     }
     
     /**
@@ -46,10 +49,13 @@ public class ActivityFactory {
      * @param sortOrder The sort order
      * @param page The page number
      * @param currencyCode The currency code
+     * @param geoId The geographic ID
+     * @param arrival The arrival date (YYYY-MM-DD)
+     * @param departure The departure date (YYYY-MM-DD)
      * @return A Rental activity
      */
-    public Activity createRentalActivity(String sortOrder, int page, String currencyCode) {
-        return new RentalActivity(sortOrder, page, currencyCode);
+    public Activity createRentalActivity(String sortOrder, int page, String currencyCode, String geoId, String arrival, String departure) {
+        return new RentalActivity(sortOrder, page, currencyCode, geoId, arrival, departure);
     }
     
     /**
@@ -72,9 +78,21 @@ public class ActivityFactory {
      * @param driverAge The driver's age
      * @param page The page number
      * @param currencyCode The currency code
+     * @param pickUpPlaceId The pickup place ID
+     * @param pickUpLocationType The pickup location type
+     * @param pickUpDate The pickup date (YYYY-MM-DD)
+     * @param dropOffDate The dropoff date (YYYY-MM-DD)
+     * @param pickUpTime The pickup time (HH:MM)
+     * @param dropOffTime The dropoff time (HH:MM)
      * @return A Car activity
      */
-    public Activity createCarActivity(String order, int driverAge, int page, String currencyCode) {
-        return new CarActivity(order, driverAge, page, currencyCode);
+    public Activity createCarActivity(String order, int driverAge, int page, String currencyCode,
+                                     String pickUpPlaceId, String pickUpLocationType,
+                                     String pickUpDate, String dropOffDate,
+                                     String pickUpTime, String dropOffTime) {
+        return new CarActivity(order, driverAge, page, currencyCode, 
+                              pickUpPlaceId, pickUpLocationType, 
+                              pickUpDate, dropOffDate,
+                              pickUpTime, dropOffTime);
     }
 } 

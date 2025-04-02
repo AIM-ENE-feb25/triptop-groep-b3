@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9898/api/tripadvisor/hotels?pageNumber=1&currencyCode=USD",
+					"raw": "http://localhost:9898/api/tripadvisor/hotels?pageNumber=1&currencyCode=USD&geoId=304554&checkIn=2023-06-15&checkOut=2023-06-18",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -59,6 +59,18 @@
 						{
 							"key": "currencyCode",
 							"value": "USD"
+						},
+						{
+							"key": "geoId",
+							"value": "304554"
+						},
+						{
+							"key": "checkIn",
+							"value": "2025-04-22"
+						},
+						{
+							"key": "checkOut",
+							"value": "2025-04-24"
 						}
 					]
 				},
@@ -100,7 +112,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9898/api/tripadvisor/rentals?sortOrder=POPULARITY&page=1&currencyCode=USD",
+					"raw": "http://localhost:9898/api/tripadvisor/rentals?sortOrder=POPULARITY&page=1&currencyCode=USD&geoId=304554&arrival=2023-06-15&departure=2023-06-22",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -123,6 +135,18 @@
 						{
 							"key": "currencyCode",
 							"value": "USD"
+						},
+						{
+							"key": "geoId",
+							"value": "304554"
+						},
+						{
+							"key": "arrival",
+							"value": "2025-04-22"
+						},
+						{
+							"key": "departure",
+							"value": "2025-04-24"
 						}
 					]
 				},
@@ -176,7 +200,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9898/api/tripadvisor/cars?order=RECOMMENDED&driverAge=20&page=1&currencyCode=USD",
+					"raw": "http://localhost:9898/api/tripadvisor/cars?order=RECOMMENDED&driverAge=20&page=1&currencyCode=USD&pickUpPlaceId=LHR&pickUpLocationType=AIRPORT&pickUpDate=2023-06-15&dropOffDate=2023-06-18&pickUpTime=12:00&dropOffTime=12:00",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -203,6 +227,30 @@
 						{
 							"key": "currencyCode",
 							"value": "USD"
+						},
+						{
+							"key": "pickUpPlaceId",
+							"value": "LHR"
+						},
+						{
+							"key": "pickUpLocationType",
+							"value": "AIRPORT"
+						},
+						{
+							"key": "pickUpDate",
+							"value": "2025-04-22"
+						},
+						{
+							"key": "dropOffDate",
+							"value": "2025-04-24"
+						},
+						{
+							"key": "pickUpTime",
+							"value": "12:00"
+						},
+						{
+							"key": "dropOffTime",
+							"value": "12:00"
 						}
 					]
 				},
