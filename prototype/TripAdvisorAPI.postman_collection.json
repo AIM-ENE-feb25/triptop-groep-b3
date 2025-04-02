@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "b59d4e79-dd39-4982-8bf1-9a2e34b7c4e5",
+		"name": "TripAdvisor API",
+		"description": "Collection for testing the TripAdvisor API prototype with Factory design pattern",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Flights",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/tripadvisor/flights?query=london",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"tripadvisor",
+						"flights"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "london"
+						}
+					]
+				},
+				"description": "Search for airports by query"
+			},
+			"response": []
+		},
+		{
+			"name": "Hotels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/tripadvisor/hotels?pageNumber=1&currencyCode=USD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"tripadvisor",
+						"hotels"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "currencyCode",
+							"value": "USD"
+						}
+					]
+				},
+				"description": "Search for hotels"
+			},
+			"response": []
+		},
+		{
+			"name": "Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/tripadvisor/restaurants?locationId=304554",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"tripadvisor",
+						"restaurants"
+					],
+					"query": [
+						{
+							"key": "locationId",
+							"value": "304554"
+						}
+					]
+				},
+				"description": "Search for restaurants by location ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Rentals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/tripadvisor/rentals?sortOrder=POPULARITY&page=1&currencyCode=USD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"tripadvisor",
+						"rentals"
+					],
+					"query": [
+						{
+							"key": "sortOrder",
+							"value": "POPULARITY"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "currencyCode",
+							"value": "USD"
+						}
+					]
+				},
+				"description": "Search for rentals"
+			},
+			"response": []
+		},
+		{
+			"name": "Cruises",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/tripadvisor/cruises?destinationId=153339&order=popularity&page=1&currencyCode=USD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"tripadvisor",
+						"cruises"
+					],
+					"query": [
+						{
+							"key": "destinationId",
+							"value": "153339"
+						},
+						{
+							"key": "order",
+							"value": "popularity"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "currencyCode",
+							"value": "USD"
+						}
+					]
+				},
+				"description": "Search for cruises by destination ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/tripadvisor/cars?order=RECOMMENDED&driverAge=20&page=1&currencyCode=USD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"tripadvisor",
+						"cars"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "RECOMMENDED"
+						},
+						{
+							"key": "driverAge",
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "currencyCode",
+							"value": "USD"
+						}
+					]
+				},
+				"description": "Search for car rentals"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:9898",
+			"type": "string"
+		}
+	]
+} 
