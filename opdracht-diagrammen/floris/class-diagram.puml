@@ -8,6 +8,8 @@ title "Klassendiagram voor Activity Extension in Triptop"
 ' Ontwerpvraag: Modularity
 ' Hoe kunnen we het systeem uitbreiden met nieuwe types activiteiten of excursies zonder de bestaande code te veranderen?
 
+' Activity Factory moet anders, enum weg, en dynamisch maken
+
 ' Controllers
 class BookingController {
   -bookingService: BookingService

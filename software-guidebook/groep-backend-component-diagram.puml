@@ -10,7 +10,7 @@ title Component diagram voor de backend container van Triptop systeem
 
 Container(website, "Frontend", "React", "De frontend waar de gebruiker interacties via een user interface maakt")
 
-System_Boundary(triptop, "Triptop System") {
+System_Boundary(triptop, "Backend Triptop Container") {
     Component(bookingC, "Booking Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van de boekingen van de gebruiker")
     Component(bookingS, "Booking Service", "Java Springboot, Service", "De service die met de api en repository praat om boekingen te plaatsen")
     Component(bookingSA, "Booking API Adapter", "interface", "Zorgt voor de adaptie laag tussen de Booking.com en TripAdvisor API en de Booking service")
