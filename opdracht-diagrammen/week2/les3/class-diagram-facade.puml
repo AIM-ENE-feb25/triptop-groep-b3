@@ -3,80 +3,52 @@
 ' gekozen ontwerpvraag:
 ' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
 
-class BookingController {
-    getBookings() : ResponseEntity<List<BookingDto>>;
-    addBooking(booking: BookingDto);
+class LoginDto {
+    - username: String;
+    - password: String;
+
+    + username() : String;
+    + password() : String;
 }
 
-class BookingService {
-    getAllBookings() : List<BookingDto>;
-    saveBooking(booking: BookingDto);
+class JsonObject <<External>> {
 }
 
-interface IServiceFacade<T> {
-    getAll() : List<T>;
-    save(booking: T);
+class JsonResponse {
+    - json: String;
+
+    + json() : String;
+    + toJsonObject() : JsonObject
 }
 
-class BookingRepository {
-    getAllBookings() : List<BookingDto>;
-    saveBooking(booking: BookingDto);
-    getBookingById(id: int) : BookingDto;
+class LoginTokenDto {
+    - token: String;
+
+    + token() : String;
 }
 
-
-class BookingDto {
-    id: int
-    name: String
-    location: String
+class AuthorisationController {
+    + login(login: LoginDto) : ResponseEntity;
+    + isLoggedIn() : ResponseEntity<Boolean>;
 }
 
-class BookingAPIDto {
-    name: String
-    location: String
+class AuthorisationServiceFacade {
+    + login(login: LoginDto) : LoginTokenDto;
+    + isLoggedIn(token: LoginTokenDto) : boolean;
 }
 
-class BookingAPIReviewDto {
-    reviewer: String
-    amount: int
+class IdentityProviderClient {
+    + login(login: LoginDto) : JsonResponse;
+    + isLoggedIn(token: LoginTokenDto) : JsonResponse;
 }
 
-interface ICrudRepositoryFacade<T, TPK> {
-    getAll() : List<T>;
-    save(item: T);
-    getById(id: TPK) : T;
-}
+AuthorisationController --> AuthorisationServiceFacade
+AuthorisationServiceFacade --> IdentityProviderClient
 
-interface IBookingAPIFacade {
-    getAll() : BookingAPIDto;
-    getReviews(booking : BookingAPIDto) : List<BookingAPIReviewDto>;
-}
+AuthorisationController --> LoginDto
+AuthorisationServiceFacade --> LoginTokenDto
+IdentityProviderClient --> JsonResponse
 
-class BookingAPIFacade {
-    getAll() : BookingAPIDto;
-    getReviews(booking : BookingAPIDto) : List<BookingAPIReviewDto>;
-}
-
-class BookingAPI {
-    getAll() : BookingAPIDto;
-}
-
-class TripAdvisorAPI {
-    getReviews(booking: BookingAPIDto) : List<BookingAPIReviewDto>;
-}
-
-BookingController --> IServiceFacade
-BookingService --|> IServiceFacade
-BookingService --> BookingRepository
-
-BookingRepository --|> ICrudRepositoryFacade
-
-BookingAPIFacade --|> IBookingAPIFacade
-
-BookingService --> IBookingAPIFacade
-
-BookingAPIFacade --> BookingAPI
-BookingAPIFacade --> TripAdvisorAPI
-
+JsonResponse --> JsonObject
 
 @enduml
