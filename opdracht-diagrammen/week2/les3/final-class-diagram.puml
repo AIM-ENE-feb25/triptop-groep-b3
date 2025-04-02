@@ -2,6 +2,8 @@
 
 ' gekozen ontwerpvraag:
 ' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
+' Dit is mijn uitgewerkte klasse diagram die ik na het maken van het prototype heb gemaakt.
+' Zie class-diagram-facade.puml voor het initiele klasse diagram
 
 class LoginDto {
     - username: String;
