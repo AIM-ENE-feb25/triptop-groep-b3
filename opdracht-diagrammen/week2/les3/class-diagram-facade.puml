@@ -28,11 +28,15 @@ class LoginTokenDto {
 }
 
 class AuthorisationController {
+    - authorisationService : AuthorisationServiceFacade;
+
     + login(login: LoginDto) : ResponseEntity;
     + isLoggedIn() : ResponseEntity<Boolean>;
 }
 
 class AuthorisationServiceFacade {
+    - client: IdentityProviderClient;
+
     + login(login: LoginDto) : LoginTokenDto;
     + isLoggedIn(token: LoginTokenDto) : boolean;
 }

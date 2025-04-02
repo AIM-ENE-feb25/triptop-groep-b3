@@ -8,6 +8,6 @@ public record JsonResponse(
     public JSONObject toJsonObject()
         throws org.json.JSONException
     {
-
+        return new JSONObject(this.json);
     }
 }
