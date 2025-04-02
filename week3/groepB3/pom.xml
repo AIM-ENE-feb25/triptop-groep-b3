@@ -40,6 +40,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.konghq/unirest-java -->
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>4.0.0-RC2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
