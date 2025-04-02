@@ -4,6 +4,7 @@ import han.triptop.groepB3.factory.ActivityFactory;
 import han.triptop.groepB3.model.Activity;
 import han.triptop.groepB3.service.TripAdvisorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,15 +25,14 @@ public class TripAdvisorController {
         this.activityFactory = activityFactory;
     }
 
-    @GetMapping("/flights")
-    public ResponseEntity<String> searchFlights(@RequestParam String query) {
+    @GetMapping(value = "/flights", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchFlights(@RequestParam String query) {
         Activity activity = activityFactory.createFlightActivity(query);
-        String response = tripAdvisorService.searchActivity(activity);
-        return ResponseEntity.ok(response);
+        return tripAdvisorService.searchActivity(activity);
     }
 
-    @GetMapping("/hotels")
-    public ResponseEntity<String> searchHotels(
+    @GetMapping(value = "/hotels", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchHotels(
             @RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "USD") String currencyCode,
             @RequestParam(required = true) String geoId,
@@ -45,19 +45,17 @@ public class TripAdvisorController {
         String checkOutDate = checkOut != null ? checkOut : today.plusDays(3).format(dateFormatter);
         
         Activity activity = activityFactory.createHotelActivity(pageNumber, currencyCode, geoId, checkInDate, checkOutDate);
-        String response = tripAdvisorService.searchActivity(activity);
-        return ResponseEntity.ok(response);
+        return tripAdvisorService.searchActivity(activity);
     }
 
-    @GetMapping("/restaurants")
-    public ResponseEntity<String> searchRestaurants(@RequestParam String locationId) {
+    @GetMapping(value = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchRestaurants(@RequestParam String locationId) {
         Activity activity = activityFactory.createRestaurantActivity(locationId);
-        String response = tripAdvisorService.searchActivity(activity);
-        return ResponseEntity.ok(response);
+        return tripAdvisorService.searchActivity(activity);
     }
 
-    @GetMapping("/rentals")
-    public ResponseEntity<String> searchRentals(
+    @GetMapping(value = "/rentals", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchRentals(
             @RequestParam(defaultValue = "POPULARITY") String sortOrder,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "USD") String currencyCode,
@@ -71,23 +69,21 @@ public class TripAdvisorController {
         String departureDate = departure != null ? departure : today.plusDays(7).format(dateFormatter);
         
         Activity activity = activityFactory.createRentalActivity(sortOrder, page, currencyCode, geoId, arrivalDate, departureDate);
-        String response = tripAdvisorService.searchActivity(activity);
-        return ResponseEntity.ok(response);
+        return tripAdvisorService.searchActivity(activity);
     }
 
-    @GetMapping("/cruises")
-    public ResponseEntity<String> searchCruises(
+    @GetMapping(value = "/cruises", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchCruises(
             @RequestParam String destinationId,
             @RequestParam(defaultValue = "popularity") String order,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "USD") String currencyCode) {
         Activity activity = activityFactory.createCruiseActivity(destinationId, order, page, currencyCode);
-        String response = tripAdvisorService.searchActivity(activity);
-        return ResponseEntity.ok(response);
+        return tripAdvisorService.searchActivity(activity);
     }
 
-    @GetMapping("/cars")
-    public ResponseEntity<String> searchCars(
+    @GetMapping(value = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchCars(
             @RequestParam(defaultValue = "RECOMMENDED") String order,
             @RequestParam(defaultValue = "20") int driverAge,
             @RequestParam(defaultValue = "1") int page,
@@ -106,7 +102,6 @@ public class TripAdvisorController {
         
         Activity activity = activityFactory.createCarActivity(order, driverAge, page, currencyCode,
                 pickUpPlaceId, pickUpLocationType, pickupDate, dropoffDate, pickUpTime, dropOffTime);
-        String response = tripAdvisorService.searchActivity(activity);
-        return ResponseEntity.ok(response);
+        return tripAdvisorService.searchActivity(activity);
     }
 } 

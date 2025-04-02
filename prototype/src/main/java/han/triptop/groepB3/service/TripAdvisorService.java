@@ -4,6 +4,7 @@ import han.triptop.groepB3.model.Activity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,9 +37,9 @@ public class TripAdvisorService {
      * Search for activities based on the given Activity type
      * 
      * @param activity The activity to search for
-     * @return The API response as a String
+     * @return The API response as a JSON object
      */
-    public String searchActivity(Activity activity) {
+    public ResponseEntity<Object> searchActivity(Activity activity) {
         // Build the URL with query parameters
         URI uri = buildUri(activity);
         
@@ -46,14 +47,16 @@ public class TripAdvisorService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-rapidapi-host", apiHost);
         headers.set("x-rapidapi-key", apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         
         // Create request entity
         RequestEntity<Void> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, uri);
         
         // Make the API call
-        ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
+        ResponseEntity<Object> response = restTemplate.exchange(requestEntity, Object.class);
         
-        return response.getBody();
+        // Return the JSON response object directly
+        return response;
     }
     
     /**
