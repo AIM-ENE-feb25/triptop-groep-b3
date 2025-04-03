@@ -3,221 +3,173 @@ skinparam linetype ortho
 skinparam nodesep 70
 skinparam ranksep 50
 
-title "Klassendiagram voor Activity Extension in Triptop"
+title "Klassendiagram voor TripAdvisor Activity Factory Pattern in Triptop"
 
-' Ontwerpvraag: Modularity
-' Hoe kunnen we het systeem uitbreiden met nieuwe types activiteiten of excursies zonder de bestaande code te veranderen?
-
-' Activity Factory moet anders, enum weg, en dynamisch maken
+' Ontwerpvraag: Modularity: Hoe kunnen we het systeem uitbreiden met nieuwe types activiteiten of excursies zonder de bestaande code te veranderen?
 
 ' Controllers
-class BookingController {
-  -bookingService: BookingService
-  -authService: AuthService 
-  +getActivities(location: String, type: ActivityType): List<Activity>
-  +bookActivity(activityId: String, participants: int): Booking
-  +getBookings(userId: String): List<Booking>
-}
-
-class MapsController {
-  -mapsService: MapsService
-  -authService: AuthService
-  +getLocations(query: String): List<Location>
-  +getRoutes(from: String, to: String): Route
-}
-
-class AuthController {
-  -authService: AuthService
-  +authenticate(credentials: Object): String
-  +register(userData: Object): User
+class TripAdvisorController {
+  -tripAdvisorService: TripAdvisorService
+  -activityFactory: ActivityFactory
+  -dateFormatter: DateTimeFormatter
+  +searchFlights(query: String): ResponseEntity<Object>
+  +searchHotels(pageNumber: int, currencyCode: String, geoId: String, checkIn: String, checkOut: String): ResponseEntity<Object>
+  +searchRestaurants(locationId: String): ResponseEntity<Object>
+  +searchRentals(sortOrder: String, page: int, currencyCode: String, geoId: String, arrival: String, departure: String): ResponseEntity<Object>
+  +searchCruises(destinationId: String, order: String, page: int, currencyCode: String): ResponseEntity<Object>
+  +searchCars(order: String, driverAge: int, page: int, currencyCode: String, pickUpPlaceId: String, pickUpLocationType: String, pickUpDate: String, dropOffDate: String, pickUpTime: String, dropOffTime: String): ResponseEntity<Object>
 }
 
 ' Services
-class BookingService {
-  -activityFactory: ActivityFactory
-  -bookingRepository: BookingRepository
-  +searchActivities(location: String, type: ActivityType): List<Activity>
-  +bookActivity(activityId: String, participants: int): Booking
-  +getBookings(userId: String): List<Booking>
+class TripAdvisorService {
+  -restTemplate: RestTemplate
+  -apiHost: String
+  -apiKey: String
+  -baseUrl: String
+  +searchActivity(activity: Activity): ResponseEntity<Object>
+  -buildUri(activity: Activity): URI
 }
 
-class MapsService {
-  -mapsRepository: MapsRepository
-  +getLocations(query: String): List<Location>
-  +getRoutes(from: String, to: String): Route
-}
-
-class AuthService {
-  -userRepository: UserRepository
-  +authenticate(credentials: Object): String
-  +register(userData: Object): User
-  +validateToken(token: String): boolean
+' Configuration
+class AppConfig {
+  +restTemplate(): RestTemplate
+  +activityFactory(): ActivityFactory
 }
 
 ' Factory Pattern Core
-interface ActivityFactory {
-  +createActivity(type: ActivityType): Activity
-}
-
-class ConcreteActivityFactory {
-  +createActivity(type: ActivityType): Activity
+class ActivityFactory {
+  +createFlightActivity(query: String): Activity
+  +createHotelActivity(pageNumber: int, currencyCode: String, geoId: String, checkIn: String, checkOut: String): Activity
+  +createRestaurantActivity(locationId: String): Activity
+  +createRentalActivity(sortOrder: String, page: int, currencyCode: String, geoId: String, arrival: String, departure: String): Activity
+  +createCruiseActivity(destinationId: String, order: String, page: int, currencyCode: String): Activity
+  +createCarActivity(order: String, driverAge: int, page: int, currencyCode: String, pickUpPlaceId: String, pickUpLocationType: String, pickUpDate: String, dropOffDate: String, pickUpTime: String, dropOffTime: String): Activity
 }
 
 ' Product interface
 interface Activity {
-  +getId(): String
-  +getName(): String
-  +getLocation(): String
   +getType(): ActivityType
-  +getDetails(): String
-  +book(participants: int): Booking
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
 ' Concrete Products
-class Excursie {
-  -id: String
-  -name: String
-  -location: String
-  -description: String
-  -price: Double
-  +getId(): String
-  +getName(): String
-  +getLocation(): String
+class FlightActivity {
+  -query: String
+  +FlightActivity(query: String)
   +getType(): ActivityType
-  +getDetails(): String
-  +book(participants: int): Booking
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
-class Overnachting {
-  -id: String
-  -name: String
-  -location: String
-  -description: String
-  -price: Double
-  +getId(): String
-  +getName(): String
-  +getLocation(): String
+class HotelActivity {
+  -pageNumber: int
+  -currencyCode: String
+  -geoId: String
+  -checkIn: String
+  -checkOut: String
+  +HotelActivity(pageNumber: int, currencyCode: String, geoId: String, checkIn: String, checkOut: String)
   +getType(): ActivityType
-  +getDetails(): String
-  +book(participants: int): Booking
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
-class Vervoer {
-  -id: String
-  -name: String
-  -location: String
-  -description: String
-  -price: Double
-  +getId(): String
-  +getName(): String
-  +getLocation(): String
+class RestaurantActivity {
+  -locationId: String
+  +RestaurantActivity(locationId: String)
   +getType(): ActivityType
-  +getDetails(): String
-  +book(participants: int): Booking
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
-' Repositories
-class BookingRepository {
-  +save(booking: Booking): void
-  +findById(id: String): Booking
-  +findByUserId(userId: String): List<Booking>
+class RentalActivity {
+  -sortOrder: String
+  -page: int
+  -currencyCode: String
+  -geoId: String
+  -arrival: String
+  -departure: String
+  +RentalActivity(sortOrder: String, page: int, currencyCode: String, geoId: String, arrival: String, departure: String)
+  +getType(): ActivityType
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
-class MapsRepository {
-  +findLocations(query: String): List<Location>
-  +findRoute(from: String, to: String): Route
+class CruiseActivity {
+  -destinationId: String
+  -order: String
+  -page: int
+  -currencyCode: String
+  +CruiseActivity(destinationId: String, order: String, page: int, currencyCode: String)
+  +getType(): ActivityType
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
-class UserRepository {
-  +save(user: User): void
-  +findById(id: String): User
-  +findByUsername(username: String): User
+class CarActivity {
+  -order: String
+  -driverAge: int
+  -page: int
+  -currencyCode: String
+  -pickUpPlaceId: String
+  -pickUpLocationType: String
+  -pickUpDate: String
+  -dropOffDate: String
+  -pickUpTime: String
+  -dropOffTime: String
+  +CarActivity(order: String, driverAge: int, page: int, currencyCode: String, pickUpPlaceId: String, pickUpLocationType: String, pickUpDate: String, dropOffDate: String, pickUpTime: String, dropOffTime: String)
+  +getType(): ActivityType
+  +getEndpoint(): String
+  +getQueryParams(): Map<String, String>
 }
 
 ' Domain models
 enum ActivityType {
-  EXCURSIE
-  OVERNACHTING
-  VERVOER
-}
-
-class Activity {
-  -id: String
-  -name: String
-  -type: ActivityType
-}
-
-class Booking {
-  -id: String
-  -activityId: String
-  -userId: String
-  -participants: int
-  -date: Date
-  -status: String
-}
-
-class User {
-  -id: String
-  -username: String
-  -email: String
-}
-
-class Location {
-  -id: String
-  -name: String
-  -coordinates: String
-}
-
-class Route {
-  -from: Location
-  -to: Location
-  -distance: Double
+  FLIGHT
+  HOTEL
+  RESTAURANT
+  RENTAL
+  CRUISE
+  CAR
 }
 
 ' External Systems
-class Database << External System >>
-class BookingAPI << External System >>
 class TripAdvisorAPI << External System >>
-class GoogleMapsAPI << External System >>
-class IdentityProviderAPI << External System >>
 
 ' Relationships - Controller and Services
-BookingController --> BookingService
-BookingController --> AuthService
-MapsController --> MapsService
-MapsController --> AuthService
-AuthController --> AuthService
+TripAdvisorController --> TripAdvisorService
+TripAdvisorController --> ActivityFactory
+
+' Configuration relationships
+AppConfig ..> RestTemplate : creates
+AppConfig ..> ActivityFactory : creates
 
 ' Factory Pattern Relationships
-BookingService --> ActivityFactory
-ActivityFactory <|.. ConcreteActivityFactory
-ConcreteActivityFactory ..> Excursie : creates
-ConcreteActivityFactory ..> Overnachting : creates
-ConcreteActivityFactory ..> Vervoer : creates
+ActivityFactory ..> FlightActivity : creates
+ActivityFactory ..> HotelActivity : creates
+ActivityFactory ..> RestaurantActivity : creates
+ActivityFactory ..> RentalActivity : creates
+ActivityFactory ..> CruiseActivity : creates
+ActivityFactory ..> CarActivity : creates
 
 ' Product Relationships
-Activity <|.. Excursie
-Activity <|.. Overnachting
-Activity <|.. Vervoer
-
-' Repository Relationships
-BookingService --> BookingRepository
-MapsService --> MapsRepository
-AuthService --> UserRepository
-BookingRepository --> Database
-MapsRepository --> Database
-UserRepository --> Database
+Activity <|.. FlightActivity
+Activity <|.. HotelActivity
+Activity <|.. RestaurantActivity
+Activity <|.. RentalActivity
+Activity <|.. CruiseActivity
+Activity <|.. CarActivity
 
 ' External Systems
-BookingService --> BookingAPI
-BookingService --> TripAdvisorAPI
-MapsService --> GoogleMapsAPI
-AuthService --> IdentityProviderAPI
+TripAdvisorService --> TripAdvisorAPI : calls
 
 ' Domain Relationships
-Activity --> ActivityType
-Excursie ..> Booking : creates
-Overnachting ..> Booking : creates
-Vervoer ..> Booking : creates
+Activity --> ActivityType : uses
+FlightActivity --> ActivityType : returns FLIGHT
+HotelActivity --> ActivityType : returns HOTEL
+RestaurantActivity --> ActivityType : returns RESTAURANT
+RentalActivity --> ActivityType : returns RENTAL
+CruiseActivity --> ActivityType : returns CRUISE
+CarActivity --> ActivityType : returns CAR
 
 @enduml 
