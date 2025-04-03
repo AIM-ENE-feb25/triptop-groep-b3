@@ -101,6 +101,20 @@ In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt vo
 In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor api en de booking.com API.  
 Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
 
+Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
+
+De implementatie bestaat uit:
+
+* Een `HotelApiAdapter` interface.
+* Klassen die deze interface implementeren, in dit geval zijn dat de BookingApiAdapter en TripadvisorApiAdapter.
+* Er is ook een `HotelFactory` die regelt welke adapter er gebruikt moet worden tijdens de aanroep in de controller.
+
+### Overige architecturele keuzes zijn:
+
+1. **Open/Closed Principle**: Er kan gemakkelijk een nieuwe externe API call worden toegevoegd, er hoeft geen huidige code voor aangepast te worden.
+2. **Dependency Injection**: In `HotelController` wordt `HotelFactory` via constructor-injectie toegevoegd, wat ervoor zorgt dat dit beter te testen is.
+
+
 ### Factory
 
 In dit project is het Factory design pattern toegepast voor het creëren van verschillende TripAdvisor activiteiten. Dit patroon beantwoordt de vraag: "Hoe breiden we het systeem uit met nieuwe activiteitstypes zonder bestaande code te wijzigen?"
@@ -396,12 +410,19 @@ Het adapter-pattern verhoogt de herbruikbaarheid van de broncode, daarnaast maak
 
 Download maven via hun [website](https://maven.apache.org/download.cgi)
 
+### Kloon het project
+
+Creëer een nieuwe folder en run hierin het commando `git clone https://github.com/AIM-ENE-feb25/triptop-groep-b3.git`  
+Open vervolgens het project in je favoriete IDE (Intellij aanbevolen)
+
 ### Run de applicatie
 
-Start de terminal of command line op in de folder waar de pom.xml in staat `/prototype` en run de commando `mvn install`
+Start de terminal of command line op in de folder waar de pom.xml in staat `/prototype` en run het commando `mvn install`
 
-Na het installen van de dependencies run het commando `mvn spring-boot:run`
+Na het installen van de dependencies run je het commando `mvn spring-boot:run`
 
 Nu start de spring boot applicatie op. De applicatie luistert naar port 9898. 
 
-[Hier zijn de beschikbare requests die je kan maken](Requests.md)
+Nu kun je de requests maken, dit kan via postman of curl, hieronder een lijst met de mogelijkheden, als er niks specifieks bij staat (post) dan gaat het om een GET-request.  
+
+[Klik hier om de lijst met requests te bekijken](Requests.md)
