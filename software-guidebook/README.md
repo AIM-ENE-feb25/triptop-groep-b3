@@ -92,9 +92,6 @@ als belangrijk:
 
 ## 6. Principles
 
-> [!IMPORTANT]
-> Beschrijf zelf de belangrijkste architecturele en design principes die zijn toegepast in de software.
-
 ### Facade
 
 In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden.
@@ -152,13 +149,16 @@ Dynamic diagram voor login
 
 ### 7.3. Design & Code
 
-Adapter class diagram
+#### Adapter class diagram
+
 ![adapter-class-diagram.svg](resources%2Fadapter-class-diagram.svg)
 
-Facade class diagram
+#### Facade class diagram
+
 ![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
 
-Factory class diagram
+#### Factory class diagram
+
 ![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
 
 > [!IMPORTANT]
@@ -390,16 +390,15 @@ architectuur.
 
 Het adapter-pattern verhoogt de herbruikbaarheid van de broncode, daarnaast maakt het de integratie van nieuwe componenten eenvoudiger zonder ingrijpende wijzigingen aan de bestaande architectuur.
 
-
 ## 9. Deployment, Operation and Support
 
-### Download maven
+### Download Maven
 
 Download maven via hun [website](https://maven.apache.org/download.cgi)
 
-### Mvn
+### Run de applicatie
 
-Start de terminal of command line op in de folder waar de pom.xml in staat en run de commando `mvn install`
+Start de terminal of command line op in de folder waar de pom.xml in staat `/prototype` en run de commando `mvn install`
 
 Na het installen van de dependencies run het commando `mvn spring-boot:run`
 
