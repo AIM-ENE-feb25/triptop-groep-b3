@@ -17,5 +17,4 @@ public class TripadvisorController {
     public String getAvailableHotelsTripadvisor() {
         return tripadvisorService.fetchTripadvisorHotels();
     }
-
 }

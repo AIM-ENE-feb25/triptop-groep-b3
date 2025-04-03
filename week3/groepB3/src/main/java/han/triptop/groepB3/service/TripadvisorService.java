@@ -12,13 +12,13 @@ import java.net.URI;
 // ADAPTER PATTERN DEMONSTRATION PURPOSES ONLY
 @Service
 public class TripadvisorService {
-    @Value("{$apiKey}")
+    @Value("${apiKey}")
     private String apiKey;
 
     public String fetchTripadvisorHotels() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchHotels?pageNumber=1&currencyCode=USD"))
+                    .uri(URI.create("https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchHotels?geoId=60763&checkIn=2025-05-05&checkOut=2025-05-06&pageNumber=1&currencyCode=USD"))
                     .header("x-rapidapi-key", apiKey)
                     .header("x-rapidapi-host", "tripadvisor16.p.rapidapi.com")
                     .header("content-type", "application/json")
