@@ -4,29 +4,31 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.URI;
 
+// ADAPTER PATTERN DEMONSTRATION PURPOSES ONLY
 @Service
-public class BookingService {
-    @Value("${apiKey}")
+public class TripadvisorService {
+    @Value("{$apiKey}")
     private String apiKey;
 
-    public String fetchBookingHotels() {
+    public String fetchTripadvisorHotels() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=929&search_type=district&arrival_date=2025-05-05&departure_date=2025-05-06&adults=1&children_age=0%2C17&room_qty=1&page_number=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=AED&location=US"))
+                    .uri(URI.create("https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchHotels?pageNumber=1&currencyCode=USD"))
                     .header("x-rapidapi-key", apiKey)
-                    .header("x-rapidapi-host", "booking-com15.p.rapidapi.com")
+                    .header("x-rapidapi-host", "tripadvisor16.p.rapidapi.com")
                     .header("content-type", "application/json")
                     .method("GET", HttpRequest.BodyPublishers.noBody())
                     .build();
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
             return response.body();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Fout bij het ophalen van hotels via Bookingservice!");
+            throw new RuntimeException("Fout bij het ophalen van hotels via Tripadvisor!");
         }
     }
 }

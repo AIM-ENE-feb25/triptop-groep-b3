@@ -16,8 +16,8 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping("/hotels")
-    public String getAvailableHotels() {
-        return bookingService.fetchHotels();
+    @GetMapping("/hotelsBooking")
+    public String getAvailableHotelsBooking() {
+        return bookingService.fetchBookingHotels();
     }
 }

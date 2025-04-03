@@ -11,6 +11,6 @@ public class BookingApiAdapter implements HotelApiAdapter {
 
     @Override
     public String fetchHotels() {
-        return bookingService.fetchHotels();
+        return bookingService.fetchBookingHotels();
     }
 }
