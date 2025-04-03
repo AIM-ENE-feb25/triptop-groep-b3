@@ -1,6 +1,6 @@
 package han.triptop.groepB3.controller;
 
-import han.triptop.groepB3.Factory.HotelFactory;
+import han.triptop.groepB3.factory.HotelFactory;
 import han.triptop.groepB3.adapter.HotelApiAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

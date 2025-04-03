@@ -1,4 +1,4 @@
-package han.triptop.groepB3.Factory;
+package han.triptop.groepB3.factory;
 
 import han.triptop.groepB3.adapter.BookingApiAdapter;
 import han.triptop.groepB3.adapter.HotelApiAdapter;
