@@ -117,6 +117,15 @@ Dynamic diagram voor login
 
 ### 7.3. Design & Code
 
+Adapter class diagram
+![adapter-class-diagram.svg](resources%2Fadapter-class-diagram.svg)
+
+Facade class diagram
+![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
+
+Factory class diagram
+![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
+
 > [!IMPORTANT]
 > Voeg toe: Per ontwerpvraag een Class Diagram plus een Sequence-Diagram van een aantal scenario's inclusief
 > begeleidende tekst.
