@@ -1,0 +1,76 @@
+@startuml
+
+' gekozen ontwerpvraag:
+' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
+' Dit is mijn uitgewerkte klasse diagram die ik na het maken van het prototype heb gemaakt.
+' Zie class-diagram-facade.puml voor het initiele klasse diagram
+
+class LoginDto {
+    - username: String;
+    - password: String;
+
+    + username() : String;
+    + password() : String;
+}
+
+class JsonObject <<External>> {
+}
+
+class JsonResponse {
+    - json: String;
+
+    + json() : String;
+    + toJsonObject() : JsonObject
+}
+
+class LoginTokenDto {
+    - token: String;
+
+    + token() : String;
+}
+
+class AuthorisationController {
+    - authorisationService : AuthorisationServiceFacade;
+
+    + login(login: LoginDto) : ResponseEntity;
+    + isLoggedIn() : ResponseEntity<Boolean>;
+}
+
+class AuthorisationServiceFacade {
+    - client: IdentityProviderClient;
+    - jdbcTemplate: JdbcTemplate;
+
+    + login(login: LoginDto) : LoginTokenDto;
+    + isLoggedIn(token: LoginTokenDto) : boolean;
+}
+
+class IdentityProviderClient {
+    + login(login: LoginDto) : Result<JsonResponse, Throwable>;
+    + isLoggedIn(token: LoginTokenDto) : Result<JsonResponse, Throwable>;
+}
+
+class Result<T, E> {
+    - value: T;
+    - error: E;
+
+    + getValue() : T;
+    + getError() : E;
+    + isError() : boolean;
+    + isSuccess() : boolean;
+}
+
+class JdbcTemplate <<External>> {
+}
+
+AuthorisationController --> AuthorisationServiceFacade
+AuthorisationServiceFacade --> IdentityProviderClient
+AuthorisationServiceFacade --> JdbcTemplate
+
+AuthorisationController --> LoginDto
+AuthorisationServiceFacade --> LoginTokenDto
+IdentityProviderClient --> JsonResponse
+IdentityProviderClient --> Result
+
+JsonResponse --> JsonObject
+
+@enduml

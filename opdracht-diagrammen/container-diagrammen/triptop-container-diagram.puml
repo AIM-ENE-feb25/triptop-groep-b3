@@ -1,0 +1,59 @@
+@startuml Container Diagram for the TripTop Reissysteem
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+title Container diagram voor het TripTop reis systeem
+
+' Layout direction
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN()
+
+' Define person actors
+Person(reiziger, "Reiziger", "Een persoon die een reis wil plannen en boeken")
+Person(reisagent, "Reisagent", "Ondersteunt reizigers bij het plannen en boeken van reizen")
+
+' Define external systems (APIs)
+System_Ext(bookingAPI, "Booking.com API", "API voor het boeken van accommodaties")
+System_Ext(getYourGuideAPI, "GetYourGuide API", "API voor excursies en activiteiten")
+System_Ext(googleMapsAPI, "Google Maps API", "API voor routeplanning en navigatie")
+System_Ext(nsAPI, "NS API", "API voor treininformatie en tickets")
+System_Ext(rentalCarAPI, "Autoverhuur API", "API voor het huren van voertuigen")
+System_Ext(identityProvider, "IdentityProvider Wiremock", "Mock service voor authenticatie en autorisatie")
+
+' Define system boundary for TripTop
+System_Boundary(triptop_system, "TripTop Reissysteem") {
+    Container(web_application, "Web Applicatie", "React, TypeScript", "Biedt gebruikers een interface om reizen samen te stellen en te boeken")
+    Container(api_gateway, "API Gateway", "Spring Boot, Java", "Zorgt voor routing van requests naar de juiste microservices")
+    Container(auth_service, "Authenticatie Service", "Spring Security, Java", "Beheert gebruikersauthenticatie en autorisatie")
+    Container(trip_service, "Trip Service", "Spring Boot, Java", "Beheert trips en reisplannen")
+    Container(booking_service, "Boekings Service", "Spring Boot, Java", "Handelt boekingen af")
+    Container(payment_service, "Betaal Service", "Spring Boot, Java", "Verwerkt betalingen")
+    ContainerDb(user_db, "Gebruikers Database", "PostgreSQL", "Slaat gebruikersgegevens en profielen op")
+    ContainerDb(trip_db, "Trip Database", "MongoDB", "Slaat reisplannen en tripgegevens op")
+    ContainerDb(booking_db, "Boekingen Database", "PostgreSQL", "Slaat boekingsgegevens op")
+}
+
+' Define relationships
+Rel(reiziger, web_application, "Gebruikt om reizen samen te stellen en te boeken", "HTTPS")
+Rel(reisagent, web_application, "Ondersteunt klanten bij het plannen", "HTTPS")
+
+Rel(web_application, api_gateway, "Communiceert via API calls", "JSON/HTTPS")
+Rel(api_gateway, auth_service, "Verifieert verzoeken", "JSON/HTTPS")
+Rel(api_gateway, trip_service, "Stuurt trip gerelateerde verzoeken door", "JSON/HTTPS")
+Rel(api_gateway, booking_service, "Stuurt boekingsgerelateerde verzoeken door", "JSON/HTTPS")
+Rel(api_gateway, payment_service, "Stuurt betalingsgerelateerde verzoeken door", "JSON/HTTPS")
+
+Rel(auth_service, user_db, "Leest van en schrijft naar", "JDBC")
+Rel(trip_service, trip_db, "Leest van en schrijft naar", "MongoDB Driver")
+Rel(booking_service, booking_db, "Leest van en schrijft naar", "JDBC")
+
+Rel(trip_service, googleMapsAPI, "Verkrijgt routeinformatie", "REST/HTTPS")
+Rel(booking_service, bookingAPI, "Boekt accommodaties", "REST/HTTPS")
+Rel(booking_service, getYourGuideAPI, "Boekt excursies", "REST/HTTPS")
+Rel(booking_service, nsAPI, "Boekt treintickets", "REST/HTTPS")
+Rel(booking_service, rentalCarAPI, "Boekt huurauto's", "REST/HTTPS")
+Rel(auth_service, identityProvider, "Verifieert gebruikers", "REST/HTTPS")
+
+@enduml 

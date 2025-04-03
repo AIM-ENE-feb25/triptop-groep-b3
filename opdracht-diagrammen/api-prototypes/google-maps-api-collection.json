@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "google-maps-api-collection",
+		"name": "Google Maps API Collection",
+		"description": "Collection for testing Google Maps API endpoints for TripTop integration. Note: Requires valid API key from Google Cloud Console",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search Places",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+amsterdam&key={{google_maps_api_key}}",
+					"protocol": "https",
+					"host": [
+						"maps.googleapis.com"
+					],
+					"path": [
+						"maps",
+						"api",
+						"place",
+						"textsearch",
+						"json"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "restaurants+in+amsterdam"
+						},
+						{
+							"key": "key",
+							"value": "{{google_maps_api_key}}"
+						}
+					]
+				},
+				"description": "Search for places using text query"
+			}
+		},
+		{
+			"name": "Get Place Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=name,rating,formatted_phone_number,formatted_address,opening_hours,website&key={{google_maps_api_key}}",
+					"protocol": "https",
+					"host": [
+						"maps.googleapis.com"
+					],
+					"path": [
+						"maps",
+						"api",
+						"place",
+						"details",
+						"json"
+					],
+					"query": [
+						{
+							"key": "place_id",
+							"value": "ChIJN1t_tDeuEmsRUsoyG83frY4"
+						},
+						{
+							"key": "fields",
+							"value": "name,rating,formatted_phone_number,formatted_address,opening_hours,website"
+						},
+						{
+							"key": "key",
+							"value": "{{google_maps_api_key}}"
+						}
+					]
+				},
+				"description": "Get detailed information about a specific place"
+			}
+		},
+		{
+			"name": "Get Directions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://maps.googleapis.com/maps/api/directions/json?origin=Amsterdam&destination=Rotterdam&mode=transit&key={{google_maps_api_key}}",
+					"protocol": "https",
+					"host": [
+						"maps.googleapis.com"
+					],
+					"path": [
+						"maps",
+						"api",
+						"directions",
+						"json"
+					],
+					"query": [
+						{
+							"key": "origin",
+							"value": "Amsterdam"
+						},
+						{
+							"key": "destination",
+							"value": "Rotterdam"
+						},
+						{
+							"key": "mode",
+							"value": "transit"
+						},
+						{
+							"key": "key",
+							"value": "{{google_maps_api_key}}"
+						}
+					]
+				},
+				"description": "Get directions between two points"
+			}
+		},
+		{
+			"name": "Get Distance Matrix",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Amsterdam&destinations=Rotterdam&mode=transit&key={{google_maps_api_key}}",
+					"protocol": "https",
+					"host": [
+						"maps.googleapis.com"
+					],
+					"path": [
+						"maps",
+						"api",
+						"distancematrix",
+						"json"
+					],
+					"query": [
+						{
+							"key": "origins",
+							"value": "Amsterdam"
+						},
+						{
+							"key": "destinations",
+							"value": "Rotterdam"
+						},
+						{
+							"key": "mode",
+							"value": "transit"
+						},
+						{
+							"key": "key",
+							"value": "{{google_maps_api_key}}"
+						}
+					]
+				},
+				"description": "Get distance and duration between multiple origins and destinations"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "google_maps_api_key",
+			"value": "YOUR_GOOGLE_MAPS_API_KEY",
+			"type": "string",
+			"description": "Get your API key from Google Cloud Console (https://console.cloud.google.com/)"
+		}
+	]
+} 

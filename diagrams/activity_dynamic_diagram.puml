@@ -1,0 +1,37 @@
+@startuml "Dynamic Diagram voor activiteiten zoeken in Triptop"
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+
+title "Dynamic Diagram: Zoeken en boeken van activiteiten"
+
+Person(user, "Reiziger")
+Container(frontend, "Frontend")
+Component(tripController, "TripController")
+Component(activityService, "ActivityService")
+Component(providerRegistry, "ProviderRegistry")
+Component(activityProviderPort, "IActivityProviderPort")
+Component(tripAdvisorAdapter, "TripAdvisorAdapter") 
+System_Ext(tripAdvisorApi, "TripAdvisor API")
+
+Rel_D(user, frontend, "1. Zoekt activiteiten")
+Rel_D(frontend, tripController, "2. Vraagt activiteiten aan")
+Rel_D(tripController, activityService, "3. Delegeert zoekopdracht")
+Rel_D(activityService, providerRegistry, "4. Zoekt beschikbare providers")
+Rel_D(providerRegistry, activityService, "5. Geeft relevante providers terug")
+Rel_D(activityService, activityProviderPort, "6. Vraagt activiteiten op")
+Rel_D(activityProviderPort, tripAdvisorAdapter, "7. Delegeert naar implementatie")
+Rel_D(tripAdvisorAdapter, tripAdvisorApi, "8. Haalt gegevens op")
+Rel_U(tripAdvisorApi, tripAdvisorAdapter, "9. Geeft activiteitendata terug")
+Rel_U(tripAdvisorAdapter, activityService, "10. Geeft activiteiten terug")
+Rel_U(activityService, tripController, "11. Geeft resultaten terug")
+Rel_U(tripController, frontend, "12. Stuurt resultaten")
+Rel_U(frontend, user, "13. Toont activiteitenopties")
+
+' Note about extension
+note right of activityProviderPort
+  Op dit uitbreidingspunt kunnen andere adapters zoals
+  BookingAdapter en GoogleMapsAdapter op dezelfde
+  manier worden gebruikt
+end note
+
+@enduml 

@@ -1,0 +1,36 @@
+@startuml
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+LAYOUT_LEFT_RIGHT()
+
+title C4 Component Diagram - Expense System
+Container(system, "Webapplicatie", "Frontend webapplicatie")
+
+System_Boundary(ExpenseSystem, "Expense System") {
+
+  Container(authenticationC, "Authentication Controller", "RestController", "handelt authenticatie af")
+  Container(expenseC, "Expense Controller", "RestController", "haalt kosten op of voegt kosten toe")
+  Container(expenseS, "Expense Service", "Service", "")
+  Container(authenticationS, "Authentication Service", "Service", "")
+  Container(expenseR, "Expense Repository", "Repository", "slaat kosten op")
+  Container(userR, "User Repository", "Repository", "slaat gebruikers op")
+  Container(sessionR, "Session Repository", "Repository", "slaat sessions op")
+
+}
+  ContainerDb(database, "Database", "H2 Sql", "Database voor het opslaan van kosten")
+
+Rel(system, expenseC, "Verstuurt verzoeken (HTTP)")
+Rel(system, authenticationC, "Verstuurt verzoeken (HTTP)")
+Rel(authenticationC, authenticationS, "Gebruikt")
+Rel(expenseC, expenseS, "Gebruikt")
+Rel(expenseC, authenticationS, "Authoriseert via")
+Rel(expenseS, expenseR, "Gebruikt")
+Rel(authenticationS, userR, "Gebruikt")
+Rel(authenticationS, sessionR, "Gebruikt")
+Rel(userR, database, "Leest/schrijft")
+Rel(sessionR, database, "Leest/schrijft")
+Rel(expenseR, database, "Leest/schrijft")
+
+@enduml

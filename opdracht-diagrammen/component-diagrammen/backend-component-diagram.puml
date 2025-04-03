@@ -1,0 +1,73 @@
+@startuml Backend Component Diagram for TripTop
+
+!include <C4/C4>
+!include <C4/C4_Component>
+
+title Component diagram voor het TripTop Backend Systeem
+
+' API Gateway Container
+Container_Boundary(api_gateway, "API Gateway") {
+    Component(request_router, "Request Router", "Spring Cloud Gateway", "Routeert requests naar de juiste microservice")
+    Component(rate_limiter, "Rate Limiter", "Spring Cloud Gateway", "Beperkt aantal requests per gebruiker")
+    Component(auth_filter, "Authenticatie Filter", "Spring Security", "Verifieert JWT tokens")
+}
+
+' Auth Service Container
+Container_Boundary(auth_service, "Authenticatie Service") {
+    Component(oauth_provider, "OAuth Provider", "Spring Security OAuth", "Ondersteunt externe login providers")
+    Component(token_service, "Token Service", "JWT", "Genereert en valideert JWT tokens")
+    Component(user_management, "Gebruikersbeheer", "Spring Boot", "Beheert gebruikersaccounts")
+}
+
+' Trip Service Container
+Container_Boundary(trip_service, "Trip Service") {
+    Component(trip_management, "Trip Management", "Spring Boot", "Beheert reisplannen")
+    Component(route_optimizer, "Route Optimalisatie", "Java, Algoritmes", "Optimaliseert reisroutes")
+    Component(trip_recommendation, "Aanbevelingsengine", "Spring Boot, ML", "Genereert gepersonaliseerde aanbevelingen")
+}
+
+' Booking Service Container
+Container_Boundary(booking_service, "Boekings Service") {
+    Component(booking_manager, "Booking Manager", "Spring Boot", "Coördineert boekingen")
+    Component(provider_adapter, "Provider Adapter", "Spring Boot", "Integreert verschillende boekingsservices")
+    Component(booking_validator, "Beschikbaarheidsvalidator", "Spring Boot", "Controleert beschikbaarheid van bouwstenen")
+}
+
+' Databases
+ContainerDb(user_db, "Gebruikers Database", "PostgreSQL", "Slaat gebruikersgegevens op")
+ContainerDb(trip_db, "Trip Database", "MongoDB", "Slaat reisplannen op")
+ContainerDb(booking_db, "Boekingen Database", "PostgreSQL", "Slaat boekingsgegevens op")
+
+' Externe systemen
+System_Ext(booking_api, "Booking.com API", "API voor accommodaties")
+System_Ext(maps_api, "Google Maps API", "API voor routes")
+System_Ext(excursion_api, "TripAdvisor API", "API voor excursies")
+System_Ext(identity_provider, "Identity Provider", "Externe auth provider")
+
+' Frontend
+Container(web_application, "Web Applicatie", "React", "Frontend van het systeem")
+
+' Relaties API Gateway
+Rel(api_gateway, auth_service, "Routeert auth verzoeken naar", "JSON/HTTPS")
+Rel(api_gateway, trip_service, "Routeert trip verzoeken naar", "JSON/HTTPS")
+Rel(api_gateway, booking_service, "Routeert boekingsverzoeken naar", "JSON/HTTPS")
+Rel(web_application, api_gateway, "Communiceert met", "JSON/HTTPS")
+
+' Interne Auth Service relaties
+Rel(oauth_provider, token_service, "Genereert tokens via")
+Rel(oauth_provider, identity_provider, "Authenticeert via", "OAuth 2.0")
+Rel(user_management, user_db, "Leest/schrijft naar")
+
+' Interne Trip Service relaties
+Rel(trip_management, trip_db, "Leest/schrijft naar")
+Rel(route_optimizer, maps_api, "Haalt routedata op via", "REST/HTTPS")
+Rel(trip_recommendation, trip_db, "Analyseert data uit")
+
+' Interne Booking Service relaties
+Rel(booking_manager, provider_adapter, "Gebruikt voor boekingen")
+Rel(booking_manager, booking_db, "Leest/schrijft naar")
+Rel(provider_adapter, booking_api, "Boekt accommodaties via", "REST/HTTPS")
+Rel(provider_adapter, excursion_api, "Boekt excursies via", "REST/HTTPS")
+Rel(provider_adapter, transport_api, "Boekt transport via", "REST/HTTPS")
+
+@enduml 

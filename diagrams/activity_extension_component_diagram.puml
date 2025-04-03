@@ -1,0 +1,66 @@
+@startuml "Component Diagram voor de Backend container van Triptop systeem"
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' Set direction for better hexagonal layout
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+title "Component Diagram voor de Backend container van Triptop systeem"
+
+' Only include actors, systems or containers that interact with components in scope
+Person(user, "Reiziger", "Een persoon die een reis wil plannen")
+Container(frontend, "Frontend", "React", "Gebruikersinterface voor reisplanning")
+
+Container_Boundary(backend, "Backend") {
+    ' Create visual groupings with boundaries
+    Boundary(primary_ports, "Primary Ports") {
+        Component(tripController, "TripController", "Spring RestController", "Behandelt HTTP-verzoeken voor reisplanning en biedt REST-endpoints")
+    }
+    
+    Boundary(application_core, "Application Core") {
+        Component(activityService, "ActivityService", "Spring Service", "Beheert activiteiten en coördineert tussen verschillende providers")
+        Component(providerRegistry, "ProviderRegistry", "Spring Bean", "Houdt een register bij van beschikbare activiteitenproviders")
+    }
+    
+    Boundary(secondary_ports, "Secondary Ports") {
+        Component(activityProviderPort, "ActivityProviderPort", "Java Interface", "Definieert interface voor alle activiteitenproviders")
+    }
+    
+    Boundary(adapters, "Adapters") {
+        Component(tripAdvisorAdapter, "TripAdvisorAdapter", "Java Adapter", "Communiceert met TripAdvisor API voor activiteiten")
+        Component(bookingAdapter, "BookingAdapter", "Java Adapter", "Communiceert met Booking.com API voor accommodaties")
+        Component(googleMapsAdapter, "GoogleMapsAdapter", "Java Adapter", "Communiceert met Google Maps API voor locaties")
+    }
+}
+
+' External APIs
+System_Ext(tripAdvisorApi, "TripAdvisor API", "Externe API voor activiteiten en excursies")
+System_Ext(bookingApi, "Booking.com API", "Externe API voor accommodaties")
+System_Ext(googleMapsApi, "Google Maps API", "Externe API voor kaarten en routes")
+
+' Relationships with proper descriptions
+Rel(user, frontend, "Gebruikt")
+Rel(frontend, tripController, "Vraagt reisopties aan", "HTTP/JSON")
+Rel_R(tripController, activityService, "Delegeert activiteiten-verzoeken naar", "Methode-aanroep")
+Rel_D(activityService, providerRegistry, "Zoekt beschikbare providers via", "Methode-aanroep")
+Rel_R(activityService, activityProviderPort, "Gebruikt providers via", "Interface")
+Rel_D(providerRegistry, activityProviderPort, "Beheert implementaties van", "Reflectie")
+
+' Adapter relationships
+Rel_R(activityProviderPort, tripAdvisorAdapter, "Wordt geïmplementeerd door")
+Rel_R(activityProviderPort, bookingAdapter, "Wordt geïmplementeerd door")
+Rel_R(activityProviderPort, googleMapsAdapter, "Wordt geïmplementeerd door")
+
+' External API calls
+Rel_R(tripAdvisorAdapter, tripAdvisorApi, "Haalt activiteitendata op van", "HTTP/JSON")
+Rel_R(bookingAdapter, bookingApi, "Haalt accommodatiedata op van", "HTTP/JSON")
+Rel_R(googleMapsAdapter, googleMapsApi, "Haalt locatie- en routedata op van", "HTTP/JSON")
+
+' Note explaining the extension point
+note right of activityProviderPort
+  Uitbreidingspunt: Nieuwe providers kunnen worden 
+  toegevoegd zonder bestaande code te wijzigen
+end note
+
+@enduml 
