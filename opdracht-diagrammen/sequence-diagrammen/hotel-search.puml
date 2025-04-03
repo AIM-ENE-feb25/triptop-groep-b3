@@ -1,0 +1,30 @@
+@startuml
+autonumber
+
+actor User
+participant "app:\nTripTopApp" as app
+participant "hotelActivity:\nHotelActivity" as hotelActivity
+participant "service:\nTripAdvisorService" as service
+database "TripAdvisorAPI" as api
+
+User -> app: searchHotels(geoId, checkIn, checkOut)
+
+create hotelActivity
+app -> hotelActivity: hotelActivity = new HotelActivity(pageNumber, currencyCode, geoId, checkIn, checkOut)
+
+app -> service: searchActivity(hotelActivity)
+service -> hotelActivity: getEndpoint()
+hotelActivity --> service: endpoint
+
+service -> hotelActivity: getQueryParams()
+hotelActivity --> service: queryParams
+
+service -> service: uri = buildUri(endpoint, queryParams)
+
+service -> api: HTTP GET Request(uri, headers)
+api --> service: JSON Response
+
+service --> app: hotelSearchResults
+User <-- app: hotelSearchResults
+
+@enduml
