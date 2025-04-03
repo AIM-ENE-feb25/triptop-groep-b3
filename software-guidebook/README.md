@@ -358,5 +358,16 @@ Het adapter-pattern verhoogt de herbruikbaarheid van de broncode, daarnaast maak
 
 ## 9. Deployment, Operation and Support
 
-> [!TIP]
-> Zelf beschrijven van wat je moet doen om de software te installeren en te kunnen runnen.
+### Download maven
+
+Download maven via hun [website](https://maven.apache.org/download.cgi)
+
+### Mvn
+
+Start de terminal of command line op in de folder waar de pom.xml in staat en run de commando `mvn install`
+
+Na het installen van de dependencies run het commando `mvn spring-boot:run`
+
+Nu start de spring boot applicatie op. De applicatie luistert naar port 9898. 
+
+[Hier zijn de beschikbare requests die je kan maken](Requests.md)
