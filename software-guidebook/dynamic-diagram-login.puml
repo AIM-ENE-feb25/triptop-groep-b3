@@ -1,0 +1,26 @@
+@startuml
+set separator none
+title Dynamisch Container Diagram - Inloggen
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+
+!include DEVICONS/java.puml
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/react.puml
+
+Component(login, "Login", "React Component", $sprite="react")
+Component(oauthProvider, "OAuth Provider", "Java Spring Boot", $sprite="java")
+Container_Ext(identityProvider, "Identity Provider", "OAuth2 Provider")
+
+Rel_R(login, oauthProvider, "1. Stuurt gegevens naar OAuth2-provider", "JSON/HTTPS")
+Rel_R(oauthProvider, identityProvider, "2. OAuth2 authenticatie via Identity Provider", "OAuth 2.0")
+Rel_R(identityProvider, oauthProvider, "3. Identity Provider bevestigt succesvolle authenticatie", "OAuth 2.0")
+Rel_R(oauthProvider, login, "4. OAuth2 Provider stuurt toegangstoken terug", "JSON/HTTPS")
+
+SHOW_LEGEND(true)
+@enduml
