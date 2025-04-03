@@ -109,6 +109,11 @@ Backend component diagram
 Frontend component diagram
 ![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)
 
+Dynamic diagram voor hotels ophalen
+![dynamic-diagram-hotels-ophalen.svg](resources%2Fdynamic-diagram-hotels-ophalen.svg)
+
+Dynamic diagram voor login
+![dynamic-diagram-login.svg](resources%2Fdynamic-diagram-login.svg)
 
 ### 7.3. Design & Code
 
