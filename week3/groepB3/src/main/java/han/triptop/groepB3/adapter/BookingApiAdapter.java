@@ -1,12 +1,11 @@
 package han.triptop.groepB3.adapter;
-
-import han.triptop.groepB3.service.BookingService;
+import han.triptop.groepB3.service.ImmutableExternalBookingService;
 
 public class BookingApiAdapter implements HotelApiAdapter {
-    private final BookingService bookingService;
+    private final ImmutableExternalBookingService bookingService;
 
-    public BookingApiAdapter(BookingService bookingService) {
-        this.bookingService = bookingService;
+    public BookingApiAdapter() {
+        this.bookingService = new ImmutableExternalBookingService();
     }
 
     @Override

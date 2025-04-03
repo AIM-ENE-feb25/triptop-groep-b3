@@ -1,10 +1,6 @@
 public class TranslateToDutch {
     public static void main(String[] args) {
-        Koenen koenen = new Koenen();
-        koenen.openEnglishDutch();
-        koenen.openDutchEnglish();
-
-        IDictionaryAdapter dictionaryAdapter = new KoenenAdapter(koenen);
+        IDictionaryAdapter dictionaryAdapter = new KoenenAdapter();
         System.out.println(dictionaryAdapter.translate("monkey"));
         System.out.println(dictionaryAdapter.translate("olifant"));
         System.out.println(dictionaryAdapter.translate("haai"));
@@ -12,8 +8,7 @@ public class TranslateToDutch {
 //        System.out.println(dictionaryAdapter.getName());
         System.out.println("--------------------");
 
-        Kramers kramers = new Kramers();
-        IDictionaryAdapter dictionaryAdapter2 = new KramersAdapter(kramers);
+        IDictionaryAdapter dictionaryAdapter2 = new KramersAdapter();
         System.out.println(dictionaryAdapter2.translate("donkey"));
         System.out.println(dictionaryAdapter2.translate("monkey"));
         System.out.println(dictionaryAdapter2.translate("fox"));

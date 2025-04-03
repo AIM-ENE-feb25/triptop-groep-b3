@@ -1,8 +1,10 @@
 public class KoenenAdapter implements IDictionaryAdapter {
     private Koenen koenen;
 
-    public KoenenAdapter(Koenen koenen) {
-        this.koenen = koenen;
+    public KoenenAdapter() {
+        this.koenen = new Koenen();
+        this.koenen.openDutchEnglish();
+        this.koenen.openEnglishDutch();
     }
 
     @Override

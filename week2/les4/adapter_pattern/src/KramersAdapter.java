@@ -1,8 +1,8 @@
 public class KramersAdapter implements IDictionaryAdapter {
     private Kramers kramers;
 
-    public KramersAdapter(Kramers kramers) {
-        this.kramers = kramers;
+    public KramersAdapter() {
+        this.kramers = new Kramers();
     }
 
     @Override
