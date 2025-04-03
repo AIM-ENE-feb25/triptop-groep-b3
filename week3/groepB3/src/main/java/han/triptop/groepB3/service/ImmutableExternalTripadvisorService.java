@@ -1,6 +1,5 @@
 package han.triptop.groepB3.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -9,12 +8,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 
-// ADAPTER PATTERN DEMONSTRATION PURPOSES ONLY
 @Service
 public class ImmutableExternalTripadvisorService {
-    @Value("${apiKey}")
-    private String apiKey;
-
     public String fetchTripadvisorHotels() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
@@ -25,7 +20,6 @@ public class ImmutableExternalTripadvisorService {
                     .method("GET", HttpRequest.BodyPublishers.noBody())
                     .build();
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-//            System.out.println(response.body());
             return response.body();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Fout bij het ophalen van hotels via Tripadvisor!");

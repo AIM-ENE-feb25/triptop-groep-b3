@@ -1,8 +1,11 @@
 package han.triptop.groepB3.controller;
 
+import han.triptop.groepB3.Factory.HotelFactory;
 import han.triptop.groepB3.adapter.BookingApiAdapter;
 import han.triptop.groepB3.adapter.HotelApiAdapter;
 import han.triptop.groepB3.adapter.TripadvisorApiAdapter;
+import han.triptop.groepB3.service.ImmutableExternalBookingService;
+import han.triptop.groepB3.service.ImmutableExternalTripadvisorService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,19 +16,15 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/")
 public class HotelController {
-    private HotelApiAdapter bookingApiAdapter;
+    private final HotelFactory hotelFactory;
 
-    public HotelController() {
-        this.bookingApiAdapter = new BookingApiAdapter();
+    public HotelController(HotelFactory hotelFactory) {
+        this.hotelFactory = hotelFactory;
     }
 
     @GetMapping("/hotels")
     public String getAvailableHotelsBooking(@RequestParam String hotelProvider) throws IOException, InterruptedException {
-        if(hotelProvider.equals("booking")){
-            this.bookingApiAdapter = new BookingApiAdapter();
-        } else if (hotelProvider.equals("tripadvisor")){
-            this.bookingApiAdapter = new TripadvisorApiAdapter();
-        }
-        return bookingApiAdapter.fetchHotels();
+        HotelApiAdapter apiAdapter = hotelFactory.getAdapter(hotelProvider);
+        return apiAdapter.fetchHotels();
     }
 }
