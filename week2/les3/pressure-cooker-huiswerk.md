@@ -23,13 +23,32 @@ Het beschrijven van de interfaces van de betrokken componenten.
 De uitkomst van deze stap is een lijst van interfaces met methoden en een eerste versie van parameters en returnwaarden.
 
 ```
-interface IdentityProvider {
-AuthToken authenticateUser(String authCode);
-boolean validateToken(AuthToken token);
+interface HotelApiAdapter {
+Strnig fetchHotels()
 }
 
-interface HotelService {
-List<Hotel> findHotels(String location, LocalDate checkIn, LocalDate checkOut);
+class BookingService {
+String fetchBookingHotels()
+}
+
+class TripadvisorService {
+String fetchTripadvisorHotels()
+}
+
+class BookingApiAdapter {
+String fetchHotels()
+}
+
+class TripadvisorApiAdapter {
+String fetchHotels()
+}
+
+class BookingController {
+String getAvailableHotelsBooking()
+}
+
+class TripadvisorController{
+String getAvailableHotelsTripadvisor()
 }
 ```
 
