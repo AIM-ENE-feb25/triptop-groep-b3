@@ -1,0 +1,30 @@
+@startuml
+autonumber
+
+actor User
+participant "app:\nTripTopApp" as app
+participant "carActivity:\nCarActivity" as carActivity
+participant "service:\nTripAdvisorService" as service
+database "TripAdvisorAPI" as api
+
+User -> app: searchCars(pickUpPlaceId, pickUpDate, dropOffDate)
+
+create carActivity
+app -> carActivity: carActivity = new CarActivity(order, driverAge, page, currencyCode, \n pickUpPlaceId, pickUpLocationType, pickUpDate, dropOffDate, \n pickUpTime, dropOffTime)
+
+app -> service: searchActivity(carActivity)
+service -> carActivity: getEndpoint()
+carActivity --> service: endpoint
+
+service -> carActivity: getQueryParams()
+carActivity --> service: queryParams
+
+service -> service: uri = buildUri(endpoint, queryParams)
+
+service -> api: HTTP GET Request(uri, headers)
+api --> service: JSON Response
+
+service --> app: carSearchResults
+User <-- app: carSearchResults
+
+@enduml
