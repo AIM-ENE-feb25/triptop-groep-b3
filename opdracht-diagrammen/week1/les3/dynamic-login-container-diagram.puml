@@ -1,0 +1,22 @@
+@startuml
+set separator none
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+title Dynamic Login container diagram
+
+Person(klant, "Klant", "Stelt zijn reis zelf samen")
+
+Container(frontend, "Frontend", "React", "Biedt een gebruikersinterface voor klanten")
+Container(backend, "Backend", "Java", "Online platform voor reisplanning")
+Container(db, "Database", "Sql", "Slaat reisgegevens en boekingen op")
+
+Rel_R(klant, frontend, "1. Stuurt login gegevens", $techn="JSON/HTTPS")
+Rel_R(frontend, backend, "2. Stuurt gebruiker data", $techn="JSON/HTTPS")
+Rel_R(backend, db, "3. leest/schrijft data", $techn="Sql")
+Rel_R(db, backend, "4. stuurt data terug", $techn="Sql")
+Rel_R(backend, frontend, "5. stuurt data terug", $techn="JSON/HTTPS")
+Rel_R(frontend, klant, "6. Toont aangepaste data", $techn="JSON/HTTPS")
+
+@enduml

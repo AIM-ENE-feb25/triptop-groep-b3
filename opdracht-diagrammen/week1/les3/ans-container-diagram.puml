@@ -1,0 +1,27 @@
+@startuml
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+LAYOUT_WITH_LEGEND()
+
+Person(student, "Student", "A student who uses the system to make exams")
+Person(teacher, "Teacher", "A teacher who uses the system to create and grade exams")
+
+System_Boundary(ans, "ANS System") {
+    Container(webapp, "Frontend", "React", "Allows students and teachers to interact with ANS")
+    Container(api, "Backend", "Java", "Handles business logic and communicates with the database")
+    ContainerDb(database, "Database", "PostgreSQL", "Stores exams, users, and results")
+}
+
+System_Ext(osiris, "Osiris", "Contains registered students for exams")
+System_Ext(schoolyear, "SchoolYear", "Secures ANS so it can only be used in a safe browser")
+
+Rel(student, webapp, "Makes exams")
+Rel(teacher, webapp, "Creates and grades exams")
+Rel(webapp, api, "Sends API requests")
+Rel(api, database, "Reads/Writes data")
+Rel(api, osiris, "Checks if student is registered for exams")
+Rel(api, schoolyear, "Checks if ANS is used in a safe browser")
+
+@enduml

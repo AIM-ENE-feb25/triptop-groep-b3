@@ -1,0 +1,56 @@
+@startuml
+
+' gekozen ontwerpvraag:
+' Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?
+
+class BookingController {
+    getBookings() : ResponseEntity<List<BookingDto>>;
+    addBooking(booking: BookingDto);
+}
+
+class BookingService {
+    getAllBookings() : List<BookingDto>;
+    saveBooking(booking: BookingDto);
+}
+
+class BookingRepository {
+    getAllBookings() : List<BookingDto>;
+    saveBooking(booking: BookingDto);
+    getBookingById(id: int) : BookingDto;
+}
+
+interface BookingAPIAdapter {
+    List<BookingAPIDto> getAllBookings();
+    void saveBooking(BookingAPIDto booking);
+}
+
+class BookingAPIAdapterImplementation {
+    List<BookingAPIDto> getAllBookings();
+    void saveBooking(BookingAPIDto booking);
+}
+
+class BookingDto {
+    id: int
+    name: String
+    location: String
+}
+
+class BookingAPIDto {
+    name: String
+    location: String
+}
+
+BookingController --> BookingService
+BookingService --> BookingRepository
+BookingService --> BookingAPIAdapter
+BookingAPIAdapterImplementation --|> BookingAPIAdapter
+
+BookingController --> BookingDto
+BookingService --> BookingDto
+BookingRepository --> BookingDto
+
+BookingService --> BookingAPIDto
+BookingAPIAdapter --> BookingAPIDto
+BookingAPIAdapterImplementation --> BookingAPIDto
+
+@enduml
