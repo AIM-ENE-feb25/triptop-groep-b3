@@ -104,6 +104,32 @@ In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt vo
 In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor api en de booking.com API.  
 Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
 
+### Factory
+
+In dit project is het Factory design pattern toegepast voor het creëren van verschillende TripAdvisor activiteiten. Dit patroon beantwoordt de vraag: "Hoe breiden we het systeem uit met nieuwe activiteitstypes zonder bestaande code te wijzigen?"
+
+De implementatie bestaat uit:
+
+* Een `Activity` interface met gemeenschappelijke methoden
+* Concrete implementatieklassen per activiteitstype (Flight, Hotel, etc.)
+* Een `ActivityFactory` die de juiste objecten aanmaakt
+
+Nieuwe activiteitstypes toevoegen kan door:
+
+1. Een nieuwe klasse te maken die `Activity` implementeert
+2. Een nieuwe factory methode toe te voegen
+3. Een nieuw endpoint toe te voegen
+
+### Andere architecturele keuzes
+
+1. **Interface-gebaseerd ontwerp**: De `Activity` interface scheidt de implementatie van het gebruik, waardoor verschillende activiteitstypes uniform behandeld worden.
+
+2. **Dependency Injection**: In `TripAdvisorController` worden `TripAdvisorService` en `ActivityFactory` via constructor-injectie toegevoegd, wat betere testbaarheid biedt.
+
+3. **Encapsulatie van API details**: Elke activiteitsklasse bepaalt zijn eigen endpoint en parameters, zoals te zien in `FlightActivity.getEndpoint()` en `getQueryParams()`.
+
+4. **Open/Closed Principle**: Nieuwe activiteiten zoals `CruiseActivity` kunnen worden toegevoegd zonder wijzigingen aan bestaande code.
+
 ## 7. Software Architecture
 
 ### 7.1. Containers
