@@ -1,0 +1,45 @@
+@startuml
+title Adapter Pattern - Hotels Ophalen
+skinparam linetype ortho
+
+    interface HotelApiAdapter {
+       + fetchHotels(): String
+    }
+    
+    class BookingApiAdapter {
+       + fetchHotels(): String
+    }
+    
+    class TripadvisorApiAdapter {
+       + fetchHotels(): String
+    }
+
+
+    class ExternalBookingService {
+        + fetchBookingHotels(): String
+    }
+
+    class ExternalTripadvisorService {
+        + fetchTripadvisorHotels(): String
+    }
+
+
+    class HotelController {
+       + getAvailableHotels(String hotelProvider): String
+    }
+
+    class HotelFactory {
+       + getAdapter(String hotelProvider) : HotelApiAdapter
+    }
+
+HotelApiAdapter <|.. BookingApiAdapter
+HotelApiAdapter <|.. TripadvisorApiAdapter
+
+BookingApiAdapter --> ExternalBookingService : --bookingService
+TripadvisorApiAdapter --> ExternalTripadvisorService : --tripadvisorService
+
+HotelFactory --> BookingApiAdapter
+HotelFactory --> TripadvisorApiAdapter
+HotelController --> HotelFactory : --hotelFactory
+
+@enduml

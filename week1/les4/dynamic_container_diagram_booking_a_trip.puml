@@ -1,0 +1,30 @@
+@startuml
+set separator none
+title Dynamisch Container Diagram - Reis Boeken
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/react.puml
+
+Person(user, "Gebruiker", $sprite="users")
+
+Container(Frontend, "Frontend", $sprite="react")
+Container(Backend, "Backend", $sprite="java")
+ContainerDb(Database, "Database", $sprite="msql_server")
+
+Rel_R(user, Frontend, "1. De gebruiker selecteert een reis", "HTTPS")
+Rel_R(Frontend, Backend, "2. Verstuurt gegevens reis door naar", "JSON")
+Rel_R(Backend, Database, "3. Controleert of de reisgegevens beschikbaar zijn via", "SQL")
+Rel_R(Database, Backend, "4. Bevestigt dat de reis beschikbaar is", "SQL")
+Rel_R(Backend, Frontend, "5. Stuurt succesvolle bevestiging terug", "JSON")
+Rel_R(Frontend, user, "6. Reis wordt weergeven aan gebruiker", "JSON")
+
+SHOW_LEGEND(true)
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/react.puml
+!include FONTAWESOME/users.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+
+
+LAYOUT_WITH_LEGEND()
+
+title Component Diagram voor de Frontend container van het Triptop Systeem
+
+Person(reiziger, "Reiziger", "[persoon]\nStelt zelf de reis samen", $sprite="users")
+Person(reisagent, "Reisagent", "[persoon]\nTweedelijns support", $sprite="users")
+
+Container(backend, "Backend", "Java, Spring Boot", $sprite="java")
+
+System_Boundary(Triptop, "Frontend van Triptop Systeem") {
+     Component(app, "App", "React Component", "Gateway voor componenten", $sprite="react")
+      Component(tripplanner, "TripPlanner", "React Component", "Gebruiker plant een reis")
+      Component(booking, "Booking", "React Component", "Afhandelen van boekingen")
+      Component(vluchtoverzicht, "VluchtOverzicht", "React Component", "Toont overzicht van beschikbare vluchten")
+      Component(vlucht, "Vlucht", "React Component", "Beschikbare vluchten")
+      Component(login, "Login", "React Component", "Rendert inlogknop")
+      Component(autolijst, "AutoLijst", "React Component", "Lijst met beschikbare auto's")
+      Component(huurauto, "HuurautoOverzicht", "React Component", "Overzicht van huurauto's")
+}
+
+Rel(reiziger, app, "gebruikt")
+Rel(app, tripplanner, "rendert component")
+Rel(tripplanner, booking, "stuurt boeking naar")
+Rel(app, login, "rendert component")
+Rel(reisagent, app, "gebruikt")
+Rel(app, vluchtoverzicht, "rendert component")
+Rel(vluchtoverzicht, vlucht, "stuurt zoekopdracht naar")
+Rel(vlucht, backend, "haalt vluchtgegevens op", "HTTP/JSON")
+Rel(app, huurauto, "rendert component")
+Rel(huurauto, autolijst, "stuurt zoekopdracht naar")
+Rel(autolijst, backend, "haalt beschikbare auto's op", "HTTP/JSON")
+Rel(login, backend, "verifieert gebruiker")
+
+@enduml

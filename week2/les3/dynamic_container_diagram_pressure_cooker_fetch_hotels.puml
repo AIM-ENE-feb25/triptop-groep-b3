@@ -1,0 +1,27 @@
+@startuml
+set separator none
+title Dynamisch Container Diagram - Hotels ophalen voor ingelogde gebruiker
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/java.puml
+!include FONTAWESOME/react.puml
+
+Component(hotelcontroller, "HotelController", "Java Spring Boot", $sprite="java")
+Component(hotelService, "HotelService", "Java Spring Boot", $sprite="java")
+Container_Ext(bookingAPI, "Booking API", "Extern systeem")
+Component(spa, "React Frontend", "Web Applicatie", $sprite="react")
+
+Rel_R(spa, hotelcontroller, "1. Gebruiker vraagt hotelinformatie op", "JSON/HTTPS")
+Rel_R(hotelcontroller, hotelService, "2. Verstuurt hotelverzoek naar service", "JSON/HTTPS")
+Rel_R(hotelService, bookingAPI, "3. Verstuurt hotelverzoek naar externe Booking API", "HTTP/JSON")
+Rel_R(bookingAPI, hotelService, "4. Ontvangt hotelgegevens van Booking API", "HTTP/JSON")
+Rel_R(hotelService, hotelcontroller, "5. Stuur ontvangen hotelgegevens naar controller", "JSON/HTTPS")
+Rel_R(hotelcontroller, spa, "6. Verstuurt hotelgegevens terug naar frontend", "JSON/HTTPS")
+
+SHOW_LEGEND(true)
+@enduml
