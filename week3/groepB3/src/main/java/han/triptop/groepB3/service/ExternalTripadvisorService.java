@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
 import java.net.URI;
 
 @Service
-public class ImmutableExternalTripadvisorService {
+public class ExternalTripadvisorService {
     public String fetchTripadvisorHotels() {
         try {
             HttpRequest request = HttpRequest.newBuilder()

@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Service
-public class ImmutableExternalBookingService {
+public class ExternalBookingService {
     public String fetchBookingHotels() {
         try {
             HttpRequest request = HttpRequest.newBuilder()

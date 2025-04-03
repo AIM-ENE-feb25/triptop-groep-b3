@@ -1,12 +1,12 @@
 package han.triptop.groepB3.adapter;
-import han.triptop.groepB3.service.ImmutableExternalTripadvisorService;
+import han.triptop.groepB3.service.ExternalTripadvisorService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TripadvisorApiAdapter implements HotelApiAdapter{
-    private final ImmutableExternalTripadvisorService tripadvisorService;
+    private final ExternalTripadvisorService tripadvisorService;
 
-    public TripadvisorApiAdapter(ImmutableExternalTripadvisorService tripadvisorService) {
+    public TripadvisorApiAdapter(ExternalTripadvisorService tripadvisorService) {
         this.tripadvisorService = tripadvisorService;
     }
 

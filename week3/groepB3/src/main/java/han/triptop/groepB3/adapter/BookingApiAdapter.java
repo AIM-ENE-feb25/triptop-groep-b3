@@ -1,12 +1,12 @@
 package han.triptop.groepB3.adapter;
-import han.triptop.groepB3.service.ImmutableExternalBookingService;
+import han.triptop.groepB3.service.ExternalBookingService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookingApiAdapter implements HotelApiAdapter {
-    private final ImmutableExternalBookingService bookingService;
+    private final ExternalBookingService bookingService;
 
-    public BookingApiAdapter(ImmutableExternalBookingService bookingService) {
+    public BookingApiAdapter(ExternalBookingService bookingService) {
         this.bookingService = bookingService;
     }
 
