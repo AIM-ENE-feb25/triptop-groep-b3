@@ -95,6 +95,10 @@ als belangrijk:
 > [!IMPORTANT]
 > Beschrijf zelf de belangrijkste architecturele en design principes die zijn toegepast in de software.
 
+### Facade
+
+In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden.
+
 ## 7. Software Architecture
 
 ### 7.1. Containers
