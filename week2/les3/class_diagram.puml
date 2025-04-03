@@ -1,15 +1,51 @@
 @startuml
-title Klasse Diagram - Hotels ophalen voor ingelogde gebruiker
+title Adapter Pattern - Hotels Ophalen
+skinparam linetype ortho
 
-interface HotelController {
-    + List<Hotel> getAvailableHotels(String location, LocalDate checkIn, LocalDate checkOut)
+interface HotelApiAdapter {
+   + fetchHotels(): String
 }
 
-interface HotelService {
-    + List<Hotel> findHotels(String location, LocalDate checkIn, LocalDate checkOut)
+class BookingService {
+    + fetchBookingHotels(): String
 }
 
-HotelController ..> HotelService : Uses
-HotelService ..> BookingAPI : Fetches hotel data
+class TripadvisorService {
+    + fetchTripadvisorHotels(): String
+}
+
+class BookingApiAdapter {
+   + fetchHotels(): String
+}
+
+class TripadvisorApiAdapter {
+    + fetchHotels(): String
+}
+
+class BookingController {
+   + getAvailableHotelsBooking(): String
+}
+
+class TripadvisorController{
+   + getAvailableHotelsTripadvisor(): String
+}
+
+HotelApiAdapter <|.. BookingApiAdapter
+HotelApiAdapter <|.. TripadvisorApiAdapter
+
+BookingApiAdapter --> BookingService : -bookingService
+TripadvisorApiAdapter --> TripadvisorService : -tripadvisorService
+
+BookingController --> BookingService : -bookingService
+TripadvisorController --> TripadvisorService : -tripadvisorService
+
+note left of BookingApiAdapter
+    return bookingService.fetchBookingHotels()
+end note
+
+
+note right of TripadvisorApiAdapter
+        return tripadvisorService.fetchTripadvisorHotels()
+end note
 
 @enduml
