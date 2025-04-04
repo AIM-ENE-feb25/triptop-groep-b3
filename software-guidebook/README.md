@@ -130,6 +130,8 @@ Facade class diagram
 Factory class diagram
 ![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
 
+Login sequence diagram
+![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
 > [!IMPORTANT]
 > Voeg toe: Per ontwerpvraag een Class Diagram plus een Sequence-Diagram van een aantal scenario's inclusief
 > begeleidende tekst.
