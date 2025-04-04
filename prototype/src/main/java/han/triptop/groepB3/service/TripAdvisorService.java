@@ -33,12 +33,6 @@ public class TripAdvisorService {
         this.baseUrl = baseUrl;
     }
     
-    /**
-     * Search for activities based on the given Activity type
-     * 
-     * @param activity The activity to search for
-     * @return The API response as a JSON object
-     */
     public ResponseEntity<Object> searchActivity(Activity activity) {
         // Build the URL with query parameters
         URI uri = buildUri(activity);
@@ -59,12 +53,6 @@ public class TripAdvisorService {
         return response;
     }
     
-    /**
-     * Build the URI for the API request with query parameters
-     * 
-     * @param activity The activity containing endpoint and parameters
-     * @return The constructed URI
-     */
     private URI buildUri(Activity activity) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(baseUrl + activity.getEndpoint());
         
