@@ -1,0 +1,28 @@
+@startuml
+autonumber
+
+actor User
+participant "app:\nTripTopApp" as app
+participant "hotelController:\nHotelController" as hotelC
+participant "hotelfactory:\nHotelFactory" as hotelF
+participant "bookingApiAdapter:\nBookingApiAdapter" as bookingApiAdapter
+participant "bookingService:\nBookingService" as bookingS
+
+database "bookingApi" as bookingApi
+
+User -> app: searchHotel(search_type, arrival_date, checkout_date)
+app -> hotelC: getAvailableHotels(hotelProvider)
+
+hotelC -> hotelF : getAdapter(hotelProvider)
+hotelF -> bookingApi : fetchHotels()
+bookingApiAdapter -> bookingS : fetchBookingHotels()
+
+bookingS -> bookingApi : HTTP GET Request
+bookingApi --> bookingS : JSON response
+bookingS --> app : hotelResults
+
+app --> User : hotelResults
+
+
+
+@enduml
