@@ -92,12 +92,58 @@ als belangrijk:
 
 ## 6. Principles
 
-> [!IMPORTANT]
-> Beschrijf zelf de belangrijkste architecturele en design principes die zijn toegepast in de software.
-
 ### Facade
 
-In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden.
+In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden. Op deze manier wordt er antwoord gegeven op de vraag: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?"
+
+De implementatie bestaat uit: 
+- Een `AuthorisatieServiceFacade` het object dat alle authorisatie afhandeld
+- Een `IdentityProviderClient` het object dat praat met de identity provider api
+
+### Adapter-pattern
+
+In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor api en de booking.com API.  
+Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
+
+Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
+
+De implementatie bestaat uit:
+
+* Een `HotelApiAdapter` interface.
+* Klassen die deze interface implementeren, in dit geval zijn dat de BookingApiAdapter en TripadvisorApiAdapter.
+* Er is ook een `HotelFactory` die regelt welke adapter er gebruikt moet worden tijdens de aanroep in de controller.
+
+### Overige architecturele keuzes zijn:
+
+1. **Open/Closed Principle**: Er kan gemakkelijk een nieuwe externe API call worden toegevoegd, er hoeft geen huidige code voor aangepast te worden.
+2. **Dependency Injection**: In `HotelController` wordt `HotelFactory` via constructor-injectie toegevoegd, wat ervoor zorgt dat dit beter te testen is.
+
+
+### Factory
+
+In dit project is het Factory design pattern toegepast voor het creëren van verschillende TripAdvisor activiteiten. Dit patroon beantwoordt de vraag: "Hoe breiden we het systeem uit met nieuwe activiteitstypes zonder bestaande code te wijzigen?"
+
+De implementatie bestaat uit:
+
+* Een `Activity` interface met gemeenschappelijke methoden
+* Concrete implementatieklassen per activiteitstype (Flight, Hotel, etc.)
+* Een `ActivityFactory` die de juiste objecten aanmaakt
+
+Nieuwe activiteitstypes toevoegen kan door:
+
+1. Een nieuwe klasse te maken die `Activity` implementeert
+2. Een nieuwe factory methode toe te voegen
+3. Een nieuw endpoint toe te voegen
+
+### Andere architecturele keuzes
+
+1. **Interface-gebaseerd ontwerp**: De `Activity` interface scheidt de implementatie van het gebruik, waardoor verschillende activiteitstypes uniform behandeld worden.
+
+2. **Dependency Injection**: In `TripAdvisorController` worden `TripAdvisorService` en `ActivityFactory` via constructor-injectie toegevoegd, wat betere testbaarheid biedt.
+
+3. **Encapsulatie van API details**: Elke activiteitsklasse bepaalt zijn eigen endpoint en parameters, zoals te zien in `FlightActivity.getEndpoint()` en `getQueryParams()`.
+
+4. **Open/Closed Principle**: Nieuwe activiteiten zoals `CruiseActivity` kunnen worden toegevoegd zonder wijzigingen aan bestaande code.
 
 ## 7. Software Architecture
 
@@ -121,20 +167,22 @@ Dynamic diagram voor login
 
 ### 7.3. Design & Code
 
-Adapter class diagram
+#### Adapter class diagram
+
 ![adapter-class-diagram.svg](resources%2Fadapter-class-diagram.svg)
 
-Facade class diagram
-![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
+#### Facade class diagram
 
-Factory class diagram
-![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
+![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
 
 Login sequence diagram
 ![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
-> [!IMPORTANT]
-> Voeg toe: Per ontwerpvraag een Class Diagram plus een Sequence-Diagram van een aantal scenario's inclusief
-> begeleidende tekst.
+
+#### Factory class diagram
+
+![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
+
+Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
 
 ## 8. Architectural Decision Records
 
@@ -361,19 +409,25 @@ architectuur.
 
 Het adapter-pattern verhoogt de herbruikbaarheid van de broncode, daarnaast maakt het de integratie van nieuwe componenten eenvoudiger zonder ingrijpende wijzigingen aan de bestaande architectuur.
 
-
 ## 9. Deployment, Operation and Support
 
-### Download maven
+### Download Maven
 
 Download maven via hun [website](https://maven.apache.org/download.cgi)
 
-### Mvn
+### Kloon het project
 
-Start de terminal of command line op in de folder waar de pom.xml in staat en run de commando `mvn install`
+Creëer een nieuwe folder en run hierin het commando `git clone https://github.com/AIM-ENE-feb25/triptop-groep-b3.git`  
+Open vervolgens het project in je favoriete IDE (Intellij aanbevolen)
 
-Na het installen van de dependencies run het commando `mvn spring-boot:run`
+### Run de applicatie
+
+Start de terminal of command line op in de folder waar de pom.xml in staat `/prototype` en run het commando `mvn install`
+
+Na het installen van de dependencies run je het commando `mvn spring-boot:run`
 
 Nu start de spring boot applicatie op. De applicatie luistert naar port 9898. 
 
-[Hier zijn de beschikbare requests die je kan maken](Requests.md)
+Nu kun je de requests maken, dit kan via postman of curl, hieronder een lijst met de mogelijkheden, als er niks specifieks bij staat (post) dan gaat het om een GET-request.  
+
+[Klik hier om de lijst met requests te bekijken](Requests.md)
