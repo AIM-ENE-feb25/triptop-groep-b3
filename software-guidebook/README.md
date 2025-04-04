@@ -175,14 +175,20 @@ Dynamic diagram voor login
 
 ![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
 
-Login sequence diagram
-![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
-
 #### Factory class diagram
 
 ![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
 
 Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
+
+Login sequence diagram
+![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
+
+Car rental search sequence diagram
+![car-rental-search-sequence-diagram.svg](resources%2Fcar-rental-search-sequence-diagram.svg)
+
+Hotel search sequence diagram
+![hotel-search-sequence-diagram.svg](resources%2Fhotel-search-sequence-diagram.svg)
 
 ## 8. Architectural Decision Records
 
