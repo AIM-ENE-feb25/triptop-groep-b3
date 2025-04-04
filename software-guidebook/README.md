@@ -100,6 +100,11 @@ De implementatie bestaat uit:
 - Een `AuthorisatieServiceFacade` het object dat alle authorisatie afhandeld
 - Een `IdentityProviderClient` het object dat praat met de identity provider api
 
+### Overige architecturele keuzes zijn:
+
+1. **Open/Closed Principle**: Er kan gemakkelijk een nieuwe externe API call worden toegevoegd, er hoeft geen huidige code voor aangepast te worden.
+2. **Dependency Injection**: In `Authorisation` wordt `AuthorisationServiceFacade` via constructor-injectie toegevoegd, wat ervoor zorgt dat dit beter te testen is.
+
 ### Adapter-pattern
 
 In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor api en de booking.com API.  
