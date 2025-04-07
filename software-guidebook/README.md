@@ -123,19 +123,11 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 
 ### Factory
 
-In dit project is het Factory design pattern toegepast voor het creëren van verschillende TripAdvisor activiteiten. Dit patroon beantwoordt de vraag: "Hoe breiden we het systeem uit met nieuwe activiteitstypes zonder bestaande code te wijzigen?"
+In dit project is het Factory pattern toegepast bij de TripAdvisor API integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten (zoals hotels, vluchten, huurauto's) op een flexibele en uitbreidbare manier aansturen?" De `ActivityFactory` centraliseert het creëren van verschillende activiteitsobjecten, zodat de controllers niet direct afhankelijk zijn van de concrete implementaties.
 
-De implementatie bestaat uit:
+Voor het toevoegen van een nieuw activiteitstype moet je drie stappen volgen: het type toevoegen aan de `ActivityType` enum, een nieuwe implementatieklasse maken die de `Activity` interface implementeert, en een createXXX methode toevoegen aan de `ActivityFactory`.
 
-* Een `Activity` interface met gemeenschappelijke methoden
-* Concrete implementatie klassen per activiteitstype (Flight, Hotel, etc.)
-* Een `ActivityFactory` die de juiste objecten aanmaakt
-
-Nieuwe activiteitstypes toevoegen kan door:
-
-1. Een nieuwe klasse te maken die `Activity` implementeert
-2. Een nieuwe factory methode toe te voegen
-3. Een nieuw endpoint toe te voegen
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#factory-class-diagram)
 
 ### Overige architecturele keuzes zijn:
 
