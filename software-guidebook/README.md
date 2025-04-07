@@ -19,15 +19,6 @@ aanpast, en de reisagent, die ondersteuning biedt waar nodig.
 De TripTop Webapplicatie schakelt met een aantal externe API's. Denk bijvoorbeeld aan het boeken van accommodaties via  
 de Booking API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.
 
-[//]: # (Toelichting op de context van de software inclusief System Context Diagram:)
-
-[//]: # ()
-
-[//]: # (* Functionaliteit)
-
-[//]: # (* Gebruikers)
-
-[//]: # (* Externe systemen)
 
 ## 3. Functional Overview
 
@@ -122,15 +113,6 @@ Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan,
 vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
 
 Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram)  
-
-[//]: # (De implementatie bestaat uit:)
-[//]: # ()
-[//]: # ()
-[//]: # (* Een `HotelApiAdapter` interface.)
-
-[//]: # (* Klassen die deze interface implementeren, in dit geval zijn dat de BookingApiAdapter en TripadvisorApiAdapter.)
-
-[//]: # (* Er is ook een `HotelFactory` die regelt welke adapter er gebruikt moet worden tijdens de aanroep in de controller.)
 
 ### Overige architecturele keuzes zijn:
 

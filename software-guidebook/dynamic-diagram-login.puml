@@ -15,12 +15,12 @@ title Dynamisch Container Diagram - Inloggen
 
 Component(login, "Login", "React Component", $sprite="react")
 Component(authorisationServiceFacade, "AuthorisationServiceFacade", "Java Spring Boot", $sprite="java")
-Container_Ext(identityProvider, "Identity Provider", "OAuth2 Provider")
+Container_Ext(identityProvider, "Identity Provider", "Authenticatie Provider")
 
-Rel_R(login, authorisationServiceFacade, "1. Stuurt gegevens naar Identity Provider", "HTTPS/JSON")
-Rel_R(authorisationServiceFacade, identityProvider, "2. authenticatie via Identity Provider", "HTTPS/JSON")
-Rel_R(identityProvider, authorisationServiceFacade, "3. Identity Provider bevestigt succesvolle authenticatie", "HTTPS/JSON")
-Rel_R(authorisationServiceFacade, login, "4. Provider stuurt token terug", "HTTPS/JSON")
+Rel_R(login, authorisationServiceFacade, "1. Stuurt gegevens naar Identity Provider", "HTTP/JSON")
+Rel_R(authorisationServiceFacade, identityProvider, "2. authenticatie via Identity Provider", "HTTP/JSON")
+Rel_R(identityProvider, authorisationServiceFacade, "3. Identity Provider bevestigt succesvolle authenticatie", "HTTP/JSON")
+Rel_R(authorisationServiceFacade, login, "4. Provider stuurt token terug", "HTTP/JSON")
 
 SHOW_LEGEND(true)
 @enduml
