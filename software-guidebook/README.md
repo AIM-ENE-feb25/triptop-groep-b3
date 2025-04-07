@@ -7,7 +7,7 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 1. De vereisten, beperkingen en principes. 
 2. De software-architectuur, met inbegrip van de technologiekeuzes op hoog niveau en de structuur van de software.
 3. De ontwerp- en codebeslissingen die zijn genomen om de software te realiseren.
-4. De architectuur van de infrastructuur en hoe de software kan worden geinstalleerd.
+4. De architectuur van de infrastructuur en hoe de software kan worden geïnstalleerd.
 
 ## 2. Context
 
@@ -146,7 +146,7 @@ In dit project is het Factory design pattern toegepast voor het creëren van ver
 De implementatie bestaat uit:
 
 * Een `Activity` interface met gemeenschappelijke methoden
-* Concrete implementatieklassen per activiteitstype (Flight, Hotel, etc.)
+* Concrete implementatie klassen per activiteitstype (Flight, Hotel, etc.)
 * Een `ActivityFactory` die de juiste objecten aanmaakt
 
 Nieuwe activiteitstypes toevoegen kan door:
@@ -161,7 +161,7 @@ Nieuwe activiteitstypes toevoegen kan door:
 
 2. **Dependency Injection**: In `TripAdvisorController` worden `TripAdvisorService` en `ActivityFactory` via constructor-injectie toegevoegd, wat betere testbaarheid biedt.
 
-3. **Encapsulatie van API details**: Elke activiteitsklasse bepaalt zijn eigen endpoint en parameters, zoals te zien in `FlightActivity.getEndpoint()` en `getQueryParams()`.
+3. **Encapsulatie van API-details**: Elke activiteitsklasse bepaalt zijn eigen endpoint en parameters, zoals te zien in `FlightActivity.getEndpoint()` en `getQueryParams()`.
 
 4. **Open/Closed Principle**: Nieuwe activiteiten zoals `CruiseActivity` kunnen worden toegevoegd zonder wijzigingen aan bestaande code.
 
@@ -177,7 +177,7 @@ De backend beheert de reisgegevens en boekingen door verbinding te maken met een
 ### 7.2. Components
 #### Backend component diagram
 ![component-backend-diagram.svg](resources%2Fcomponent-backend-diagram.svg)  
-Toelichting: In dit diagram is te zien hoe de controllers met de services in het diagram praten. De services halen de data op die de controller nodig hebben, dit wordt gedaan via de api's en de database. Deze data wordt terug gestuurd naar de controller die de data terug verstuurd naar de frontend.
+Toelichting: In dit diagram is te zien hoe de controllers met de services in het diagram praten. De services halen de data op die de controller nodig hebben, dit wordt gedaan via de API's en de database. Deze data wordt terug gestuurd naar de controller die de data terug verstuurd naar de frontend.
 
 #### Frontend component diagram
 ![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)  
@@ -217,9 +217,9 @@ De implementatie bestaat uit:
 ![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
 
 De implementatie bestaat uit:
-* Een `AuthorisatieServiceFacade` het object dat alle authorisatie afhandeld.
-* Een `IdentityProviderClient` het object dat praat met de identity provider api.
-* Als de data die uit de Identity provider api aangepast wordt dan hoeft alleen de `AuthorisatieServiceFacade` aangepast worden. Zo wordt het probleem weggewerkt van: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?".
+* Een `AuthorisatieServiceFacade` het object dat alle autorisatie afhandelt.
+* Een `IdentityProviderClient` het object dat praat met de identity provider API.
+* Als de data die uit de Identity provider API aangepast wordt dan hoeft alleen de `AuthorisatieServiceFacade` aangepast worden. Zo wordt het probleem weggewerkt van: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?".
 
 #### Factory class diagram
 
@@ -266,7 +266,7 @@ rechtstreeks vanuit de frontend of via de backend moeten benaderen.
 We kiezen voor een hybride aanpak waarbij we het beste van twee werelden combineren. Visuele kaarten worden direct via
 de frontend geladen met de Google Maps JavaScript API, wat zorgt voor een snelle en interactieve gebruikerservaring.
 Tegelijkertijd worden alle gevoelige operaties zoals routeberekeningen en geocoding veilig via de backend afgehandeld.
-Om de prestaties te optimaliseren, implementeert de backend een slim cachingsysteem dat veelgebruikte routes en
+Om de prestaties te optimaliseren, implementeert de backend een slim caching-systeem dat veelgebruikte routes en
 locatiegegevens bewaart voor hergebruik.
 
 #### Consequences
@@ -284,7 +284,7 @@ onderhoud.
 
 ##### Actiepunten
 
-We zullen een duidelijk functionaliteitenoverzicht maken waarin we de verdeling tussen frontend en backend specificeren.
+We zullen een duidelijk functionaliteit overzicht maken waarin we de verdeling tussen frontend en backend specificeren.
 Het implementeren van een robuust caching-systeem en het toevoegen van rate limiting zijn essentiële vervolgstappen om
 de oplossing te optimaliseren.
 
@@ -299,8 +299,8 @@ Proposed
 #### Context
 
 TripTop moet verschillende identity providers integreren (Google, Microsoft, AirBnB) om gebruikers in te laten loggen
-zonder een extra account aan te maken. De containerdiagram toont een aparte Login Service die communiceert met externe
-Identity Provider APIs. We moeten beslissen hoe deze verschillende providers te integreren zodat het systeem niet
+zonder een extra account aan te maken. Het container-diagram toont een aparte Login Service die communiceert met externe
+Identity Provider API's. We moeten beslissen hoe deze verschillende providers te integreren zodat het systeem niet
 afhankelijk wordt van één specifieke provider.
 
 #### Considered Options
@@ -341,7 +341,7 @@ synchronisatie van userdata tussen providers vereist extra logica, wat het syste
 ##### Actiepunten
 
 We implementeren de OAuth 2.0 flow en ontwikkelen provider adapters voor diverse identity providers. We creëren een
-gebruikersinterface voor providerkeuze en implementeren een token-validatie/refreshing mechanisme voor optimale
+gebruikersinterface voor provider keuze en implementeren een token-validatie/refreshing mechanisme voor optimale
 beveiliging.
 
 ### 8.3. ADR-003 Factory keuze
@@ -476,7 +476,7 @@ Open vervolgens het project in je favoriete IDE (Intellij aanbevolen)
 
 Start de terminal of command line op in de folder waar de pom.xml in staat `/prototype` en run het commando `mvn install`
 
-Na het installen van de dependencies run je het commando `mvn spring-boot:run`
+Na het installeren van de dependencies run je het commando `mvn spring-boot:run`
 
 Nu start de spring boot applicatie op. De applicatie luistert naar port 9898. 
 
