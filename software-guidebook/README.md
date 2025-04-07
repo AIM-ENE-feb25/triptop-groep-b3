@@ -232,9 +232,7 @@ Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modu
 
 Toelichting: In het eerste deel van dit diagram wordt er ingelogd via een POST request gemaakt naar `/authorisatie/login` met de json gegevens voor het inloggen. Hierna wordt de `login` functie binnen de service aangeroepen. De service roept de client aan en deze maakt een UniRest post request naar de api, het resultaat hiervan wordt terug gestuurd en opgeslagen in de database. Hierna wordt een OK teruggestuurd naar de reiziger met een cookie waar de login token in staat die de gebruiker op moet slaan.
 
-In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd via een GET request naar `/authorisatie/logged-in` met de cookie waar de login token in staat. Hierna wordt de `isLoggedin` functie binnen de service aangeroepen. De gebruikersnaam wordt opgehaald met behulp van de login token. De service roept de client aan en deze maakt een UniRest post request naar de api. Binnen de service wordt gecheckt of de gebruiker daadwerkelijk is ingelogd op basis van wat de client terug stuurt, op basis hiervan wordt een true of false terug gestuurd naar de client. 
-
-
+In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd via een GET request naar `/authorisatie/logged-in` met de cookie waar de login token in staat. Hierna wordt de `isLoggedin` functie binnen de service aangeroepen. De gebruikersnaam wordt opgehaald met behulp van de login token. De service roept de client aan en deze maakt een UniRest post request naar de api. Binnen de service wordt gecheckt of de gebruiker daadwerkelijk is ingelogd op basis van wat de client terug stuurt, op basis hiervan wordt een true of false terug gestuurd naar de client.
 
 #### Car rental search sequence diagram
 ![car-rental-search-sequence-diagram.svg](resources%2Fcar-rental-search-sequence-diagram.svg)
@@ -304,51 +302,39 @@ Proposed
 
 #### Context
 
-TripTop moet verschillende identity providers integreren (Google, Microsoft, AirBnB) om gebruikers in te laten loggen
-zonder een extra account aan te maken. De containerdiagram toont een aparte Login Service die communiceert met externe
-Identity Provider APIs. We moeten beslissen hoe deze verschillende providers te integreren zodat het systeem niet
-afhankelijk wordt van één specifieke provider.
+TripTop will een identity providers integreren gebruikers in te laten loggen. Het containerdiagram toont een aparte Login Service die communiceert met externe
+Identity Provider API's.
 
 #### Considered Options
 
-| Criteria                        | Directe integratie | Adapter Pattern | OAuth middleware |
-|---------------------------------|--------------------|-----------------|------------------|
-| Onafhankelijkheid van providers | --                 | ++              | +                |
-| Implementatie-eenvoud           | +                  | -               | ++               |
-| Gebruikerservaring              | +                  | +               | ++               |
-| Onderhoudbaarheid               | --                 | +               | ++               |
-| Beveiliging                     | +                  | +               | ++               |
+| Criteria                        | Directe integratie | Adapter Pattern | Facade pattern |
+|---------------------------------|--------------------|-----------------|----------------|
+| Onafhankelijkheid van providers | --                 | ++              | +              |
+| Implementatie-eenvoud           | +                  | -               | ++             |
+| Gebruikerservaring              | +                  | +               | ++             |
+| Onderhoudbaarheid               | --                 | +               | ++             |
+| Beveiliging                     | +                  | +               | ++             |
 
 #### Decision
 
-Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het OAuth 2.0 protocol en het Adapter Pattern.
-We centraliseren alle authenticatie in de Login Service container, waar een generieke interface als brug fungeert tussen
-onze applicatie en de diverse identity providers.
+Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het facade.
+We centraliseren alle authenticatie in een facade. 
 
-Voor elke provider, zoals Google, Microsoft en AirBnB, ontwikkelen we een specifieke adapter die de unieke eigenschappen
-van die provider vertaalt naar onze standaard interface. Een slimme factory bepaalt vervolgens welke adapter nodig is,
-gebaseerd op de keuze van de gebruiker.
-
-Het hart van deze oplossing is onze `IdentityProviderInterface`, die alle essentiële authenticatiefuncties definieert:
+Het hart van deze oplossing is onze `AuthorisationServiceFacade`, die alle essentiële authenticatiefuncties definieert:
 
 #### Consequences
 
 ##### Positief
 
-Gebruikers kunnen inloggen met bestaande accounts en nieuwe providers zijn eenvoudig toe te voegen zonder
-systeemwijzigingen. De Login Service fungeert als beveiligingslaag en zorgt voor een consistente authenticatie-ervaring
-ongeacht de gekozen provider.
+De Login Service fungeert als beveiligingslaag en zorgt voor een consistente authenticatie-ervaring.
 
 ##### Negatief
 
-De abstractielaag voegt complexiteit toe en verschillende providers ondersteunen uiteenlopende features. De
-synchronisatie van userdata tussen providers vereist extra logica, wat het systeem complexer maakt.
+De abstractielaag voegt complexiteit toe.
 
 ##### Actiepunten
 
-We implementeren de OAuth 2.0 flow en ontwikkelen provider adapters voor diverse identity providers. We creëren een
-gebruikersinterface voor providerkeuze en implementeren een token-validatie/refreshing mechanisme voor optimale
-beveiliging.
+We creeën de `AuthorisatieServiceFacade` binnen de applicatie. We maken een login systeem op de frontend die communiceert met de backend via verschillende endpoints. Hierbij moet ingelogd kunnen worden en gecheckt worden of iemand is ingelogd of niet. 
 
 ### 8.3. ADR-003 Factory keuze
 
