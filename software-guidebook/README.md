@@ -93,7 +93,7 @@ als belangrijk:
 
 ## 6. Principles
 
-### Facade
+### Facade-pattern
 
 In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden. Op deze manier wordt er antwoord gegeven op de vraag: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?"
 
@@ -105,23 +105,18 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 2. **Dependency Injection**: In `Authorisation` wordt `AuthorisationServiceFacade` via constructor-injectie toegevoegd, wat ervoor zorgt dat dit beter te testen is.
 
 ### Adapter-pattern
-In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor API en  
-de Booking.com API.
-Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
-
-Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of  
-vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
-
-Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram)  
-
-### Overige architecturele keuzes zijn:
+#### Architecturele keuzes zijn:
 
 1. **Open/Closed Principle**: Er kan gemakkelijk een nieuwe externe API call worden toegevoegd, er hoeft geen huidige  
    code voor aangepast te worden.
 2. **Dependency Injection**: In `HotelController` wordt `HotelFactory` via constructor-injectie toegevoegd, wat ervoor  
    zorgt dat dit beter te testen is.
 
-### Factory
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram) en in [ADR-005 Aanroepen Externe API](#85-adr-005-aanroepen-externe-api)
+
+
+
+### Factory-pattern 
 
 In dit project is het Factory pattern toegepast bij de TripAdvisor API integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten (zoals hotels, vluchten, huurauto's) op een flexibele en uitbreidbare manier aansturen?" De `ActivityFactory` centraliseert het creëren van verschillende activiteitsobjecten, zodat de controllers niet direct afhankelijk zijn van de concrete implementaties.
 
@@ -397,7 +392,7 @@ Om het Facade-patroon effectief te implementeren, voegen we een centrale interfa
 interactie met het subsysteem. Vervolgens beoordelen we of aanvullende patronen zoals Factory of Strategy nodig zijn
 binnen de facade.
 
-### 8.5. ADR-005 Adapter keuze
+### 8.5. ADR-005 Aanroepen externe API
 
 Date: 2025-03-27
 
@@ -407,7 +402,11 @@ Proposed
 
 #### Context
 
-Bij het ontwerpen van onze softwarearchitectuur hebben we verschillende ontwerppatronen overwogen die kunnen bijdragen aan een flexibele, onderhoudbare en herbruikbare codebase. De voornaamste kandidaten zijn Facade, Factory, Adapter, State en Strategy. Elk van deze patronen biedt unieke voordelen en is geschikt voor specifieke scenario's.
+In deze ADR wordt een ontwerpbeslissing onderbouwd die voortkomt uit de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
+Bij het ontwerpen van onze softwarearchitectuur hebben we verschillende ontwerppatronen overwogen die kunnen bijdragen aan een flexibele, onderhoudbare en herbruikbare codebase. De voornaamste kandidaten zijn Facade, Factory, Adapter, State en Strategy. 
+Elk van deze patronen biedt unieke voordelen en is geschikt voor specifieke scenario's.
+We bekijken de voor- en nadelen van beide benaderingen en leggen uit hoe het gekozen ontwerppatroon hierbij helpt.
+
 
 #### Considered options
 
@@ -422,8 +421,8 @@ Bij het ontwerpen van onze softwarearchitectuur hebben we verschillende ontwerpp
 
 We hebben gekozen voor het Adapter pattern, het is een makkelijk patroon wat ook een goede herbruikbaarheid biedt met
 onze bestaande code.
-Het stelt ons in staat om nieuwe componenten eenvoudig te integreren zonder grote wijzigingen aan de bestaande
-architectuur.
+Het zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden zonder grote wijzigingen aan de bestaande
+architectuur te hoeven maken.
 
 #### Consequences
 
