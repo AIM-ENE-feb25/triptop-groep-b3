@@ -11,7 +11,7 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 
 ## 2. Context
 
-![context-diagram.svg](resources%2Fcontext-diagram.svg)
+![context-diagram.svg](resources/context-diagram.svg)
 
 Toelichting: In dit contextdiagram zie je hoe de verschillende onderdelen van het TripTop-systeem met elkaar  
 samenwerken. Er zijn twee hoofdgebruikers: de reiziger, die via de webapplicatie zelf reizen samenstelt, boekt of  
@@ -106,7 +106,7 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 
 ### Adapter-pattern
 In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor API en  
-de Booking.com API. 
+de Booking.com API.
 Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
 
 Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of  
@@ -137,7 +137,7 @@ Nieuwe activiteitstypes toevoegen kan door:
 2. Een nieuwe factory methode toe te voegen
 3. Een nieuw endpoint toe te voegen
 
-### Andere architecturele keuzes
+### Overige architecturele keuzes zijn:
 
 1. **Interface-gebaseerd ontwerp**: De `Activity` interface scheidt de implementatie van het gebruik, waardoor verschillende activiteitstypes uniform behandeld worden.
 
@@ -145,28 +145,26 @@ Nieuwe activiteitstypes toevoegen kan door:
 
 3. **Encapsulatie van API-details**: Elke activiteitsklasse bepaalt zijn eigen endpoint en parameters, zoals te zien in `FlightActivity.getEndpoint()` en `getQueryParams()`.
 
-4. **Open/Closed Principle**: Nieuwe activiteiten zoals `CruiseActivity` kunnen worden toegevoegd zonder wijzigingen aan bestaande code.
-
 ## 7. Software Architecture
 
 ### 7.1. Containers
 #### Container diagram
 
-![container-diagram.svg](resources%2Fcontainer-diagram.svg)  
+![container-diagram.svg](resources/container-diagram.svg)  
 Toelichting: In dit container-diagram zie je de verschillende componenten van het Triptop Systeem en hoe ze met elkaar communiceren. De reiziger en de reisagent gebruiken de frontend om reizen samen te stellen, boeken, aan te passen of te annuleren. De frontend is een gebruikersinterface die communiceert met de backend, het hart van het systeem, via API-verzoeken.  
 De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API's: de Booking API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
 
 ### 7.2. Components
 #### Backend component diagram
-![component-backend-diagram.svg](resources%2Fcomponent-backend-diagram.svg)  
+![component-backend-diagram.svg](resources/component-backend-diagram.svg)  
 Toelichting: In dit diagram is te zien hoe de controllers met de services in het diagram praten. De services halen de data op die de controller nodig hebben, dit wordt gedaan via de API's en de database. Deze data wordt terug gestuurd naar de controller die de data terug verstuurd naar de frontend.
 
 #### Frontend component diagram
-![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)  
+![component-frontend-diagram.svg](resources/component-frontend-diagram.svg)  
 Toelichting: In dit diagram is te zien hoe de reiziger en de reisagent met de frontend communiceren. Dit gaat eerst via de app die de routing afhandelt zodat de gebruiker op de juiste pagina beland. Het kaart component praat met de google maps api om de meest recente map data op te halen. Verder praten alle componenten met de API Client behalve het notificatiesysteem. De API Client praat met de backend om hier de data op te halen vanuit alle endpoints. Ook is er een notificatie systeem die de notificaties op de frontend toont, zoals een error of success notificatie wanneer een gebruiker een formulier heeft verstuurd. 
 
 #### Dynamic diagram voor hotels ophalen
-![dynamic-diagram-hotels-ophalen.svg](resources%2Fdynamic-diagram-hotels-ophalen.svg)  
+![dynamic-diagram-hotels-ophalen.svg](resources/dynamic-diagram-hotels-ophalen.svg)  
 Toelichting: In dit diagram is te zien hoe het proces van het ophalen van hotels verloopt. De gebruiker vraagt via de frontend  
 informatie van een hotel op, waarna deze worden doorgestuurd naar de backend. Vervolgens wordt via een service een  
 koppeling gemaakt met de Booking.com API om de juiste hotel gegevens op te vragen en terug te sturen.  
@@ -174,7 +172,7 @@ Zodra de juiste gegevens gevonden zijn stuurt de API deze terug via de backend e
 voor de gebruiker.
 
 #### Dynamic diagram voor login
-![dynamic-diagram-login.svg](resources%2Fdynamic-diagram-login.svg)  
+![dynamic-diagram-login.svg](resources/dynamic-diagram-login.svg)  
 Toelichting: In dit diagram is te zien hoe het inlogproces verloopt. Een gebruiker voert via de frontend zijn inloggegevens in,  
 waarna deze worden doorgestuurd naar de backend. Daar wordt een koppeling gemaakt met een externe Identity Provider API  
 om te controleren of de gegevens kloppen.  
@@ -185,7 +183,7 @@ stuurt vervolgens een acces token naar de frontend. Daarmee is de login afgerond
 
 #### Adapter class diagram
 
-![adapter-class-diagram.svg](resources%2Fadapter-class-diagram.svg)  
+![adapter-class-diagram.svg](resources/adapter-class-diagram.svg)  
 Toelichting: In dit diagram is te zien hoe de verschillende klassen samenwerken om het adapter pattern toe te passen.
 
 De implementatie bestaat uit:
@@ -196,7 +194,7 @@ De implementatie bestaat uit:
 
 #### Facade class diagram
 
-![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
+![facade-class-diagram.svg](resources/facade-class-diagram.svg)
 
 De implementatie bestaat uit:
 * Een `AuthorisatieServiceFacade` het object dat alle autorisatie afhandelt.
@@ -205,24 +203,24 @@ De implementatie bestaat uit:
 
 #### Factory class diagram
 
-![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
+![factory-class-diagram.svg](resources/factory-class-diagram.svg)
 
 Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
 
 #### Login sequence diagram
-![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
+![login-sequence-diagram.svg](resources/login-sequence-diagram.svg)
 
 Toelichting: In het eerste deel van dit diagram wordt er ingelogd via een POST request gemaakt naar `/authorisatie/login` met de json gegevens voor het inloggen. Hierna wordt de `login` functie binnen de service aangeroepen. De service roept de client aan en deze maakt een UniRest post request naar de API, het resultaat hiervan wordt terug gestuurd en opgeslagen in de database. Hierna wordt een OK teruggestuurd naar de reiziger met een cookie waar de login token in staat die de gebruiker op moet slaan.
 
 In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd via een GET request naar `/authorisatie/logged-in` met de cookie waar de login token in staat. Hierna wordt de `isLoggedin` functie binnen de service aangeroepen. De gebruikersnaam wordt opgehaald met behulp van de login token. De service roept de client aan en deze maakt een UniRest post request naar de API. Vervolgens wordt via de service gecheckt of de gebruiker daadwerkelijk is ingelogd op basis van wat de client terug stuurt, hierna wordt er een true of false bevestiging terug gestuurd naar de client.
 
 #### Car rental search sequence diagram
-![car-rental-search-sequence-diagram.svg](resources%2Fcar-rental-search-sequence-diagram.svg)
+![car-rental-search-sequence-diagram.svg](resources/car-rental-search-sequence-diagram.svg)
 
 Toelichting: In dit diagram wordt het proces getoond voor het zoeken naar huurauto's. De gebruiker geeft zoekcriteria in zoals ophaallocatie en datums. De TripTopApp maakt een CarActivity object aan met deze gegevens en stuurt dit naar de TripAdvisorService. Deze service vraagt de juiste endpoint en parameters op bij het CarActivity object, bouwt een URI en stuurt een HTTP request naar de TripAdvisor API. De resultaten worden teruggestuurd naar de gebruiker via de app. Dit diagram toont duidelijk hoe het Factory pattern gebruikt wordt om verschillende activiteitstypes te verwerken.
 
 #### Hotel search sequence diagram
-![hotel-search-sequence-diagram.svg](resources%2Fhotel-search-sequence-diagram.svg)
+![hotel-search-sequence-diagram.svg](resources/hotel-search-sequence-diagram.svg)
 
 Toelichting: In dit diagram is te zien hoe hotelzoekopdrachten worden afgehandeld. De gebruiker voert locatie- en datumgegevens in, waarna de TripTopApp een HotelActivity object aanmaakt. Dit object wordt doorgegeven aan de TripAdvisorService die de benodigde API-parameters opvraagt. Vervolgens stuurt de service een request naar de TripAdvisor API en worden de resultaten teruggegeven aan de gebruiker. Net als bij de autoverhuur toont dit het gebruik van het Factory pattern, waarbij verschillende activiteitstypen via dezelfde service worden afgehandeld maar met activiteit-specifieke parameters.
 
