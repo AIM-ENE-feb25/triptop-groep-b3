@@ -106,7 +106,7 @@ als belangrijk:
 
 In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden. Op deze manier wordt er antwoord gegeven op de vraag: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?"
 
-Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#73-design--code)
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#facade-class-diagram)
 
 ### Overige architecturele keuzes zijn:
 
@@ -121,7 +121,7 @@ Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soort
 Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of  
 vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
 
-Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#73-design--code)  
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram)  
 
 [//]: # (De implementatie bestaat uit:)
 [//]: # ()
