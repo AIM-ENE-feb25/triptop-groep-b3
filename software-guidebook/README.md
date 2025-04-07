@@ -115,7 +115,7 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 
 ### Adapter-pattern
 In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor API en  
-de Booking.com API. 
+de Booking.com API.
 Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
 
 Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of  
@@ -155,15 +155,13 @@ Nieuwe activiteitstypes toevoegen kan door:
 2. Een nieuwe factory methode toe te voegen
 3. Een nieuw endpoint toe te voegen
 
-### Andere architecturele keuzes
+### Overige architecturele keuzes zijn:
 
 1. **Interface-gebaseerd ontwerp**: De `Activity` interface scheidt de implementatie van het gebruik, waardoor verschillende activiteitstypes uniform behandeld worden.
 
 2. **Dependency Injection**: In `TripAdvisorController` worden `TripAdvisorService` en `ActivityFactory` via constructor-injectie toegevoegd, wat betere testbaarheid biedt.
 
 3. **Encapsulatie van API-details**: Elke activiteitsklasse bepaalt zijn eigen endpoint en parameters, zoals te zien in `FlightActivity.getEndpoint()` en `getQueryParams()`.
-
-4. **Open/Closed Principle**: Nieuwe activiteiten zoals `CruiseActivity` kunnen worden toegevoegd zonder wijzigingen aan bestaande code.
 
 ## 7. Software Architecture
 
