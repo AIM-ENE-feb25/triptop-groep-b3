@@ -17,7 +17,7 @@ Toelichting: In dit contextdiagram zie je hoe de verschillende onderdelen van he
 samenwerken. Er zijn twee hoofdgebruikers: de reiziger, die via de webapplicatie zelf reizen samenstelt, boekt of  
 aanpast, en de reisagent, die ondersteuning biedt waar nodig.  
 De TripTop Webapplicatie schakelt met een aantal externe API's. Denk bijvoorbeeld aan het boeken van accommodaties via  
-de Booking API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.
+de Booking.com API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.
 
 
 ## 3. Functional Overview
@@ -112,15 +112,15 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 2. **Dependency Injection**: In `HotelController` wordt `HotelFactory` via constructor-injectie toegevoegd, wat ervoor  
    zorgt dat dit beter te testen is.
 
-Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram) en in [ADR-005 Aanroepen Externe API](#85-adr-005-aanroepen-externe-api)
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram) en in [ADR-005 Aanroepen externe API](#85-adr-005-aanroepen-externe-api)
 
 
 
 ### Factory-pattern 
 
-In dit project is het Factory pattern toegepast bij de TripAdvisor API integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten (zoals hotels, vluchten, huurauto's) op een flexibele en uitbreidbare manier aansturen?" De `ActivityFactory` centraliseert het creëren van verschillende activiteitsobjecten, zodat de controllers niet direct afhankelijk zijn van de concrete implementaties.
+In dit project is het Factory pattern toegepast bij de TripAdvisor API-integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten (zoals hotels, vluchten, huurauto's) op een flexibele en uitbreidbare manier aansturen?" De `ActivityFactory` centraliseert het creëren van verschillende activiteitsobjecten, zodat de controllers niet direct afhankelijk zijn van de concrete implementaties.
 
-Voor het toevoegen van een nieuw activiteitstype moet je drie stappen volgen: het type toevoegen aan de `ActivityType` enum, een nieuwe implementatieklasse maken die de `Activity` interface implementeert, en een createXXX methode toevoegen aan de `ActivityFactory`.
+Voor het toevoegen van een nieuw activiteitstype moet je drie stappen volgen: het type toevoegen aan de `ActivityType` enum, een nieuwe implementatie klasse maken die de `Activity` interface implementeert, en een createXXX methode toevoegen aan de `ActivityFactory`.
 
 Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#factory-class-diagram)
 
@@ -139,7 +139,7 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 
 ![container-diagram.svg](resources/container-diagram.svg)  
 Toelichting: In dit container-diagram zie je de verschillende componenten van het Triptop Systeem en hoe ze met elkaar communiceren. De reiziger en de reisagent gebruiken de frontend om reizen samen te stellen, boeken, aan te passen of te annuleren. De frontend is een gebruikersinterface die communiceert met de backend, het hart van het systeem, via API-verzoeken.  
-De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API's: de Booking API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
+De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API's: de Booking.com API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
 
 ### 7.2. Components
 #### Backend component diagram
@@ -192,7 +192,7 @@ De implementatie bestaat uit:
 
 ![factory-class-diagram.svg](resources/factory-class-diagram.svg)
 
-Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
+Toelichting: Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
 
 #### Login sequence diagram
 ![login-sequence-diagram.svg](resources/login-sequence-diagram.svg)
