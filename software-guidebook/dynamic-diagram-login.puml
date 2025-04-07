@@ -13,7 +13,7 @@ title Dynamisch Container Diagram - Inloggen
 !include FONTAWESOME/users.puml
 !include FONTAWESOME/react.puml
 
-Component(login, "Login", "React Component", $sprite="react")
+Component(login, "Frontend", "Web applicatie", $sprite="react")
 Component(authorisationServiceFacade, "AuthorisationServiceFacade", "Java Spring Boot", $sprite="java")
 Container_Ext(identityProvider, "Identity Provider API", "Extern systeem", "Authenticatie en autorisatie")
 

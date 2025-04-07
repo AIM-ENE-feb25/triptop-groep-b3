@@ -265,8 +265,8 @@ Proposed
 
 #### Context
 
-TripTop wil een identity provider integreren om gebruikers in te laten loggen. Het container diagram toont een aparte Login Service die communiceert met externe
-Identity Provider API's.
+TripTop wil een identity provider integreren om gebruikers in te laten loggen. Hiervoor komt een aparte Login Service die communiceert met externe
+Identity Provider API's. Binnen deze adr willen we uitzoeken met welke pattern dit het beste gedaan kan worden.
 
 #### Considered Options
 
@@ -274,7 +274,6 @@ Identity Provider API's.
 |---------------------------------|--------------------|-----------------|----------------|
 | Onafhankelijkheid van providers | --                 | ++              | +              |
 | Implementatie-eenvoud           | +                  | -               | ++             |
-| Gebruikerservaring              | +                  | +               | ++             |
 | Onderhoudbaarheid               | --                 | +               | ++             |
 | Beveiliging                     | +                  | +               | ++             |
 
