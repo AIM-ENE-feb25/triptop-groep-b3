@@ -106,9 +106,7 @@ als belangrijk:
 
 In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden. Op deze manier wordt er antwoord gegeven op de vraag: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?"
 
-De implementatie bestaat uit: 
-- Een `AuthorisatieServiceFacade` het object dat alle authorisatie afhandeld
-- Een `IdentityProviderClient` het object dat praat met de identity provider api
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#73-design--code)
 
 ### Overige architecturele keuzes zijn:
 
@@ -179,7 +177,7 @@ De backend beheert de reisgegevens en boekingen door verbinding te maken met een
 ### 7.2. Components
 #### Backend component diagram
 ![component-backend-diagram.svg](resources%2Fcomponent-backend-diagram.svg)  
-Toelichting:
+Toelichting: In dit diagram is te zien hoe de controllers met de services in het diagram praten. De services halen de data op die de controller nodig hebben, dit wordt gedaan via de api's en de database. Deze data wordt terug gestuurd naar de controller die de data terug verstuurd naar de frontend.
 
 #### Frontend component diagram
 ![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)  
@@ -218,19 +216,24 @@ De implementatie bestaat uit:
 
 ![facade-class-diagram.svg](resources%2Ffacade-class-diagram.svg)
 
+De implementatie bestaat uit:
+* Een `AuthorisatieServiceFacade` het object dat alle authorisatie afhandeld.
+* Een `IdentityProviderClient` het object dat praat met de identity provider api.
+* Als de data die uit de Identity provider api aangepast wordt dan hoeft alleen de `AuthorisatieServiceFacade` aangepast worden. Zo wordt het probleem weggewerkt van: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?".
+
 #### Factory class diagram
 
 ![factory-class-diagram.svg](resources%2Ffactory-class-diagram.svg)
 
 Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
 
-Login sequence diagram
+#### Login sequence diagram
 ![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
 
-Car rental search sequence diagram
+#### Car rental search sequence diagram
 ![car-rental-search-sequence-diagram.svg](resources%2Fcar-rental-search-sequence-diagram.svg)
 
-Hotel search sequence diagram
+#### Hotel search sequence diagram
 ![hotel-search-sequence-diagram.svg](resources%2Fhotel-search-sequence-diagram.svg)
 
 ## 8. Architectural Decision Records
