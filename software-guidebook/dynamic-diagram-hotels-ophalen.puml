@@ -16,12 +16,12 @@ Component(hotelService, "HotelService", "Java Spring Boot", $sprite="java")
 Container_Ext(bookingAPI, "Booking API", "Extern systeem")
 Component(spa, "React Frontend", "Web Applicatie", $sprite="react")
 
-Rel_R(spa, hotelcontroller, "1. Gebruiker vraagt hotelinformatie op", "JSON/HTTPS")
-Rel_R(hotelcontroller, hotelService, "2. Verstuurt hotelverzoek naar service", "JSON/HTTPS")
+Rel_R(spa, hotelcontroller, "1. Gebruiker vraagt hotelinformatie op", "HTTP/JSON")
+Rel_R(hotelcontroller, hotelService, "2. Verstuurt hotelverzoek naar service", "HTTP/JSON")
 Rel_R(hotelService, bookingAPI, "3. Verstuurt hotelverzoek naar externe Booking API", "HTTP/JSON")
 Rel_R(bookingAPI, hotelService, "4. Ontvangt hotelgegevens van Booking API", "HTTP/JSON")
-Rel_R(hotelService, hotelcontroller, "5. Stuur ontvangen hotelgegevens naar controller", "JSON/HTTPS")
-Rel_R(hotelcontroller, spa, "6. Verstuurt hotelgegevens terug naar frontend", "JSON/HTTPS")
+Rel_R(hotelService, hotelcontroller, "5. Stuur ontvangen hotelgegevens naar controller", "HTTP/JSON")
+Rel_R(hotelcontroller, spa, "6. Verstuurt hotelgegevens terug naar frontend", "HTTP/JSON")
 
 SHOW_LEGEND(true)
 @enduml
