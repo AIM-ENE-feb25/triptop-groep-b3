@@ -5,7 +5,7 @@ actor Reiziger
 
 autonumber
 
-participant controller as "controller:\nAuthorisationController"
+participant app as "app:\nTripTopApp"
 participant service as "service:\nAuthorisationServiceFacade"
 participant client as "client:\nIdentityProviderClient"
 participant response as "response:\nJsonResponse"
@@ -13,31 +13,31 @@ participant api as "external api:\nIdentityProviderApi"
 database database as "db:\nJdbcTemplate"
 
 group Inloggen
-Reiziger -> controller: POST /authorisation/login \n\
+Reiziger -> app: POST /authorisation/login \n\
     loginDto = { "username":"edevries", "password":"3g2Rw9sT1x" }
 
-controller -> service: login(loginDto)
+app -> service: login(loginDto)
 service -> client: result = login(loginDto)
 client -> api: response = UniRest.post()
 client -> response: result = new JsonResponse(response)
 service -> database: save(loginDto)
-service --> controller: result
-controller --> Reiziger: 200 OK (een cookie met ingelogde status)
+service --> app: result
+app --> Reiziger: 200 OK (een cookie met ingelogde status)
 
 end
 
 group Check Ingelogd
 
-Reiziger -> controller: GET /authorisation/logged-in \n\
+Reiziger -> app: GET /authorisation/logged-in \n\
     cookie: login-token="f3126624-9db2-456f-8e5f-1974d636c988"
 
-controller -> service: isLoggedIn(loginToken)
+app -> service: isLoggedIn(loginToken)
 service -> database: username = findByToken(loginToken)
 service -> client: result = isLoggedIn(loginToken, username)
 client -> api: response = UniRest.post()
 client -> response: result = new JsonResponse(response)
-service --> controller: result
-controller --> Reiziger: 200 OK true (is ingeloged)
+service --> app: result
+app --> Reiziger: 200 OK true (is ingeloged)
 
 
 end
