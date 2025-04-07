@@ -12,22 +12,16 @@ Container(website, "Frontend", "React", "De frontend waar de gebruiker interacti
 
 System_Boundary(triptop, "Backend Triptop Container") {
     ' Services
-    Component(authS, "Authorisation Service Facade", "Java Springboot, Service", "De service die OAuth authenticatie afhandelt en gebruikersgegevens in de database opslaat")
-    Component(identC, "Identity Provider Client", "Java Springboot, Service", "Service die communiceert met de Identity Provider API")
-    Component(tripAdvS, "TripAdvisor Service", "Java Springboot, Service", "De service die de TripAdvisor API aanroept voor verschillende activiteiten")
+    Component(authS, "Authorisation Service Facade", "Java Springboot, Service", "De service die authenticatie afhandelt en gebruikersgegevens in de database opslaat")
 
     ' Factories
     Component(actFact, "Activity Factory", "Java Springboot, Factory", "Factory voor het aanmaken van verschillende activiteiten")
-    Component(hotelFact, "Hotel Factory", "Java Springboot, Factory", "Factory voor het aanmaken van hotel adapters")
+    Component(hotelFact, "Hotel Adapter", "Java Springboot, Factory", "Adapter voor het ophalen van hotel data.")
 
     ' Controllers
     Component(authC, "Authorisation Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van authenticatie verzoeken")
     Component(hotelC, "Hotel Controller", "Java Springboot, Controller", "De controller die hotels ophaalt via verschillende providers")
     Component(tripAdvC, "TripAdvisor Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van activiteiten via TripAdvisor API")
-
-    ' Adapters
-    Component(bookingA, "Booking API Adapter", "Java Springboot, Adapter", "Adapter voor de Booking.com API")
-    Component(tripadvisorA, "Tripadvisor API Adapter", "Java Springboot, Adapter", "Adapter voor de TripAdvisor API voor hotels")
 }
 
 ' Database
@@ -39,22 +33,15 @@ System_Ext(tripAdvisorApi, "TripAdvisor API", "Zorgt voor het ophalen van activi
 System_Ext(identityProviderApi, "Identity Provider API", "Zorgt voor authenticatie en autorisatie")
 
 ' Relationships - Controllers to Services
-Rel(authC, authS, "gebruikt", "method calls")
-Rel(hotelC, hotelFact, "gebruikt", "method calls")
-Rel(tripAdvC, tripAdvS, "gebruikt voor activiteiten", "method calls")
-Rel(tripAdvC, actFact, "gebruikt voor aanmaken activiteiten", "method calls")
+Rel(authC, authS, "gebruikt")
+Rel(hotelC, hotelFact, "gebruikt")
+Rel(tripAdvC, actFact, "gebruikt voor aanmaken activiteiten")
+Rel(actFact, tripAdvisorApi, "gebruikt voor aanmaken activiteiten", "HTTP/JSON")
 
-' Factory relationships
-Rel(actFact, tripAdvS, "levert activiteiten aan", "Activity objects")
-Rel(hotelFact, bookingA, "creëert", "Factory method")
-Rel(hotelFact, tripadvisorA, "creëert", "Factory method")
+Rel(hotelFact, bookingApi, "haalt hotel data op", "HTTP/JSON")
+Rel(hotelFact, tripAdvisorApi, "haalt hotel data op", "HTTP/JSON")
 
-' Service to External API relationships
-Rel(tripAdvS, tripAdvisorApi, "gebruikt voor activiteiten", "HTTP/JSON")
-Rel(authS, identC, "gebruikt", "method calls")
-Rel(identC, identityProviderApi, "authenticeert gebruikers", "HTTP/JSON")
-Rel(bookingA, bookingApi, "gebruikt voor hotels", "HTTP/JSON")
-Rel(tripadvisorA, tripAdvisorApi, "gebruikt voor hotels", "HTTP/JSON")
+Rel(authS, identityProviderApi, "authenticeert gebruikers", "HTTP/JSON")
 
 ' Database relationships
 Rel(authS, database, "slaat gebruikersgegevens op", "JDBC")
