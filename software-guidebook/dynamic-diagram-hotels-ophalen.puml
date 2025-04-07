@@ -13,7 +13,7 @@ title Dynamisch Container Diagram - Hotels ophalen voor ingelogde gebruiker
 
 Component(hotelcontroller, "HotelController", "Java Spring Boot", $sprite="java")
 Component(hotelService, "HotelService", "Java Spring Boot", $sprite="java")
-Container_Ext(bookingAPI, "Booking API", "Extern systeem")
+Container_Ext(bookingAPI, "Booking.com API", "Extern systeem", "Verblijfsaccommodaties via Booking.com")
 Component(spa, "React Frontend", "Web Applicatie", $sprite="react")
 
 Rel_R(spa, hotelcontroller, "1. Gebruiker vraagt hotelinformatie op", "HTTP/JSON")

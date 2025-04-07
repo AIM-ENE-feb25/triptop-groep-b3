@@ -8,15 +8,13 @@ LAYOUT_WITH_LEGEND()
 
 title Component diagram voor de backend container van Triptop systeem
 
-Container(website, "Frontend", "React", "De frontend waar de gebruiker interacties via een user interface maakt")
+Container(website, "Frontend", "React", "Biedt een gebruikersinterface voor klanten")
 
 System_Boundary(triptop, "Backend Triptop Container") {
     ' Services
     Component(authS, "Authorisation Service Facade", "Java Springboot, Service", "De service die authenticatie afhandelt en gebruikersgegevens in de database opslaat")
-
-    ' Factories
-    Component(actFact, "Activity Factory", "Java Springboot, Factory", "Factory voor het aanmaken van verschillende activiteiten")
-    Component(hotelFact, "Hotel Adapter", "Java Springboot, Factory", "Adapter voor het ophalen van hotel data.")
+    Component(actFact, "Activity Factory", "Java Springboot, Service", "Factory voor het aanmaken van verschillende activiteiten")
+    Component(hotelFact, "Hotel Adapter", "Java Springboot, Service", "Adapter voor het ophalen van hotel data.")
 
     ' Controllers
     Component(authC, "Authorisation Controller", "Java Springboot, Controller", "De controller die zorgt voor afhandelen van authenticatie verzoeken")
@@ -25,12 +23,12 @@ System_Boundary(triptop, "Backend Triptop Container") {
 }
 
 ' Database
-ContainerDb(database, "Database", "JDBC", "Voor het opslaan en ophalen van gebruikersgegevens")
+ContainerDb(database, "Database", "JDBC", "Slaat reisgegevens en boekingen op")
 
 ' External Systems
-System_Ext(bookingApi, "Booking.com API", "Zorgt voor het ophalen van hotels")
-System_Ext(tripAdvisorApi, "TripAdvisor API", "Zorgt voor het ophalen van activiteiten, hotels en reviews")
-System_Ext(identityProviderApi, "Identity Provider API", "Zorgt voor authenticatie en autorisatie")
+System_Ext(bookingApi, "Booking.com API", "Verblijfsaccommodaties via Booking.com")
+System_Ext(tripAdvisorApi, "TripAdvisor API", "Toont reviews van boekingen")
+System_Ext(identityProviderApi, "Identity Provider API", "Authenticatie en autorisatie")
 
 ' Relationships - Controllers to Services
 Rel(authC, authS, "gebruikt")

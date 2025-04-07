@@ -5,7 +5,7 @@ actor User
 participant "app:\nTripTopApp" as app
 participant "hotelActivity:\nHotelActivity" as hotelActivity
 participant "service:\nTripAdvisorService" as service
-database "TripAdvisorAPI" as api
+participant "api:\nTripAdvisorAPI" as api
 
 User -> app: searchHotels(geoId, checkIn, checkOut)
 

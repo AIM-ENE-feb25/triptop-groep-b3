@@ -134,7 +134,7 @@ enum ActivityType {
 }
 
 ' External Systems
-class TripAdvisorAPI << External System >>
+class TripAdvisorAPI << External >>
 
 ' Relationships - Controller and Services
 TripAdvisorController --> TripAdvisorService

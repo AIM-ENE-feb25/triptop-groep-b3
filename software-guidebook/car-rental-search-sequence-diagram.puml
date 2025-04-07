@@ -5,7 +5,7 @@ actor User
 participant "app:\nTripTopApp" as app
 participant "carActivity:\nCarActivity" as carActivity
 participant "service:\nTripAdvisorService" as service
-database "TripAdvisorAPI" as api
+participant "api:\nTripAdvisorAPI" as api
 
 User -> app: searchCars(pickUpPlaceId, pickUpDate, dropOffDate)
 

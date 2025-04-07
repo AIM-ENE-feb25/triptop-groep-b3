@@ -15,7 +15,7 @@ title Dynamisch Container Diagram - Inloggen
 
 Component(login, "Login", "React Component", $sprite="react")
 Component(authorisationServiceFacade, "AuthorisationServiceFacade", "Java Spring Boot", $sprite="java")
-Container_Ext(identityProvider, "Identity Provider", "Authenticatie Provider")
+Container_Ext(identityProvider, "Identity Provider API", "Extern systeem", "Authenticatie en autorisatie")
 
 Rel_R(login, authorisationServiceFacade, "1. Stuurt gegevens naar Identity Provider", "HTTP/JSON")
 Rel_R(authorisationServiceFacade, identityProvider, "2. authenticatie via Identity Provider", "HTTP/JSON")

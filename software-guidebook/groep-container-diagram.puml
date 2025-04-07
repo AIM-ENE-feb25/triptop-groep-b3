@@ -13,7 +13,7 @@ Person(reisagent, "Reisagent\n[persoon]", "Medewerker van Triptop")
 System_Boundary(triptop, "Triptop Systeem") {
     Container(frontend, "Frontend", "React","Biedt een gebruikersinterface voor klanten")
     Container(backend, "Backend", "Java", "Online platform voor reisplanning")
-    ContainerDb(database, "Database", "SQL", "Slaat reisgegevens en boekingen op")
+    ContainerDb(database, "Database", "JDBC", "Slaat reisgegevens en boekingen op")
 }
 
 System_Ext(bookingAPI, "Booking.com API", "Verblijfsaccommodaties via Booking.com")

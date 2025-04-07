@@ -18,11 +18,11 @@ skinparam linetype ortho
     }
 
 
-    class ExternalBookingService {
+    class ExternalBookingService <<External>> {
         + fetchBookingHotels(): String
     }
 
-    class ExternalTripadvisorService {
+    class ExternalTripadvisorService <<External>> {
         + fetchTripadvisorHotels(): String
     }
 
