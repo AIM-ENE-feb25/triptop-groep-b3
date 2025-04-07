@@ -16,7 +16,7 @@ System_Boundary(triptop, "Triptop Systeem") {
     ContainerDb(database, "Database", "SQL", "Slaat reisgegevens en boekingen op")
 }
 
-System_Ext(bookingAPI, "Booking API", "Verblijfsaccommodaties via Booking.com")
+System_Ext(bookingAPI, "Booking.com API", "Verblijfsaccommodaties via Booking.com")
 System_Ext(MapsAPI, "Google Maps API", "navigeert en toont de locatie van boekingen")
 System_Ext(identityProviderAPI, "Identity Provider API", "Authenticatie en autorisatie")
 System_Ext(tripAdvisor, "Trip advisor API", "Reviews van boekingen")

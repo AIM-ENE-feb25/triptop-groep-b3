@@ -53,7 +53,7 @@ person "==Reisagent\n<size:10><<Persoon>></size>\n\nMedewerker van Triptop" <<Re
 rectangle "==TripTop Webapplicatie\n<size:10><<Software Systeem>></size>\n\nOnline platform voor reisplanning" <<TripTopWebapplicatie>> as TripTopWebapplicatie
 
 ' Externe APIs
-rectangle "==Booking API\n<size:10><<Externe API>></size>\n\nVerblijfsaccommodaties via Booking.com" <<ExterneAPI>> as BookingAPI
+rectangle "==Booking.com API\n<size:10><<Externe API>></size>\n\nVerblijfsaccommodaties via Booking.com" <<ExterneAPI>> as BookingAPI
 rectangle "==Google Maps API\n<size:10><<Externe API>></size>\n\nRouteplanning en navigatie" <<ExterneAPI>> as GoogleMapsAPI
 rectangle "==Identity Provider API\n<size:10><<Externe API>></size>\n\nAuthenticatie en autorisatie" <<ExterneAPI>> as IdentityProviderAPI
 rectangle "==TripAdvisor API\n<size:10><<Externe API>></size>\n\nToont reviews van boekingen" <<ExterneAPI>> as TripAdvisor
