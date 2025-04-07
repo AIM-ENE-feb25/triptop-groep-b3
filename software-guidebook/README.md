@@ -181,7 +181,7 @@ Toelichting: In dit diagram is te zien hoe de controllers met de services in het
 
 #### Frontend component diagram
 ![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)  
-Toelichting:
+Toelichting: In dit diagram is te zien hoe de reiziger en de reisagent met de frontend communiceren. Dit gaat eerst via de app die de routing afhandelt zodat de gebruiker op de juiste pagina beland. Het kaart component praat met de google maps api om de meest recente map data op te halen. Verder praten alle componenten met de API Client behalve het notificatiesysteem. De API Client praat met de backend om hier de data op te halen vanuit alle endpoints. Ook is er een notificatie systeem die de notificaties op de frontend toont, zoals een error of success notificatie wanneer een gebruiker een formulier heeft verstuurd. 
 
 #### Dynamic diagram voor hotels ophalen
 ![dynamic-diagram-hotels-ophalen.svg](resources%2Fdynamic-diagram-hotels-ophalen.svg)  

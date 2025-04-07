@@ -25,7 +25,7 @@ Container_Boundary(web_app, "Frontend van Triptop Systeem") {
     Component(api_client, "API Client", "Axios/Fetch", "Centraal punt voor alle API-communicatie met de backend")
 }
 
-System(api_gateway, "API Gateway", "Centrale gateway voor alle backend services")
+System(api_gateway, "Backend", "Centrale gateway voor alle backend services")
 System_Ext(google_maps_api, "Google Maps API", "API voor Google Maps")
 
 Person(reiziger, "Reiziger", "Klant van Triptop")
