@@ -114,15 +114,11 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 
 Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#adapter-class-diagram) en in [ADR-005 Aanroepen externe API](#85-adr-005-aanroepen-externe-api)
 
-
-
 ### Factory-pattern 
 
-In dit project is het Factory pattern toegepast bij de TripAdvisor API-integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten (zoals hotels, vluchten, huurauto's) op een flexibele en uitbreidbare manier aansturen?" De `ActivityFactory` centraliseert het creëren van verschillende activiteitsobjecten, zodat de controllers niet direct afhankelijk zijn van de concrete implementaties.
+In dit project is het Factory pattern toegepast bij de TripAdvisor API integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten op een flexibele en uitbreidbare manier aansturen?" Dit pattern is gekozen omdat het de controller-laag ontkoppelt van de concrete implementaties van activiteiten.
 
-Voor het toevoegen van een nieuw activiteitstype moet je drie stappen volgen: het type toevoegen aan de `ActivityType` enum, een nieuwe implementatie klasse maken die de `Activity` interface implementeert, en een createXXX methode toevoegen aan de `ActivityFactory`.
-
-Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#factory-class-diagram)
+Verdere uitleg over de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#factory-class-diagram) en de architectuurkeuze wordt onderbouwd in [hoofdstuk 8.3 ADR-003](#83-adr-003-factory-keuze).
 
 ### Overige architecturele keuzes zijn:
 
@@ -192,7 +188,9 @@ De implementatie bestaat uit:
 
 ![factory-class-diagram.svg](resources/factory-class-diagram.svg)
 
-Toelichting: Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modulariteit. De `Activity` interface is een soort contract waar alle activiteiten aan moeten voldoen, en de `ActivityFactory` maakt dan de concrete implementaties zoals `HotelActivity` en `CarActivity`. In de sequence diagrammen zie je hoe een request van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die dan met de TripAdvisorAPI praat. Door deze opzet kunnen we makkelijk nieuwe activiteiten toevoegen door gewoon een nieuwe klasse te maken die de interface implementeert en een factory-methode toe te voegen, zonder dat we bestaande code hoeven aan te passen. Best handig eigenlijk.
+In het klassendiagram is te zien hoe het Factory pattern is toegepast voor het creëren van verschillende soorten activiteiten voor de TripAdvisor API. De `Activity` interface vormt het contract waar alle activiteiten aan moeten voldoen, met methoden zoals `getEndpoint()` en `getQueryParams()`. De `ActivityFactory` is verantwoordelijk voor het instantiëren van de concrete implementaties zoals `HotelActivity` en `CarActivity`.
+
+Voor het toevoegen van een nieuw activiteitstype zijn drie stappen nodig: het type toevoegen aan de `ActivityType` enum, een nieuwe implementatieklasse maken die de `Activity` interface implementeert, en een createXXX methode toevoegen aan de `ActivityFactory`. De sequence diagrammen voor hotel- en autoverhuur-zoekfuncties tonen hoe een verzoek van de gebruiker via de TripTopApp wordt omgezet naar de juiste activiteitsklasse en hoe die vervolgens met de TripAdvisorAPI communiceert.
 
 #### Login sequence diagram
 ![login-sequence-diagram.svg](resources/login-sequence-diagram.svg)
@@ -307,7 +305,7 @@ De abstractielaag voegt complexiteit toe.
 
 We creëren de `AuthorisatieServiceFacade` binnen de applicatie. We maken een login systeem op de frontend die communiceert met de backend via verschillende endpoints. Hierbij moet ingelogd kunnen worden en gecheckt worden of iemand is ingelogd of niet.
 
-### 8.3. ADR-003 Factory keuze
+### 8.3. ADR-003 Verschillende activiteitstypes flexibel aansturen
 
 Datum: 2025-03-27
 #### Status
@@ -316,7 +314,9 @@ Proposed
 
 #### Context
 
-TripTop biedt gebruikers de mogelijkheid om reizen samen te stellen uit verschillende "bouwstenen" zoals vluchten, accommodaties en activiteiten. Deze componenten moeten flexibel uitbreidbaar zijn zonder bestaande code aan te passen. We moeten een patroon kiezen dat het mogelijk maakt om nieuwe providers en bouwsteentypes toe te voegen terwijl de applicatie onafhankelijk blijft van specifieke implementaties.
+Deze ADR beschrijft de keuze voor een design pattern dat specifiek gebruikt wordt bij de TripAdvisor API integratie gerelateerd aan het afhandelen van verschillende activiteitstypes.
+
+Bij het integreren van de TripAdvisor API in onze applicatie, stuitten we op de vraag: "Hoe kunnen we verschillende soorten activiteiten op een flexibele en uitbreidbare manier aansturen?" We zochten een oplossing die het toevoegen van nieuwe activiteitstypes mogelijk zou maken zonder bestaande code aan te passen.
 
 #### Considered options
 
@@ -330,17 +330,17 @@ TripTop biedt gebruikers de mogelijkheid om reizen samen te stellen uit verschil
 
 #### Decision
 
-We implementeren het Factory Method Pattern voor TripTop. Dit patroon biedt de beste combinatie van flexibiliteit, ontkoppeling en uitbreidbaarheid voor TripTop.
+Na zorgvuldige afweging hebben we specifiek voor de TripAdvisor activiteiten-integratie gekozen voor het Factory Method Pattern. Dit pattern biedt voor deze specifieke use case de beste combinatie van flexibiliteit, ontkoppeling en uitbreidbaarheid. Door een centraal punt te creëren waar activiteitsobjecten worden aangemaakt via de `ActivityFactory`, kunnen controllers op een uniforme manier met verschillende activiteitstypes werken zonder afhankelijk te zijn van de specifieke implementaties.
 
 #### Consequences
 
-Het Factory Method Pattern zorgt voor een duidelijke scheiding tussen creatie en gebruik van reisbouwstenen. Nieuwe providers en types kunnen worden toegevoegd zonder bestaande code te wijzigen. Het systeem wordt beter testbaar doordat we makkelijker mock-implementaties kunnen injecteren.
+Het Factory Method Pattern zorgt voor een duidelijke scheiding tussen creatie en gebruik van activiteitsobjecten. Het systeem wordt ook beter testbaar doordat we eenvoudiger mock-implementaties kunnen injecteren tijdens het testen.
 
-Het patroon introduceert wel extra klassen en interfaces, wat de initiële complexiteit verhoogt. Dit kan voor beginnende ontwikkelaars een leercurve betekenen en de ontwikkeltijd verlengen in vergelijking met directe, minder flexibele implementaties.
+Het patroon vereist wel meer initiële ontwikkeltijd door de extra abstractielaag. Hiervoor moeten de `Activity` interface, concrete implementatieklassen en de `ActivityFactory` worden opgesteld. Deze complexiteit is vooral bij aanvang van het project merkbaar, maar verdient zich terug naarmate het aantal activiteitstypes groeit.
 
 ##### Actiepunten
 
-We definiëren kerninterfaces voor reisbouwstenen en factories, creëren een consistente naamgeving, en ondersteunen de implementatie met unit tests. We documenteren het patroon grondig voor toekomstige ontwikkelaars.
+We implementeren de `Activity` interface als contract voor alle activiteitstypes, ontwikkelen concrete implementaties zoals `HotelActivity` en `CarActivity`, en creëren een `ActivityFactory` met aparte methoden voor elk type. Voor de uitbreiding met nieuwe activiteitstypes documenteren we het proces waarbij het type wordt toegevoegd aan de enum, een nieuwe implementatieklasse wordt gemaakt en een factory-methode wordt toegevoegd.
 
 ### 8.4. ADR-004 Facade keuze
 
