@@ -230,9 +230,9 @@ Je kan in het klassendiagram zien hoe we het Factory pattern gebruiken voor modu
 #### Login sequence diagram
 ![login-sequence-diagram.svg](resources%2Flogin-sequence-diagram.svg)
 
-Toelichting: In het eerste deel van dit diagram wordt er ingelogd via een POST request gemaakt naar `/authorisatie/login` met de json gegevens voor het inloggen. Hierna wordt de `login` functie binnen de service aangeroepen. De service roept de client aan en deze maakt een UniRest post request naar de api, het resultaat hiervan wordt terug gestuurd en opgeslagen in de database. Hierna wordt een OK teruggestuurd naar de reiziger met een cookie waar de login token in staat die de gebruiker op moet slaan.
+Toelichting: In het eerste deel van dit diagram wordt er ingelogd via een POST request gemaakt naar `/authorisatie/login` met de json gegevens voor het inloggen. Hierna wordt de `login` functie binnen de service aangeroepen. De service roept de client aan en deze maakt een UniRest post request naar de API, het resultaat hiervan wordt terug gestuurd en opgeslagen in de database. Hierna wordt een OK teruggestuurd naar de reiziger met een cookie waar de login token in staat die de gebruiker op moet slaan.
 
-In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd via een GET request naar `/authorisatie/logged-in` met de cookie waar de login token in staat. Hierna wordt de `isLoggedin` functie binnen de service aangeroepen. De gebruikersnaam wordt opgehaald met behulp van de login token. De service roept de client aan en deze maakt een UniRest post request naar de api. Binnen de service wordt gecheckt of de gebruiker daadwerkelijk is ingelogd op basis van wat de client terug stuurt, op basis hiervan wordt een true of false terug gestuurd naar de client.
+In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd via een GET request naar `/authorisatie/logged-in` met de cookie waar de login token in staat. Hierna wordt de `isLoggedin` functie binnen de service aangeroepen. De gebruikersnaam wordt opgehaald met behulp van de login token. De service roept de client aan en deze maakt een UniRest post request naar de API. Vervolgens wordt via de service gecheckt of de gebruiker daadwerkelijk is ingelogd op basis van wat de client terug stuurt, hierna wordt er een true of false bevestiging terug gestuurd naar de client.
 
 #### Car rental search sequence diagram
 ![car-rental-search-sequence-diagram.svg](resources%2Fcar-rental-search-sequence-diagram.svg)
@@ -306,7 +306,7 @@ Proposed
 
 #### Context
 
-TripTop will een identity providers integreren gebruikers in te laten loggen. Het containerdiagram toont een aparte Login Service die communiceert met externe
+TripTop wil een identity provider integreren om gebruikers in te laten loggen. Het container diagram toont een aparte Login Service die communiceert met externe
 Identity Provider API's.
 
 #### Considered Options
@@ -321,10 +321,10 @@ Identity Provider API's.
 
 #### Decision
 
-Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het facade.
+Na zorgvuldige afweging hebben we gekozen voor een elegante oplossing met het facade-pattern.
 We centraliseren alle authenticatie in een facade. 
 
-Het hart van deze oplossing is onze `AuthorisationServiceFacade`, die alle essentiële authenticatiefuncties definieert:
+Het hart van deze oplossing is onze `AuthorisationServiceFacade`, die alle essentiële authenticatiefuncties definieert.
 
 #### Consequences
 
@@ -338,7 +338,7 @@ De abstractielaag voegt complexiteit toe.
 
 ##### Actiepunten
 
-We creeën de `AuthorisatieServiceFacade` binnen de applicatie. We maken een login systeem op de frontend die communiceert met de backend via verschillende endpoints. Hierbij moet ingelogd kunnen worden en gecheckt worden of iemand is ingelogd of niet.
+We creëren de `AuthorisatieServiceFacade` binnen de applicatie. We maken een login systeem op de frontend die communiceert met de backend via verschillende endpoints. Hierbij moet ingelogd kunnen worden en gecheckt worden of iemand is ingelogd of niet.
 
 ### 8.3. ADR-003 Factory keuze
 
