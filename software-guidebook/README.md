@@ -133,7 +133,7 @@ Verdere uitleg over de implementatie hiervan is te lezen in [hoofdstuk 7.3 Desig
 
 ![container-diagram.svg](resources/container-diagram.svg)  
 Toelichting: In dit container-diagram zie je de verschillende componenten van het Triptop Systeem en hoe ze met elkaar communiceren. De reiziger en de reisagent gebruiken de frontend om reizen samen te stellen, boeken, aan te passen of te annuleren. De frontend is een gebruikersinterface die communiceert met de backend, het hart van het systeem, via API-verzoeken.  
-De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API's: de Booking.com API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
+De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API's: de Booking.com API voor het boeken van verblijfplaatsen, de Google Maps API voor locatie-informatie, de Identity Provider API voor gebruikersauthenticatie en de TripAdvisor API voor het ophalen van reviews van boekingen.
 
 ### 7.2. Components
 #### Backend component diagram
@@ -142,7 +142,7 @@ Toelichting: In dit diagram is te zien hoe de controllers met de services in het
 
 #### Frontend component diagram
 ![component frontend diagram](resources/component-frontend-diagram.svg)  
-Toelichting: In dit diagram is te zien hoe de reiziger en de reisagent met de frontend communiceren. Dit gaat eerst via de app die de routing afhandelt zodat de gebruiker op de juiste pagina beland. Het kaart component praat met de google maps api om de meest recente map data op te halen. Verder praten alle componenten met de API Client behalve het notificatiesysteem. De API Client praat met de backend om hier de data op te halen vanuit alle endpoints. Ook is er een notificatie systeem die de notificaties op de frontend toont, zoals een error of success notificatie wanneer een gebruiker een formulier heeft verstuurd. 
+Toelichting: In dit diagram is te zien hoe de reiziger en de reisagent met de frontend communiceren. Dit gaat eerst via de app die de routing afhandelt zodat de gebruiker op de juiste pagina beland. Het kaart component praat met de google maps api om de meest recente map data op te halen. Verder praten alle componenten met de API-client behalve het notificatiesysteem. De API-client praat met de backend om hier de data op te halen vanuit alle endpoints. Het notificatiesysteem toont de notificaties op de frontend, zoals een error of success notificatie wanneer een gebruiker een formulier heeft verstuurd. 
 
 #### Dynamic diagram voor hotels ophalen
 ![dynamic diagram hotels ophalen](resources/dynamic-diagram-hotels-ophalen.svg)  

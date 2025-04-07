@@ -1,6 +1,9 @@
 @startuml
+!include <C4/C4_Context>
 
+LAYOUT_WITH_LEGEND()
 title Context diagram voor het Triptop reis systeem
+
 
 top to bottom direction
 
@@ -46,8 +49,8 @@ skinparam person<<Reiziger>> {
 }
 
 ' Actoren
-person "==Reiziger\n<size:10><<Persoon>></size>\n\nKlant van Triptop" <<Reiziger>> as Reiziger
-person "==Reisagent\n<size:10><<Persoon>></size>\n\nMedewerker van Triptop" <<Reisagent>> as Reisagent
+person "==Reiziger\n<size:10>[Persoon]</size>\n\nKlant van Triptop" <<Reiziger>> as Reiziger
+person "==Reisagent\n<size:10>[Persoon]</size>\n\nMedewerker van Triptop" <<Reisagent>> as Reisagent
 
 ' Hoofd systeem
 rectangle "==TripTop Webapplicatie\n<size:10><<Software Systeem>></size>\n\nOnline platform voor reisplanning" <<TripTopWebapplicatie>> as TripTopWebapplicatie

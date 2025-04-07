@@ -1,6 +1,5 @@
 @startuml
 !include <C4/C4>
-!include <C4/C4_Context>
 !include <C4/C4_Container>
 
 LAYOUT_WITH_LEGEND()
@@ -17,9 +16,9 @@ System_Boundary(triptop, "Triptop Systeem") {
 }
 
 System_Ext(bookingAPI, "Booking.com API", "Verblijfsaccommodaties via Booking.com")
-System_Ext(MapsAPI, "Google Maps API", "navigeert en toont de locatie van boekingen")
+System_Ext(MapsAPI, "Google Maps API", "Routeplanning en navigatie")
 System_Ext(identityProviderAPI, "Identity Provider API", "Authenticatie en autorisatie")
-System_Ext(tripAdvisor, "Trip advisor API", "Reviews van boekingen")
+System_Ext(tripAdvisor, "TripAdvisor API", "Toont reviews van boekingen")
 
 Rel(reiziger, frontend, "Stelt reis samen, boekt, past aan of annuleert")
 Rel(reisagent, frontend, "Biedt advies en ondersteuning")
