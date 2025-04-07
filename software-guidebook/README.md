@@ -118,7 +118,7 @@ Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoof
 
 In dit project is het Factory pattern toegepast bij de TripAdvisor API integratie. Het beantwoordt de vraag: "Hoe kunnen we verschillende soorten activiteiten op een flexibele en uitbreidbare manier aansturen?" Dit pattern is gekozen omdat het de controller-laag ontkoppelt van de concrete implementaties van activiteiten.
 
-Verdere uitleg over de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#factory-class-diagram) en de architectuurkeuze wordt onderbouwd in [hoofdstuk 8.3 ADR-003](#83-adr-003-factory-keuze).
+Verdere uitleg over de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#factory-class-diagram) en de architectuurkeuze wordt onderbouwd in [hoofdstuk 8.3 ADR-003](#83-adr-003-verschillende-activiteitstypes-flexibel-aansturen).
 
 ### Overige architecturele keuzes zijn:
 
