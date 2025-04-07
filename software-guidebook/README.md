@@ -95,9 +95,7 @@ als belangrijk:
 
 ### Facade-pattern
 
-In dit project is facade gebruikt bij de autorisatie service. Dit is gebruikt voor als de data die terug gestuurd wordt via identity provider api aangepast wordt. Dan hoeft niet de hele applicatie aangepast hoeft te worden. Op deze manier wordt er antwoord gegeven op de vraag: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?"
-
-Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#facade-class-diagram)
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#facade-class-diagram) en verder in [ADR-004](#84-adr-004-identity-provider-data-structuur-past-zich-aan)
 
 ### Overige architecturele keuzes zijn:
 
@@ -342,7 +340,7 @@ Het patroon vereist wel meer initiële ontwikkeltijd door de extra abstractielaa
 
 We implementeren de `Activity` interface als contract voor alle activiteitstypes, ontwikkelen concrete implementaties zoals `HotelActivity` en `CarActivity`, en creëren een `ActivityFactory` met aparte methoden voor elk type. Voor de uitbreiding met nieuwe activiteitstypes documenteren we het proces waarbij het type wordt toegevoegd aan de enum, een nieuwe implementatieklasse wordt gemaakt en een factory-methode wordt toegevoegd.
 
-### 8.4. ADR-004 Facade keuze
+### 8.4. ADR-004 Identity provider data structuur past zich aan
 
 Date: 2025-03-27
 
@@ -352,10 +350,7 @@ Proposed
 
 #### Context
 
-Bij het ontwerpen van onze softwarearchitectuur staan we voor de keuze tussen verschillende design patterns. De
-belangrijkste kandidaten zijn het Facade-pattern, Factory-pattern, Adapter-pattern, State-pattern en Strategy-pattern.
-Elk van deze patronen heeft zijn eigen voordelen en toepassingen. We willen een keuze maken die de codebase
-vereenvoudigt, onderhoudbaarheid verhoogt en flexibiliteit biedt.
+Bij het ontwerpen van onze softwarearchitectuur staan we voor de keuze tussen verschillende design patterns. Hiermee moet de ontwerpvraag: "Hoe zorg je ervoor dat je bij een wijziging in de datastructuur van een externe service niet de hele applicatie hoeft aan te passen?" afgevangen worden. Zodat als dit gebeurt niet de hele codebase herschreven moet worden.
 
 #### Considered Options
 
@@ -370,15 +365,14 @@ vereenvoudigt, onderhoudbaarheid verhoogt en flexibiliteit biedt.
 #### Decision
 
 We kiezen voor het **Facade design pattern**. Dit patroon biedt een vereenvoudigde interface voor complexe
-subsysteem functionaliteit, wat de code overzichtelijker maakt en de afhankelijkheden vermindert.
+subsysteem functionaliteit, wat de code overzichtelijker maakt en de afhankelijkheden vermindert. Dit is zodat de code, maar op 1 plek aangepast moet worden als de datastructuur van de api aangepast wordt
 
 #### Consequences
 
 ##### Positief
 
 Het Facade-patroon maakt de interactie met complexe subsystemen eenvoudiger. Dit verlaagt de afhankelijkheid tussen
-componenten. Daardoor ontstaat een meer modulaire architectuur. De code wordt ook leesbaarder en makkelijker te
-onderhouden. Ontwikkelaars hoeven zich niet direct met de onderliggende implementatie bezig te houden.
+componenten. Daardoor is de code binnen de facade onafhankelijk van de code buiten de facade, als de api zich aanpast, zal de returnwaarde van de functie niet aangepast hoeven te worden.
 
 ##### Negatief
 
@@ -388,9 +382,7 @@ interface als een soort God interface worden gebruikt die door elke klasse binne
 
 ##### Actiepunten
 
-Om het Facade-patroon effectief te implementeren, voegen we een centrale interface toe. Deze interface vereenvoudigt de
-interactie met het subsysteem. Vervolgens beoordelen we of aanvullende patronen zoals Factory of Strategy nodig zijn
-binnen de facade.
+We maken een klasse die alle authenticatie met de api afhandelt deze moet geïnjecteerd worden door controllers of andere services. Hiernaast komt er ook nog een client die met de api praat.
 
 ### 8.5. ADR-005 Aanroepen externe API
 
