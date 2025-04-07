@@ -16,7 +16,7 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 Toelichting: In dit contextdiagram zie je hoe de verschillende onderdelen van het TripTop-systeem met elkaar  
 samenwerken. Er zijn twee hoofdgebruikers: de reiziger, die via de webapplicatie zelf reizen samenstelt, boekt of  
 aanpast, en de reisagent, die ondersteuning biedt waar nodig.  
-De TripTop Webapplicatie schakelt met een aantal externe API’s. Denk bijvoorbeeld aan het boeken van accommodaties via  
+De TripTop Webapplicatie schakelt met een aantal externe API's. Denk bijvoorbeeld aan het boeken van accommodaties via  
 de Booking API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.
 
 [//]: # (Toelichting op de context van de software inclusief System Context Diagram:)
@@ -172,7 +172,7 @@ Nieuwe activiteitstypes toevoegen kan door:
 
 ![container-diagram.svg](resources%2Fcontainer-diagram.svg)  
 Toelichting: In dit container-diagram zie je de verschillende componenten van het Triptop Systeem en hoe ze met elkaar communiceren. De reiziger en de reisagent gebruiken de frontend om reizen samen te stellen, boeken, aan te passen of te annuleren. De frontend is een gebruikersinterface die communiceert met de backend, het hart van het systeem, via API-verzoeken.  
-De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API’s: de Booking API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
+De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API's: de Booking API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
 
 ### 7.2. Components
 #### Backend component diagram
@@ -237,8 +237,12 @@ In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd
 #### Car rental search sequence diagram
 ![car-rental-search-sequence-diagram.svg](resources%2Fcar-rental-search-sequence-diagram.svg)
 
+Toelichting: In dit diagram wordt het proces getoond voor het zoeken naar huurauto's. De gebruiker geeft zoekcriteria in zoals ophaallocatie en datums. De TripTopApp maakt een CarActivity object aan met deze gegevens en stuurt dit naar de TripAdvisorService. Deze service vraagt de juiste endpoint en parameters op bij het CarActivity object, bouwt een URI en stuurt een HTTP request naar de TripAdvisor API. De resultaten worden teruggestuurd naar de gebruiker via de app. Dit diagram toont duidelijk hoe het Factory pattern gebruikt wordt om verschillende activiteitstypes te verwerken.
+
 #### Hotel search sequence diagram
 ![hotel-search-sequence-diagram.svg](resources%2Fhotel-search-sequence-diagram.svg)
+
+Toelichting: In dit diagram is te zien hoe hotelzoekopdrachten worden afgehandeld. De gebruiker voert locatie- en datumgegevens in, waarna de TripTopApp een HotelActivity object aanmaakt. Dit object wordt doorgegeven aan de TripAdvisorService die de benodigde API-parameters opvraagt. Vervolgens stuurt de service een request naar de TripAdvisor API en worden de resultaten teruggegeven aan de gebruiker. Net als bij de autoverhuur toont dit het gebruik van het Factory pattern, waarbij verschillende activiteitstypen via dezelfde service worden afgehandeld maar met activiteit-specifieke parameters.
 
 ## 8. Architectural Decision Records
 
@@ -431,7 +435,7 @@ Proposed
 
 #### Context
 
-Bij het ontwerpen van onze softwarearchitectuur hebben we verschillende ontwerppatronen overwogen die kunnen bijdragen aan een flexibele, onderhoudbare en herbruikbare codebase. De voornaamste kandidaten zijn Facade, Factory, Adapter, State en Strategy. Elk van deze patronen biedt unieke voordelen en is geschikt voor specifieke scenario’s.
+Bij het ontwerpen van onze softwarearchitectuur hebben we verschillende ontwerppatronen overwogen die kunnen bijdragen aan een flexibele, onderhoudbare en herbruikbare codebase. De voornaamste kandidaten zijn Facade, Factory, Adapter, State en Strategy. Elk van deze patronen biedt unieke voordelen en is geschikt voor specifieke scenario's.
 
 #### Considered options
 
