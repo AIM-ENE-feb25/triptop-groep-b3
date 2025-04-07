@@ -219,45 +219,41 @@ Accepted
 
 #### Context
 
-De TripTop applicatie heeft Google Maps functionaliteit nodig voor locaties en routes. De vraag is of we de API
-rechtstreeks vanuit de frontend of via de backend moeten benaderen.
+De TripTop applicatie heeft Google Maps functionaliteit nodig voor het weergeven van locaties, routes en interactieve kaarten. We moesten beslissen of de Google Maps API rechtstreeks vanaf de frontend of via de backend zou worden benaderd.
 
 #### Considered Options
 
 | Criteria                  | Backend | Frontend | Hybride |
 |---------------------------|---------|----------|---------|
-| Beveiliging               | ++      | --       | +       |
-| Gebruikerservaring        | -       | ++       | ++      |
-| Serverbelasting           | --      | ++       | +       |
-| Implementatiecomplexiteit | +       | +        | -       |
+| Beveiliging               | ++      | -        | 0       |
+| Gebruikerservaring        | --      | ++       | +       |
+| Serverbelasting           | --      | ++       | -       |
+| Implementatiecomplexiteit | -       | ++       | --      |
 | Caching mogelijkheden     | ++      | -        | +       |
+| Onderhoudbaarheid         | 0       | 0        | -       |
+| Responsetijd              | --      | ++       | -       |
 
 #### Decision
 
-We kiezen voor een hybride aanpak waarbij we het beste van twee werelden combineren. Visuele kaarten worden direct via
-de frontend geladen met de Google Maps JavaScript API, wat zorgt voor een snelle en interactieve gebruikerservaring.
-Tegelijkertijd worden alle gevoelige operaties zoals routeberekeningen en geocoding veilig via de backend afgehandeld.
-Om de prestaties te optimaliseren, implementeert de backend een slim caching-systeem dat veelgebruikte routes en
-locatiegegevens bewaart voor hergebruik.
+Na zorgvuldige afweging hebben we gekozen om de Google Maps API rechtstreeks vanuit de frontend te benaderen. Deze keuze is primair gebaseerd op de aanzienlijk betere gebruikerservaring, lagere serverbelasting (geen backend-implementatie) en eenvoudigere implementatie. De Google Maps JavaScript API is speciaal ontworpen voor naadloze integratie in webapplicaties, met snelle laadtijden en soepele interacties zoals zoomen en pannen.
+
+Hoewel een backend-implementatie voordelen zou bieden voor API-sleutelbescherming en caching, wegen deze niet op tegen de voordelen van de frontend-benadering. We mitigeren de beveiligingsrisico's door domeinrestricties toe te passen op onze API-sleutels.
 
 #### Consequences
 
 ##### Positief
 
-De gebruiker ervaart een snelle, interactieve kaartervaring terwijl de API-sleutels veilig op de server worden bewaard.
-Het systeem profiteert van effectieve caching van veelgebruikte routes, wat de prestaties verder verbetert.
+De gebruikerservaring is aanzienlijk beter met de frontend-implementatie. Kaarten laden sneller en reageren direct op gebruikersinteracties zonder vertragingen. De serverbelasting blijft minimaal omdat alle kaartgerelateerde verwerkingen rechtstreeks plaatsvinden tussen de browser van de gebruiker en de Google servers. De implementatie is eenvoudiger en vereist minder code, wat resulteert in lagere ontwikkelingskosten en betere onderhoudbaarheid.
 
 ##### Negatief
 
-We moeten rekening houden met een dubbele implementatie in zowel frontend als backend, wat extra ontwikkeltijd kost. De
-configuratie wordt complexer door de hybride aanpak, wat meer aandacht vereist tijdens de implementatie en het
-onderhoud.
+De API-sleutel is zichtbaar in de frontend code, wat een beveiligingsrisico vormt als er geen juiste domeinrestricties zijn ingesteld. We hebben dit risico beperkt door strikte herkomst- en referrer-beperkingen te configureren in het Google Cloud Console.
+
+We hebben beperkte mogelijkheden voor caching of voor het toevoegen van eigen logica aan de kaartfunctionaliteit. Voor geavanceerde functionaliteit kan in de toekomst alsnog een aanvullende backend-component nodig zijn.
 
 ##### Actiepunten
 
-We zullen een duidelijk functionaliteit overzicht maken waarin we de verdeling tussen frontend en backend specificeren.
-Het implementeren van een robuust caching-systeem en het toevoegen van rate limiting zijn essentiële vervolgstappen om
-de oplossing te optimaliseren.
+We implementeren de Google Maps JavaScript API in onze frontend React-componenten met de juiste domeinrestricties voor de API-sleutel. We documenteren het gebruik van de API om toekomstige ontwikkelaars te helpen.
 
 ### 8.2. ADR-002 Integratie van Identity Providers
 
