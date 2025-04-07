@@ -10,15 +10,36 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 4. De architectuur van de infrastructuur en hoe de software kan worden geïnstalleerd.
 
 ## 2. Context
-
 ![context-diagram.svg](resources/context-diagram.svg)
 
-Toelichting: In dit contextdiagram zie je hoe de verschillende onderdelen van het TripTop-systeem met elkaar  
-samenwerken. Er zijn twee hoofdgebruikers: de reiziger, die via de webapplicatie zelf reizen samenstelt, boekt of  
-aanpast, en de reisagent, die ondersteuning biedt waar nodig.  
-De TripTop Webapplicatie schakelt met een aantal externe API's. Denk bijvoorbeeld aan het boeken van accommodaties via  
-de Booking.com API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.
+Triptop is een webapplicatie die ontworpen is zodat reizigers zelfstandig een vakantie kunnen samenstellen en beheren zonder afhankelijk te zijn van een reisbureau.
+De reisagenten ondersteunen de reizigers in dit proces.
 
+### 2.1 Functionaliteit 
+De functionaliteiten van Triptop betreffen:
+- Het samenstellen van een reis met behulp van bouwstenen.
+- Boeken, aanpassen, beheren en annuleren van een reis.
+- Kaartweergave met behulp van de Google Maps API.
+
+### 2.2 Gebruikers
+- Reizigers: dit is de gebruiker van de Triptop applicatie. De reiziger zal zelf reizen samenstellen en beheren.
+- Reisagent: de reisagent ondersteunt (tweedelijns support) de reiziger bij het samenstellen en beheren van een reis.
+
+### 2.3 Externe Systemen
+- Booking.com API: boeken van accommodaties.
+- Identity Provider API: regelt veilig inloggen voor gebruikers.
+- TripAdvisor API: verantwoordelijk voor het ophalen van reviews.
+- Google Maps API: haalt informatie over kaarten en locaties op.
+
+[//]: # (Toelichting: In dit contextdiagram zie je hoe de verschillende onderdelen van het TripTop-systeem met elkaar  )
+
+[//]: # (samenwerken. Er zijn twee hoofdgebruikers: de reiziger, die via de webapplicatie zelf reizen samenstelt, boekt of  )
+
+[//]: # (aanpast, en de reisagent, die ondersteuning biedt waar nodig.  )
+
+[//]: # (De TripTop Webapplicatie schakelt met een aantal externe API's. Denk bijvoorbeeld aan het boeken van accommodaties via  )
+
+[//]: # (de Booking.com API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.)
 
 ## 3. Functional Overview
 
