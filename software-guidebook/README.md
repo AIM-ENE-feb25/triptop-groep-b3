@@ -200,12 +200,12 @@ In het tweede deel van dit diagram wordt er gecheckt of de gebruiker is ingelogd
 #### Car rental search sequence diagram
 ![car rental search sequence diagram](resources/car-rental-search-sequence-diagram.svg)
 
-Toelichting: In dit diagram wordt het proces getoond voor het zoeken naar huurauto's. De gebruiker geeft zoekcriteria in zoals ophaallocatie en datums. De TripTopApp maakt een CarActivity object aan met deze gegevens en stuurt dit naar de TripAdvisorService. Deze service vraagt de juiste endpoint en parameters op bij het CarActivity object, bouwt een URI en stuurt een HTTP request naar de TripAdvisor API. De resultaten worden teruggestuurd naar de gebruiker via de app. Dit diagram toont duidelijk hoe het Factory pattern gebruikt wordt om verschillende activiteitstypes te verwerken.
+Toelichting: In dit diagram wordt het proces getoond voor het zoeken naar huurauto's. De gebruiker geeft zoekcriteria in zoals ophaallocatie en datums. De TripTopApp maakt een CarActivity object aan met deze gegevens en stuurt dit naar de TripAdvisorService. Deze service vraagt de juiste endpoint en parameters op bij het CarActivity object, bouwt een URI en stuurt een HTTP request naar de TripAdvisor API. De resultaten worden teruggestuurd naar de gebruiker via de app.
 
 #### Hotel search sequence diagram
 ![hotel search sequence diagram](resources/hotel-search-sequence-diagram.svg)
 
-Toelichting: In dit diagram is te zien hoe hotelzoekopdrachten worden afgehandeld. De gebruiker voert locatie- en datumgegevens in, waarna de TripTopApp een HotelActivity object aanmaakt. Dit object wordt doorgegeven aan de TripAdvisorService die de benodigde API-parameters opvraagt. Vervolgens stuurt de service een request naar de TripAdvisor API en worden de resultaten teruggegeven aan de gebruiker. Net als bij de autoverhuur toont dit het gebruik van het Factory pattern, waarbij verschillende activiteitstypen via dezelfde service worden afgehandeld maar met activiteit-specifieke parameters.
+Toelichting: In dit diagram is te zien hoe hotelzoekopdrachten worden afgehandeld. De gebruiker voert locatie- en datumgegevens in, waarna de TripTopApp een HotelActivity object aanmaakt. Dit object wordt doorgegeven aan de TripAdvisorService die de benodigde API-parameters opvraagt. Vervolgens stuurt de service een request naar de TripAdvisor API en worden de resultaten teruggegeven aan de gebruiker.
 
 ## 8. Architectural Decision Records
 
