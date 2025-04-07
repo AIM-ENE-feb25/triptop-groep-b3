@@ -13,11 +13,21 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 
 ![context-diagram.svg](resources%2Fcontext-diagram.svg)
 
-Toelichting op de context van de software inclusief System Context Diagram:
+Toelichting: In dit contextdiagram zie je hoe de verschillende onderdelen van het TripTop-systeem met elkaar  
+samenwerken. Er zijn twee hoofdgebruikers: de reiziger, die via de webapplicatie zelf reizen samenstelt, boekt of  
+aanpast, en de reisagent, die ondersteuning biedt waar nodig.  
+De TripTop Webapplicatie schakelt met een aantal externe API’s. Denk bijvoorbeeld aan het boeken van accommodaties via  
+de Booking API, het ophalen van reviews via TripAdvisor en het regelen van login met een Identity Provider API.
 
-* Functionaliteit
-* Gebruikers
-* Externe systemen
+[//]: # (Toelichting op de context van de software inclusief System Context Diagram:)
+
+[//]: # ()
+
+[//]: # (* Functionaliteit)
+
+[//]: # (* Gebruikers)
+
+[//]: # (* Externe systemen)
 
 ## 3. Functional Overview
 
@@ -106,23 +116,30 @@ De implementatie bestaat uit:
 2. **Dependency Injection**: In `Authorisation` wordt `AuthorisationServiceFacade` via constructor-injectie toegevoegd, wat ervoor zorgt dat dit beter te testen is.
 
 ### Adapter-pattern
-
-In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor api en de booking.com API.  
+In dit project is het adapter pattern toegepast bij het communiceren met API's in de backend, bij de tripadvisor API en  
+de Booking.com API. 
 Dit zorgt voor modulariteit en makkelijke uitbreidbaarheid indien er later soortgelijke API's toegevoegd worden.
 
-Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
+Dit pattern beantwoordt de vraag: "Wie roept een specifieke externe service aan, gebeurt dat vanuit de front-end of  
+vanuit de back-end? Welke redenen zijn er om voor de ene of de andere aanpak te kiezen?"
 
-De implementatie bestaat uit:
+Verdere uitleg over dit pattern en de implementatie hiervan is te lezen in [hoofdstuk 7.3 Design & Code](#73-design--code)  
 
-* Een `HotelApiAdapter` interface.
-* Klassen die deze interface implementeren, in dit geval zijn dat de BookingApiAdapter en TripadvisorApiAdapter.
-* Er is ook een `HotelFactory` die regelt welke adapter er gebruikt moet worden tijdens de aanroep in de controller.
+[//]: # (De implementatie bestaat uit:)
+[//]: # ()
+[//]: # ()
+[//]: # (* Een `HotelApiAdapter` interface.)
+
+[//]: # (* Klassen die deze interface implementeren, in dit geval zijn dat de BookingApiAdapter en TripadvisorApiAdapter.)
+
+[//]: # (* Er is ook een `HotelFactory` die regelt welke adapter er gebruikt moet worden tijdens de aanroep in de controller.)
 
 ### Overige architecturele keuzes zijn:
 
-1. **Open/Closed Principle**: Er kan gemakkelijk een nieuwe externe API call worden toegevoegd, er hoeft geen huidige code voor aangepast te worden.
-2. **Dependency Injection**: In `HotelController` wordt `HotelFactory` via constructor-injectie toegevoegd, wat ervoor zorgt dat dit beter te testen is.
-
+1. **Open/Closed Principle**: Er kan gemakkelijk een nieuwe externe API call worden toegevoegd, er hoeft geen huidige  
+   code voor aangepast te worden.
+2. **Dependency Injection**: In `HotelController` wordt `HotelFactory` via constructor-injectie toegevoegd, wat ervoor  
+   zorgt dat dit beter te testen is.
 
 ### Factory
 
@@ -153,28 +170,49 @@ Nieuwe activiteitstypes toevoegen kan door:
 ## 7. Software Architecture
 
 ### 7.1. Containers
+#### Container diagram
 
-![container-diagram.svg](resources%2Fcontainer-diagram.svg)
+![container-diagram.svg](resources%2Fcontainer-diagram.svg)  
+Toelichting: In dit container-diagram zie je de verschillende componenten van het Triptop Systeem en hoe ze met elkaar communiceren. De reiziger en de reisagent gebruiken de frontend om reizen samen te stellen, boeken, aan te passen of te annuleren. De frontend is een gebruikersinterface die communiceert met de backend, het hart van het systeem, via API-verzoeken.  
+De backend beheert de reisgegevens en boekingen door verbinding te maken met een SQL-database. Het regelt ook de communicatie met verschillende externe API’s: de Booking API voor het boeken van verblijfplaatsen, de Identity Provider API voor gebruikersauthenticatie, en de TripAdvisor API voor het ophalen van reviews van boekingen.
 
 ### 7.2. Components
+#### Backend component diagram
+![component-backend-diagram.svg](resources%2Fcomponent-backend-diagram.svg)  
+Toelichting:
 
-Backend component diagram
-![component-backend-diagram.svg](resources%2Fcomponent-backend-diagram.svg)
+#### Frontend component diagram
+![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)  
+Toelichting:
 
-Frontend component diagram
-![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)
+#### Dynamic diagram voor hotels ophalen
+![dynamic-diagram-hotels-ophalen.svg](resources%2Fdynamic-diagram-hotels-ophalen.svg)  
+Toelichting: In dit diagram is te zien hoe het proces van het ophalen van hotels verloopt. De gebruiker vraagt via de frontend  
+informatie van een hotel op, waarna deze worden doorgestuurd naar de backend. Vervolgens wordt via een service een  
+koppeling gemaakt met de Booking.com API om de juiste hotel gegevens op te vragen en terug te sturen.  
+Zodra de juiste gegevens gevonden zijn stuurt de API deze terug via de backend en worden deze zichtbaar op de frontend  
+voor de gebruiker.
 
-Dynamic diagram voor hotels ophalen
-![dynamic-diagram-hotels-ophalen.svg](resources%2Fdynamic-diagram-hotels-ophalen.svg)
-
-Dynamic diagram voor login
-![dynamic-diagram-login.svg](resources%2Fdynamic-diagram-login.svg)
+#### Dynamic diagram voor login
+![dynamic-diagram-login.svg](resources%2Fdynamic-diagram-login.svg)  
+Toelichting: In dit diagram is te zien hoe het inlogproces verloopt. Een gebruiker voert via de frontend zijn inloggegevens in,  
+waarna deze worden doorgestuurd naar de backend. Daar wordt een koppeling gemaakt met een externe Identity Provider API  
+om te controleren of de gegevens kloppen.  
+Als de authenticatie succesvol is, stuurt de Identity Provider een bevestiging terug. De backend ontvangt dit signaal en  
+stuurt vervolgens een acces token naar de frontend. Daarmee is de login afgerond en is de gebruiker succesvol ingelogd.
 
 ### 7.3. Design & Code
 
 #### Adapter class diagram
 
-![adapter-class-diagram.svg](resources%2Fadapter-class-diagram.svg)
+![adapter-class-diagram.svg](resources%2Fadapter-class-diagram.svg)  
+Toelichting: In dit diagram is te zien hoe de verschillende klassen samenwerken om het adapter pattern toe te passen.
+
+De implementatie bestaat uit:
+* Een `HotelApiAdapter` interface.
+* Klassen die deze interface implementeren, in dit geval zijn dat de BookingApiAdapter en TripadvisorApiAdapter.
+* Er is ook een `HotelFactory` klasse, deze klasse regelt welke adapter er gebruikt moet worden tijdens de aanroep in de controller.
+* Verder is er onderaan te zien hoe de twee service klassen, die de aanroep naar de API doen allebei hun eigen methode hebben om dit af te handelen, zo wordt ook duidelijk hoe het adapter-pattern dit probleem wegwerkt door dit via de adapter klassen gelijk te trekken.
 
 #### Facade class diagram
 
@@ -321,7 +359,7 @@ TripTop biedt gebruikers de mogelijkheid om reizen samen te stellen uit verschil
 | Flexibiliteit         |   +   |    ++    |    +    |   -    |       ++       |
 | Ontkoppeling          |   +   |    +     |   ++    |   -    |       ++       |
 | Uitbreidbaarheid      |   +   |    +     |    +    |   -    |       ++       |
-| Eenvoud implementatie |   -   |    +     |    -    |  ++    |       +        |
+| Eenvoud implementatie |   -   |    +     |    -    |   ++   |       +        |
 | Toekomstbestendigheid |   +   |    +     |    +    |   -    |       ++       |
 
 #### Decision

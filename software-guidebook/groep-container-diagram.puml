@@ -27,7 +27,6 @@ Rel(frontend, backend, "Maakt API-verzoeken", "HTTP/JSON")
 Rel(backend, database, "Leest/schrijft reisgegevens en boekingen", "TCP/IP/SQL")
 Rel(backend, bookingAPI, "Boekt verblijfplaatsen", "HTTP/JSON")
 Rel(frontend, MapsAPI, "Toont locatie via", "HTTP/JSON")
-Rel(backend, MapsAPI, "Maakt API-verzoeken", "HTTP/JSON")
 Rel(backend, identityProviderAPI, "Beheert authenticatie en autorisatie", "HTTP/JSON")
 Rel(backend, tripAdvisor, "Haalt reviews op via", "HTTP/JSON")
 
