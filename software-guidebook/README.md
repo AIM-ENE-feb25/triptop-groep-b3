@@ -179,7 +179,7 @@ De backend beheert de reisgegevens en boekingen door verbinding te maken met een
 ### 7.2. Components
 #### Backend component diagram
 ![component-backend-diagram.svg](resources%2Fcomponent-backend-diagram.svg)  
-Toelichting:
+Toelichting: In dit diagram is te zien hoe de controllers met de services in het diagram praten. De services halen de data op die de controller nodig hebben, dit wordt gedaan via de api's en de database. Deze data wordt terug gestuurd naar de controller die de data terug verstuurd naar de frontend.
 
 #### Frontend component diagram
 ![component-frontend-diagram.svg](resources%2Fcomponent-frontend-diagram.svg)  
